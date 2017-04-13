@@ -1,4 +1,4 @@
-package controller;
+package org.cba.controller;
 
 import hyggemvc.controller.Controller;
 

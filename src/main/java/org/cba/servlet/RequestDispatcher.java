@@ -1,4 +1,4 @@
-package servlet;
+package org.cba.servlet;
 
 import hyggemvc.router.AppContainer;
 import hyggemvc.router.Route;
@@ -19,7 +19,7 @@ public class RequestDispatcher extends hyggemvc.servlet.RequestDispatcher {
                 new Route("(?<controller>[a-z\\-]+)(?<method>/[a-z\\-]+)?(?<int0>/\\d+)?","Default","index")
         );
 
-        RouteCallable routeCallable = router.getRouteCallable("controller",url);
+        RouteCallable routeCallable = router.getRouteCallable("org.cba.controller",url);
         AppContainer app = new AppContainer(request,response);
         app.run(routeCallable);
     }
