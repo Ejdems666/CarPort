@@ -1,4 +1,4 @@
-package model;
+package org.cba.model;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

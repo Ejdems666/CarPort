@@ -1,4 +1,4 @@
-<%@ page import="model.entity.User" %>
+<%@ page import="org.cba.domain.User" %>
 <% User user = ((User) session.getAttribute("user")); %>
 <!DOCTYPE html>
 <html lang="en">

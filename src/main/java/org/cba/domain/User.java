@@ -1,11 +1,15 @@
-package model.entity;
+package org.cba.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Date;
 
 /**
  * Created by adam on 26/02/2017.
  */
-public class User implements Entity {
+@Entity
+public class User {
+    @Id
     private Integer id;
     private String name;
     private String surname;
@@ -89,7 +93,11 @@ public class User implements Entity {
         this.salt = salt;
     }
 
-    public int getBalance() { return balance; }
+    public int getBalance() {
+        return balance;
+    }
 
-    public void setBalance(int balance) { this.balance = balance; }
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
 }

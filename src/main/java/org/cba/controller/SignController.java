@@ -1,12 +1,12 @@
-package controller;
+package org.cba.controller;
 
 import hyggemvc.component.Alerts;
-import model.entity.User;
-import model.exception.EmailTakenException;
-import model.exception.NonExistentEmailException;
-import model.exception.WrongPasswordException;
-import model.facade.LoginFacade;
-import model.facade.RegisterFacade;
+import org.cba.domain.User;
+import org.cba.model.exception.EmailTakenException;
+import org.cba.model.exception.NonExistentEmailException;
+import org.cba.model.exception.WrongPasswordException;
+import org.cba.model.facade.LoginFacade;
+import org.cba.model.facade.RegisterFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ public class SignController extends BaseController {
 
     public void in() {
         if (request.getMethod().equals("POST")) {
-            LoginFacade loginFacade = new LoginFacade(getDatabase());
+            LoginFacade loginFacade = new LoginFacade();
             try {
                 User user = loginFacade.loginUser(
                         request.getParameter("email"),
@@ -46,7 +46,7 @@ public class SignController extends BaseController {
 
     public void up() {
         if (request.getMethod().equals("POST")) {
-            RegisterFacade registerFacade = new RegisterFacade(getDatabase());
+            RegisterFacade registerFacade = new RegisterFacade();
             try {
                 User user = registerFacade.registerUser(getParameters());
                 alertSuccess("Account was created");

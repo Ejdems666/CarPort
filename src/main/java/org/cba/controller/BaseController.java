@@ -1,10 +1,8 @@
-package controller;
+package org.cba.controller;
 
-import hyggedb.HyggeDb;
 import hyggemvc.component.Alerts;
 import hyggemvc.controller.Controller;
-import model.Connector;
-import model.entity.User;
+import org.cba.domain.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +15,6 @@ import java.util.Map;
  * Created by adam on 26/02/2017.
  */
 public abstract class BaseController extends Controller {
-    private HyggeDb db = null;
     public static final int ADMIN_TYPE = 2;
     protected final String ROOT = "/";
     protected final String ASSETS = ROOT+"assets/";
@@ -35,14 +32,6 @@ public abstract class BaseController extends Controller {
 
     protected boolean isLoggedIn() {
         return loggedUser != null;
-    }
-
-    protected HyggeDb getDatabase() {
-        if (db == null) {
-            return db = new HyggeDb(new Connector());
-        } else {
-            return db;
-        }
     }
 
     @Override

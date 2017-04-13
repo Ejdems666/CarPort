@@ -1,16 +1,12 @@
-package model.facade;
+package org.cba.model.facade;
 
-import hyggedb.HyggeDb;
-import hyggedb.select.Selection;
-import model.Hasher;
-import model.entity.User;
-import model.exception.EmailTakenException;
-import model.repository.Repository;
-import model.repository.UserRepository;
+import io.ebean.Ebean;
+import org.cba.domain.User;
+import org.cba.domain.query.QUser;
+import org.cba.model.Hasher;
+import org.cba.model.exception.EmailTakenException;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -18,32 +14,16 @@ import java.util.Map;
  * Created by adam on 28/02/2017.
  */
 public class RegisterFacade {
-    private final HyggeDb db;
-
-    public RegisterFacade(HyggeDb db) {
-        this.db = db;
-    }
 
     public User registerUser(Map attributes) throws EmailTakenException {
-        Repository<User> userRepository = UserRepository.getInstance(db);
-        if (emailIsFree((attributes.get("email").toString()))) {
+        String email = (String) attributes.get("email");
+        int exist = new QUser().email.equalTo(email).findCount();
+        if (exist == 0) {
             User user = mapUser(attributes);
-            userRepository.persistAndFlush(user);
+            Ebean.save(user);
             return user;
         } else {
             throw new EmailTakenException();
-        }
-    }
-
-    private boolean emailIsFree(String email) {
-        Selection selection = new Selection("user");
-        selection.where("email=?", email);
-        ResultSet rs = db.getSelectionExecutor().getResult(selection);
-        try {
-            return !rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
