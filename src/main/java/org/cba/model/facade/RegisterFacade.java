@@ -40,7 +40,6 @@ public class RegisterFacade {
         user.setCreatedAt(new Date(Calendar.getInstance().getTimeInMillis()));
         user.setPassword(hashedPassword);
         user.setSalt(salt);
-        user.setBalance(500);
         return user;
     }
 }

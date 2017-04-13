@@ -17,7 +17,7 @@ import java.util.Map;
 public abstract class BaseController extends Controller {
     public static final int ADMIN_TYPE = 2;
     protected final String ROOT = "/";
-    protected final String ASSETS = ROOT+"assets/";
+    protected final String ASSETS = ROOT + "assets/";
     protected User loggedUser = null;
 
     public BaseController(HttpServletRequest request, HttpServletResponse response) {
@@ -48,10 +48,18 @@ public abstract class BaseController extends Controller {
         super.renderTemplate();
     }
 
+    @Override
+    protected void redirect(String url) {
+        super.redirect(ROOT + url);
+    }
+    protected void redirect() {
+        super.redirect(ROOT);
+    }
+
     protected void redirectIfNotSignedIn() {
         if (!isLoggedIn()) {
             addAlert(Alerts.Type.ERROR, "First sign in mate.");
-            redirect(ROOT + "sign/in");
+            redirect("sign/in");
         }
     }
 
@@ -59,7 +67,7 @@ public abstract class BaseController extends Controller {
         redirectIfNotSignedIn();
         if (!isAdmin()) {
             addAlert(Alerts.Type.ERROR, "You're not an admin mate.");
-            redirect(ROOT);
+            redirect();
         }
     }
 

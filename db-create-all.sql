@@ -8,7 +8,6 @@ create table user (
   email                         varchar(255),
   password                      varchar(255),
   salt                          varchar(255),
-  balance                       integer,
   constraint pk_user primary key (id)
 );
 

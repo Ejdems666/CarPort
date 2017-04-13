@@ -29,7 +29,7 @@ public class SignController extends BaseController {
                         request.getParameter("password")
                 );
                 setLoginSession(user);
-                redirect(ROOT);
+                redirect();
                 return;
             } catch (WrongPasswordException | NonExistentEmailException e) {
                 alertError("This email and password pair doesn't exist.");
@@ -51,7 +51,7 @@ public class SignController extends BaseController {
                 User user = registerFacade.registerUser(getParameters());
                 alertSuccess("Account was created");
                 setLoginSession(user);
-                redirect(ROOT);
+                redirect();
                 return;
             } catch (EmailTakenException e) {
                 alertError(e.getMessage());
@@ -64,11 +64,10 @@ public class SignController extends BaseController {
         if (isLoggedIn()) {
             HttpSession session = request.getSession();
             session.removeAttribute("user");
-            session.removeAttribute("cupcakes");
             alertSuccess("Successfully logged out.");
         } else {
             addAlert(Alerts.Type.WARNING, "Don't have to log out when you're not logged in.");
         }
-        redirect(ROOT + "sign/in");
+        redirect("sign/in");
     }
 }
