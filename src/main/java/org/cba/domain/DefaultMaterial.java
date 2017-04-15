@@ -1,5 +1,6 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.DefaultMaterialFinder;
 import javax.persistence.*;
 
 /**
@@ -7,6 +8,8 @@ import javax.persistence.*;
  */
 @Entity
 public class DefaultMaterial {
+
+  public static final DefaultMaterialFinder find = new DefaultMaterialFinder();
     @Id
     private Integer id;
 

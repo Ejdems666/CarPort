@@ -1,5 +1,6 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.DynamicMaterialVariableFinder;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -10,6 +11,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class DynamicMaterialVariable {
+
+  public static final DynamicMaterialVariableFinder find = new DynamicMaterialVariableFinder();
     @Id
     private Integer id;
 

@@ -1,5 +1,7 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.UserFinder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,8 @@ import java.sql.Date;
  */
 @Entity
 public class User {
+
+    public static final UserFinder find = new UserFinder();
     @Id
     private Integer id;
     @NotNull

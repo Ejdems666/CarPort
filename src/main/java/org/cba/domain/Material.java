@@ -1,5 +1,6 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.MaterialFinder;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class Material {
+
+  public static final MaterialFinder find = new MaterialFinder();
     @Id
     private Integer id;
     @NotNull

@@ -1,5 +1,6 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.CarportFinder;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -11,6 +12,8 @@ import java.util.List;
  */
 @Entity
 public class Carport {
+
+  public static final CarportFinder find = new CarportFinder();
     @Id
     private Integer id;
 
