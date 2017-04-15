@@ -18,19 +18,12 @@ public class User {
     private Integer id;
     @NotNull
     private String name;
-    @NotNull
     private String surname;
-    @NotNull
     private Date createdAt;
-    @NotNull
     private int status;
-    @NotNull
     private int type;
-    @NotNull
     private String email;
-    @NotNull
     private String password;
-    @NotNull
     private String salt;
 
     public Integer getId() {

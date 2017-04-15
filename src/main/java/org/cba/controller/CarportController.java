@@ -1,5 +1,7 @@
 package org.cba.controller;
 
+import org.cba.domain.Carport;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +13,9 @@ public class CarportController extends BaseController {
         super(request, response);
     }
 
-    private void index(Integer carportId) {
-
+    public void index(Integer carportId) {
+        Carport carport = Carport.find.byId(carportId);
+        request.setAttribute("carport",carport);
+        renderTemplate();
     }
 }

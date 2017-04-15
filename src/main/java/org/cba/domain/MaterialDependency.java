@@ -1,7 +1,10 @@
 package org.cba.domain;
 
 import org.cba.domain.finder.MaterialDependencyFinder;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -10,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class MaterialDependency {
 
-  public static final MaterialDependencyFinder find = new MaterialDependencyFinder();
+    public static final MaterialDependencyFinder find = new MaterialDependencyFinder();
     @Id
     private Integer id;
 
