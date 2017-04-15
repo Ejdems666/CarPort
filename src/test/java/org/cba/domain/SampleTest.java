@@ -10,7 +10,8 @@ public class SampleTest {
     @Test
     public void insert() {
         User user = new User();
-        user.setName("org.cba.domain.SampleTest");
+        user.setName("name");
+        user.setSurname("surname");
         Ebean.save(user);
     }
 }
