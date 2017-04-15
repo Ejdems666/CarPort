@@ -2,6 +2,7 @@ package org.cba.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -11,13 +12,21 @@ import java.sql.Date;
 public class User {
     @Id
     private Integer id;
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @NotNull
     private Date createdAt;
+    @NotNull
     private int status;
+    @NotNull
     private int type;
+    @NotNull
     private String email;
+    @NotNull
     private String password;
+    @NotNull
     private String salt;
 
     public Integer getId() {
