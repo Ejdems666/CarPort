@@ -1,21 +1,19 @@
 <%@ page import="org.cba.domain.Carport" %>
-<%@ page import="org.cba.domain.DefaultMaterial" %>
+<%@ page import="org.cba.domain.StaticMaterial" %>
 ${carport.name}
 <br>
-Materials:
+Static Materials:
 <table>
     <tr>
         <th>Name</th>
         <th>Amount</th>
         <th>Price</th>
-        <th>Dinamic 0/1</th>
     </tr>
-    <% for (DefaultMaterial defaultMaterial : ((Carport) request.getAttribute("carport")).getDefaultMaterials()) { %>
+    <% for (StaticMaterial staticMaterial : ((Carport) request.getAttribute("carport")).getStaticMaterials()) { %>
     <tr>
-        <td><%= defaultMaterial.getMaterial().getName() %></td>
-        <td><%= defaultMaterial.getAmount() %></td>
-        <td><%= defaultMaterial.getMaterial().getPrice() %></td>
-        <td><%= defaultMaterial.getDynamic() %></td>
+        <td><%= staticMaterial.getMaterial().getName() %></td>
+        <td><%= staticMaterial.getAmount() %></td>
+        <td><%= staticMaterial.getMaterial().getPrice() %></td>
 
     </tr>
     <% } %>

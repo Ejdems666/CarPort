@@ -1,6 +1,5 @@
 package org.cba.domain;
 
-import io.ebean.annotation.PrivateOwned;
 import org.cba.domain.finder.CarportFinder;
 
 import javax.persistence.Entity;
@@ -30,8 +29,7 @@ public class Carport {
     private Integer defaultLength;
 
     @OneToMany(mappedBy = "carport")
-    @PrivateOwned
-    private List<DefaultMaterial> defaultMaterials;
+    private List<StaticMaterial> staticMaterials;
 
     public Integer getId() {
         return id;
@@ -73,8 +71,8 @@ public class Carport {
         this.name = name;
     }
 
-    public List<DefaultMaterial> getDefaultMaterials() {
-        return defaultMaterials;
+    public List<StaticMaterial> getStaticMaterials() {
+        return staticMaterials;
     }
 }
 
