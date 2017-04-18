@@ -1,19 +1,17 @@
 package org.cba.domain;
 
-import org.cba.domain.finder.DynamicMaterialVariableFinder;
-
+import org.cba.domain.finder.StaticMaterialFinder;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by adam on 15/04/2017.
  */
 @Entity
-public class DynamicMaterialVariable {
+public class StaticMaterial {
 
-    public static final DynamicMaterialVariableFinder find = new DynamicMaterialVariableFinder();
+  public static final StaticMaterialFinder find = new StaticMaterialFinder();
     @Id
     private Integer id;
 
@@ -23,10 +21,7 @@ public class DynamicMaterialVariable {
     @ManyToOne
     private Carport carport;
 
-    @NotNull
-    private Integer baseLength;
-    @NotNull
-    private Integer baseDistance;
+    private Integer amount;
 
     public Integer getId() {
         return id;
@@ -52,19 +47,11 @@ public class DynamicMaterialVariable {
         this.carport = carport;
     }
 
-    public Integer getBaseLength() {
-        return baseLength;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setBaseLength(Integer baseLength) {
-        this.baseLength = baseLength;
-    }
-
-    public Integer getBaseDistance() {
-        return baseDistance;
-    }
-
-    public void setBaseDistance(Integer baseDistance) {
-        this.baseDistance = baseDistance;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 }
