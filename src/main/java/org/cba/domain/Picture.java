@@ -22,6 +22,16 @@ public class Picture {
 
     @ManyToOne
     private Carport carport;
+    @NotNull
+    private boolean thumbnail;
+
+    public boolean isThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(boolean thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
     public Integer getId() {
         return id;

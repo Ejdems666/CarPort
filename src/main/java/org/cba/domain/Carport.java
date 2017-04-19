@@ -30,6 +30,17 @@ public class Carport {
 
     private String description;
 
+    @OneToMany(mappedBy = "carport")
+    private List<StaticMaterial> staticMaterials;
+
+    @OneToMany(mappedBy = "carport")
+    private List<Picture> pictures;
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+
     public String getDescription() {
         return description;
     }
@@ -38,8 +49,6 @@ public class Carport {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "carport")
-    private List<StaticMaterial> staticMaterials;
 
     public Integer getId() {
         return id;
