@@ -1,6 +1,8 @@
 package org.cba.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.cba.domain.finder.StaticMaterialFinder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,7 @@ public class StaticMaterial {
     private Material material;
 
     @ManyToOne
+    @JsonBackReference
     private Carport carport;
 
     private Integer amount;

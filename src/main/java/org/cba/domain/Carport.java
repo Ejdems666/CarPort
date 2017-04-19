@@ -1,5 +1,6 @@
 package org.cba.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.cba.domain.finder.CarportFinder;
 
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ public class Carport {
     @NotNull
     private Integer defaultLength;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "carport")
     private List<StaticMaterial> staticMaterials;
 
