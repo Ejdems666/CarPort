@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 /**
  * Created by adam on 19/04/2017.
  */
-public class ApiController extends Controller{
+public abstract class ApiController extends Controller{
     public ApiController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
