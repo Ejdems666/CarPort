@@ -39,6 +39,9 @@
                 <li>
                     <a href="${root}sign/in">Login</a>
                 </li>
+                <li>
+                    <a href="${root}store/index">Store</a>
+                </li>
                 <% } else {%>
                 <li>
                     <a href="${root}sign/out">Logout <%=user.getName()%> <%=user.getSurname()%></a>
