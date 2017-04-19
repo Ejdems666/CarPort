@@ -28,6 +28,16 @@ public class Carport {
     @NotNull
     private Integer defaultLength;
 
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @OneToMany(mappedBy = "carport")
     private List<StaticMaterial> staticMaterials;
 
