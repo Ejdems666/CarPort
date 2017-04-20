@@ -15,6 +15,7 @@
                     <p>Price: <%=carport.getDefaultPrice() %></p>
                     <hr>
                     <a href="#" class="btn btn-primary">Add to basket</a>
+                    <a href="${root}carport/edit/<%=carport.getId() %>" class="btn btn-primary">Or edit first</a>
                 </div>
         </div>
     </div>
