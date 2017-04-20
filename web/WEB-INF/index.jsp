@@ -43,7 +43,7 @@
                     <a href="${root}sign/in">Login</a>
                 </li>
                 <li>
-                    <a href="${root}store/index">Store</a>
+                    <a href="${root}carport/all">Store</a>
                 </li>
                 <% } else {%>
                 <li>
