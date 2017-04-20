@@ -1,3 +1,6 @@
+alter table carport drop foreign key fk_carport_picture_id;
+drop index ix_carport_picture_id on carport;
+
 alter table dynamic_material drop foreign key fk_dynamic_material_material_id;
 drop index ix_dynamic_material_material_id on dynamic_material;
 

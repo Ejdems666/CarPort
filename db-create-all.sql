@@ -5,6 +5,7 @@ create table carport (
   default_width                 integer not null,
   default_length                integer not null,
   description                   varchar(255),
+  picture_id                    integer,
   constraint pk_carport primary key (id)
 );
 
@@ -35,7 +36,6 @@ create table picture (
   id                            integer auto_increment not null,
   url                           varchar(255) not null,
   carport_id                    integer,
-  thumbnail                     tinyint(1) default 0 not null,
   constraint pk_picture primary key (id)
 );
 
@@ -59,6 +59,9 @@ create table user (
   salt                          varchar(255),
   constraint pk_user primary key (id)
 );
+
+alter table carport add constraint fk_carport_picture_id foreign key (picture_id) references picture (id) on delete restrict on update restrict;
+create index ix_carport_picture_id on carport (picture_id);
 
 alter table dynamic_material add constraint fk_dynamic_material_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
 create index ix_dynamic_material_material_id on dynamic_material (material_id);

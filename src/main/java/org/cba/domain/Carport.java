@@ -4,6 +4,7 @@ import org.cba.domain.finder.CarportFinder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -35,6 +36,17 @@ public class Carport {
 
     @OneToMany(mappedBy = "carport")
     private List<Picture> pictures;
+
+    @ManyToOne
+    private Picture picture;
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 
     public List<Picture> getPictures() {
         return pictures;
