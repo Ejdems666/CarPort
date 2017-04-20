@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${assets}bootstrap.min.css">
+    <link rel="stylesheet" href="${assets}custom.css">
     <link rel="stylesheet" href="${assets}style.css">
     <link rel="stylesheet" href="${assets}font-awesome/css/font-awesome.min.css">
     <script src="${assets}jquery-3.1.1.min.js"></script>
@@ -40,6 +41,9 @@
                 </li>
                 <li>
                     <a href="${root}sign/in">Login</a>
+                </li>
+                <li>
+                    <a href="${root}store/index">Store</a>
                 </li>
                 <% } else {%>
                 <li>

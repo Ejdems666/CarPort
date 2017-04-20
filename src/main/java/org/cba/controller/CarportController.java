@@ -25,4 +25,10 @@ public class CarportController extends BaseController {
         request.setAttribute("carports", carport);
         renderTemplate();
     }
+
+    public void edit(Integer carportId) {
+        Carport carport = Carport.find.byId(carportId);
+        request.setAttribute("carport", carport);
+        renderTemplate();
+    }
 }
