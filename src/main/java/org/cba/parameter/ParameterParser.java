@@ -4,30 +4,27 @@ import org.cba.parameter.exception.InvalidParameterTypeException;
 import org.cba.parameter.exception.ParameterParserException;
 import org.cba.parameter.exception.RequiredParameterNonExistentException;
 
+import javax.servlet.ServletRequest;
 import java.util.Map;
 
 /**
  * Created by adam on 19/04/2017.
  */
 public class ParameterParser {
-    public ParsedParameters parseParameters(Map sendParameters, ParameterSieve mask) throws ParameterParserException {
+    public ParsedParameters parseParameters(ServletRequest request, ParameterSieve mask) throws ParameterParserException {
         ParsedParameters parsedParameters = new ParsedParameters();
         Map<String, ParameterMask> parameters = mask.getParameters();
         for (ParameterMask parameterMask : parameters.values()) {
             String key = parameterMask.getKey();
-            if (sendParameters.containsKey(key)) {
-                String sendValue = sendParameters.get(key).toString();
-                if (!sendValue.isEmpty()) {
-                    Class<?> type = parameterMask.getType();
-                    if (type.equals(String.class)) {
-                        parsedParameters.addString(key, sendValue);
-                    } else if (type.equals(Integer.class)) {
-                        parsedParameters.addInteger(key, parseInteger(sendValue, parameterMask));
-                    } else if (type.equals(Boolean.class)) {
-                        parsedParameters.addBoolean(key, parseBoolean(sendValue, parameterMask));
-                    }
-                } else if (parameterMask.isRequired()) {
-                    throw new RequiredParameterNonExistentException(key);
+            String sendValue = request.getParameter(key);
+            if (sendValue != null && !sendValue.isEmpty()) {
+                Class<?> type = parameterMask.getType();
+                if (type.equals(String.class)) {
+                    parsedParameters.addString(key, sendValue);
+                } else if (type.equals(Integer.class)) {
+                    parsedParameters.addInteger(key, parseInteger(sendValue, parameterMask));
+                } else if (type.equals(Boolean.class)) {
+                    parsedParameters.addBoolean(key, parseBoolean(sendValue, parameterMask));
                 }
             } else if (parameterMask.isRequired()) {
                 throw new RequiredParameterNonExistentException(key);

@@ -12,6 +12,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class DynamicMaterial {
 
+  public static final int WIDTH = 1;
+  public static final int LENGTH = 2;
+
   public static final DynamicMaterialFinder find = new DynamicMaterialFinder();
 
     @Id
@@ -25,6 +28,17 @@ public class DynamicMaterial {
 
     @NotNull
     private Integer baseDistance;
+
+    @NotNull
+    private Integer affectedBy;
+
+    public Integer getAffectedBy() {
+        return affectedBy;
+    }
+
+    public void setAffectedBy(Integer affectedBy) {
+        this.affectedBy = affectedBy;
+    }
 
     public Integer getId() {
         return id;
