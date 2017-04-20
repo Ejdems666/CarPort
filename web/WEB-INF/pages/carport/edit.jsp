@@ -3,16 +3,16 @@
     <div class="panel-body">
         *Insert cool SVG/OpenGL render here*
         <hr>
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="dimensions-form">
             <div class="form-group">
                 <label class="control-label col-sm-2" form="width">Width (in cm):</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="width" name="width" value="${carport.defaultWidth}">
+                    <input type="number" class="dimension form-control" id="width" name="width" value="${carport.defaultWidth}">
                 </div>
                 <hr>
                 <label class="control-label col-sm-2" form="length">Length (in cm): </label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="length" name="length"
+                    <input type="number" class="dimension form-control" id="length" name="length"
                            value="${carport.defaultLength}">
                 </div>
             </div>
@@ -25,15 +25,29 @@
             <p id="price">${carport.defaultPrice} DKK.</p> <strong></strong>
             <hr>
             <button type="button" class="btn btn-success">Confirm</button>
-            <button onclick="calculatePrice()" type="button" class="btn btn-info">Calculate Price</button>
             <button type="button" class="btn btn-danger">Discard</button>
         </div>
     </div>
 </div>
 
 <script>
+    $( document ).ready(function() {
+        $('.dimension').on('keyup',calculatePrice);
+    });
     function calculatePrice() {
         var width = document.getElementById('width').value;
         var length = document.getElementById('length').value;
+        $.ajax({
+            url: "${root}api/carport/get-price/${carport.id}",
+            data: {
+                "width": width,
+                "length": length
+            }
+        })
+            .done(function (data) {
+                if(data.price != null) {
+                    $('#price').text(data.price + " DKK")
+                }
+            });
     }
 </script>

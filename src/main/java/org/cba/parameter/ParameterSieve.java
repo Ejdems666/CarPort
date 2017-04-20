@@ -9,7 +9,7 @@ import java.util.Map;
 public class ParameterSieve {
     private Map<String, ParameterMask> parameters = new HashMap<>();
 
-    public ParameterMask addNumber(String key) {
+    public ParameterMask addInteger(String key) {
         ParameterMask mask = new ParameterMask(key, Integer.class);
         parameters.put(key, mask);
         return mask;

@@ -37,10 +37,17 @@ public class Carport {
     private List<StaticMaterial> staticMaterials;
 
     @OneToMany(mappedBy = "carport")
+    private List<DynamicMaterial> dynamicMaterials;
+
+    @OneToMany(mappedBy = "carport")
     private List<Picture> pictures;
 
     @ManyToOne
     private Picture picture;
+
+    public List<DynamicMaterial> getDynamicMaterials() {
+        return dynamicMaterials;
+    }
 
     public Picture getPicture() {
         return picture;

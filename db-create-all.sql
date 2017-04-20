@@ -14,6 +14,7 @@ create table dynamic_material (
   material_id                   integer,
   carport_id                    integer,
   base_distance                 integer not null,
+  affected_by                   integer not null,
   constraint pk_dynamic_material primary key (id)
 );
 
