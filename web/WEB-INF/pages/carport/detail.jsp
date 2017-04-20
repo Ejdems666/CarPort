@@ -6,21 +6,39 @@ ${carport.name}
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="${assets}slider.js"></script>
 
-<div class="w3-content w3-display-container">
+<div class="container">
+    <div class="span8">
 
-    <% for (Picture picture : ((Carport) request.getAttribute("carport")).getPictures()) { %>
-    <img class="mySlides" style="display:<% if (picture.isThumbnail()) { %>block<%} else {%>none<%}%>"
-         src="${assets}<%=picture.getUrl()%>">
-    <% } %>
+        <h1>Carport selection</h1>
 
-        <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
-            <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
-            <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
-    <% for (int i = 1; i <= ((Carport) request.getAttribute("carport")).getPictures().size(); i++) { %>
-         <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(<%=i%>)"></span>
-   <% } %>
+
+        <div class="well">
+
+            <div id="myCarousel" class="carousel slide">
+
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+
+
+
+                <% for (Picture picture : ((Carport) request.getAttribute("carport")).getPictures()) { %>
+                <div class="carousel-inner">
+                    <div class="span3"><a href="#x" class="thumbnail">
+            <img class="mySlides" style="display: <% if (picture.isThumbnail()) { %>block<%} else {%>none<%}%>"
+                 src="${assets}<%=picture.getUrl()%>">
+                <% } %>
+                    </div>
+                </div>
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+
+
         </div>
-
-
-
+    </div>
 </div>
+</div>
+<h2> Text</h2>
+<p>fsafdasdfadsfsaafds</p>
