@@ -4,7 +4,6 @@ import org.cba.domain.Carport;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.AssertFalse;
 import java.util.List;
 
 /**
@@ -23,10 +22,7 @@ public class CarportController extends BaseController {
 
     public void all(){
         List<Carport> carport =  Carport.find.all();
-        request.setAttribute("carport", carport);
-        renderTemplate("carport");
-
-
-
+        request.setAttribute("carports", carport);
+        renderTemplate();
     }
 }
