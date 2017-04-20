@@ -17,7 +17,7 @@ public class CarportController extends BaseController {
     public void index(Integer carportId) {
         Carport carport = Carport.find.byId(carportId);
         request.setAttribute("carport",carport);
-        renderTemplate();
+        renderTemplate("carport/detail");
     }
 
     public void all(){
