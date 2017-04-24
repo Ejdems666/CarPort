@@ -31,8 +31,7 @@ public abstract class BaseController extends Controller {
     }
 
     protected boolean isLoggedIn() {
-        return loggedUser != null;
-    }
+        return loggedUser != null; }
 
     @Override
     protected void renderTemplate(String template) {

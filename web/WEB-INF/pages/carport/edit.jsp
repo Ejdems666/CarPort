@@ -14,19 +14,20 @@
                 <div class="col-sm-10">
                     <input type="number" class="dimension form-control" id="length" name="length"
                            value="${carport.defaultLength}">
+
+                    <hr>
+                    <strong>Price: </strong>
+                    <p id="price">${carport.defaultPrice} DKK.</p> <strong></strong>
+                    <hr>
+                    <button type="button" class="btn btn-success">Confirm</button>
+                    <button type="button" class="btn btn-danger">Discard</button>
                 </div>
+
             </div>
+
         </form>
         <hr>
 
-
-        <div class="alert alert-info">
-            <strong>Price: </strong>
-            <p id="price">${carport.defaultPrice} DKK.</p> <strong></strong>
-            <hr>
-            <button type="button" class="btn btn-success">Confirm</button>
-            <button type="button" class="btn btn-danger">Discard</button>
-        </div>
     </div>
 </div>
 
