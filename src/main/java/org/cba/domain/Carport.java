@@ -50,7 +50,7 @@ public class Carport {
     }
 
     public Picture getPicture() {
-        return picture;
+            return picture;
     }
 
     public void setPicture(Picture picture) {

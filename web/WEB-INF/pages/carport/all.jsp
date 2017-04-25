@@ -1,5 +1,8 @@
 <%@ page import="org.cba.domain.Carport" %>
 <%@ page import="java.util.List" %>
+<head>
+    <title>Carport List</title>
+</head>
 <div class="container">
     <div class="row box">
         <% for (Carport carport : ((List<Carport>) request.getAttribute("carports"))) { %>
@@ -24,7 +27,6 @@
                 </div>
             </div>
         </div>
-
         <% } %>
     </div>
 </div>

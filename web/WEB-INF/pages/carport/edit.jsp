@@ -1,3 +1,6 @@
+<head>
+    <title>Carport Editing</title>
+</head>
 <div class="panel panel-default">
     <div class="panel-heading">Carport <strong>${carport.name}</strong></div>
     <div class="panel-body">
