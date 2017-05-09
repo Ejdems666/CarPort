@@ -4,7 +4,9 @@ import org.cba.domain.finder.MaterialFinder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by adam on 15/04/2017.
@@ -16,9 +18,19 @@ public class Material {
     @Id
     private Integer id;
     @NotNull
-    private Integer price;
+    private Integer width;
+    @NotNull
+    private Integer height;
     @NotNull
     private String name;
+
+    @OneToMany(mappedBy = "material")
+    @NotNull
+    private List<MaterialLength> materialLengths;
+
+    @OneToMany(mappedBy = "material")
+    @NotNull
+    private List<MaterialDependency> materialDependencies;
 
     public Integer getId() {
         return id;
@@ -28,12 +40,20 @@ public class Material {
         this.id = id;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getWidth() {
+        return width;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     public String getName() {
@@ -42,5 +62,21 @@ public class Material {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<MaterialLength> getMaterialLengths() {
+        return materialLengths;
+    }
+
+    public void setMaterialLengths(List<MaterialLength> materialLengths) {
+        this.materialLengths = materialLengths;
+    }
+
+    public List<MaterialDependency> getMaterialDependencies() {
+        return materialDependencies;
+    }
+
+    public void setMaterialDependencies(List<MaterialDependency> materialDependencies) {
+        this.materialDependencies = materialDependencies;
     }
 }

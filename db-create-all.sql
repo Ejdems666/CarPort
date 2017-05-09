@@ -33,7 +33,7 @@ create table material_dependency (
   constraint pk_material_dependency primary key (id)
 );
 
-create table picture (
+create table thumbnail (
   id                            integer auto_increment not null,
   url                           varchar(255) not null,
   carport_id                    integer,
@@ -61,7 +61,7 @@ create table user (
   constraint pk_user primary key (id)
 );
 
-alter table carport add constraint fk_carport_picture_id foreign key (picture_id) references picture (id) on delete restrict on update restrict;
+alter table carport add constraint fk_carport_picture_id foreign key (picture_id) references thumbnail (id) on delete restrict on update restrict;
 create index ix_carport_picture_id on carport (picture_id);
 
 alter table dynamic_material add constraint fk_dynamic_material_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
@@ -76,8 +76,8 @@ create index ix_material_dependency_base_material_id on material_dependency (bas
 alter table material_dependency add constraint fk_material_dependency_dependent_material_id foreign key (dependent_material_id) references material (id) on delete restrict on update restrict;
 create index ix_material_dependency_dependent_material_id on material_dependency (dependent_material_id);
 
-alter table picture add constraint fk_picture_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
-create index ix_picture_carport_id on picture (carport_id);
+alter table thumbnail add constraint fk_picture_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
+create index ix_picture_carport_id on thumbnail (carport_id);
 
 alter table static_material add constraint fk_static_material_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
 create index ix_static_material_material_id on static_material (material_id);

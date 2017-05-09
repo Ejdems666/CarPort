@@ -18,10 +18,12 @@ public class MaterialDependency {
     private Integer id;
 
     @ManyToOne
-    private Material baseMaterial;
+    @NotNull
+    private Material material;
 
     @ManyToOne
-    private Material dependentMaterial;
+    @NotNull
+    private AssemblyMaterial assemblyMaterial;
 
     @NotNull
     private Integer amountPerUnit;
@@ -34,20 +36,20 @@ public class MaterialDependency {
         this.id = id;
     }
 
-    public Material getBaseMaterial() {
-        return baseMaterial;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setBaseMaterial(Material baseMaterial) {
-        this.baseMaterial = baseMaterial;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
-    public Material getDependentMaterial() {
-        return dependentMaterial;
+    public AssemblyMaterial getAssemblyMaterial() {
+        return assemblyMaterial;
     }
 
-    public void setDependentMaterial(Material dependentMaterial) {
-        this.dependentMaterial = dependentMaterial;
+    public void setAssemblyMaterial(AssemblyMaterial assemblyMaterial) {
+        this.assemblyMaterial = assemblyMaterial;
     }
 
     public Integer getAmountPerUnit() {

@@ -26,6 +26,8 @@ public class Carport {
     @NotNull
     private Integer defaultPrice;
     @NotNull
+    private Integer profitFromMaterials;
+    @NotNull
     private Integer defaultWidth;
     @NotNull
     private Integer defaultLength;
@@ -34,27 +36,23 @@ public class Carport {
     private String description;
 
     @OneToMany(mappedBy = "carport")
-    private List<StaticMaterial> staticMaterials;
-
-    @OneToMany(mappedBy = "carport")
-    private List<DynamicMaterial> dynamicMaterials;
-
-    @OneToMany(mappedBy = "carport")
     private List<Picture> pictures;
 
     @ManyToOne
-    private Picture picture;
+    private Picture thumbnail;
 
-    public List<DynamicMaterial> getDynamicMaterials() {
-        return dynamicMaterials;
+    @ManyToOne
+    private Frame frame;
+
+    @ManyToOne
+    private RoofTile roofTile;
+
+    public Picture getThumbnail() {
+        return thumbnail;
     }
 
-    public Picture getPicture() {
-            return picture;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
+    public void setThumbnail(Picture thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public List<Picture> getPictures() {
@@ -111,8 +109,29 @@ public class Carport {
         this.name = name;
     }
 
-    public List<StaticMaterial> getStaticMaterials() {
-        return staticMaterials;
+
+    public Integer getProfitFromMaterials() {
+        return profitFromMaterials;
+    }
+
+    public void setProfitFromMaterials(Integer profitFromMaterials) {
+        this.profitFromMaterials = profitFromMaterials;
+    }
+
+    public Frame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(Frame frame) {
+        this.frame = frame;
+    }
+
+    public RoofTile getRoofTile() {
+        return roofTile;
+    }
+
+    public void setRoofTile(RoofTile roofTile) {
+        this.roofTile = roofTile;
     }
 }
 
