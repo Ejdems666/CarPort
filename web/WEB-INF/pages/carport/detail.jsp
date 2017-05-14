@@ -11,8 +11,8 @@
 
 <div id="slider" class="ol-xs-6 col-sm-8 col-lg-10 slider">
 
-       <% for (Picture thumbnail : carport.getPictures()) { %>
-        <img src="<%=thumbnail.getUrl()%>">
+       <% for (Picture picture : carport.getPictures()) { %>
+        <img src="${cpImgs}<%=picture.getUrl()%>">
     <% } %>
 </div>
 <div class="col-xs-6 col-sm-4 col-lg-2">

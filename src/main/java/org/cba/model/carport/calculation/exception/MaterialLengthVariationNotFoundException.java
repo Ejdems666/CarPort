@@ -1,4 +1,4 @@
-package org.cba.model.carport.calculation;
+package org.cba.model.carport.calculation.exception;
 
 import org.cba.domain.Material;
 

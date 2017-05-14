@@ -6,11 +6,11 @@ import org.cba.domain.MaterialLength;
 /**
  * Created by adam on 09/05/2017.
  */
-public class ListedMaterial {
+public class MaterialLengthAmountPair {
     private MaterialLength materialLengthVariation;
     private int count;
 
-    public ListedMaterial(MaterialLength materialLengthVariation, int count) {
+    public MaterialLengthAmountPair(MaterialLength materialLengthVariation, int count) {
         this.materialLengthVariation = materialLengthVariation;
         this.count = count;
     }

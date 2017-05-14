@@ -12,7 +12,7 @@
                 <div class="panel-heading"> Name:  <%=carport.getName() %>
                 </div>
                 <div class="panel-body">
-                    <a href="${root}carport/<%=carport.getId() %>"><img src="${assets}<%=carport.getThumbnail().getUrl()%>" alt="<%=carport.getName() %>"
+                    <a href="${root}carport/<%=carport.getId() %>"><img src="${cpImgs}<%=carport.getThumbnail().getUrl()%>" alt="<%=carport.getName() %>"
                                                                         class="img-responsive"></a>
                     <p>Lenght: <%=carport.getDefaultLength() %>
                     </p>
