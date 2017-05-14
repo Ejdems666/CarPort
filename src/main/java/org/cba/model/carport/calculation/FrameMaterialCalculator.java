@@ -19,7 +19,7 @@ public class FrameMaterialCalculator implements MaterialCalculator {
     }
 
     @Override
-    public List<ListedMaterial> calculateMaterialsForDimensions(int desiredWidth, int desiredLength) throws MaterialLengthVariationNotFoundException {
+    public List<ListedMaterial> getRawMaterialsWithDesiredDimensions(int desiredWidth, int desiredLength) throws MaterialLengthVariationNotFoundException {
         addMaterialWithOptimalLengthVariation(desiredLength, frame.getUpperPillarMaterial());
         addMaterialWithOptimalLengthVariation(desiredWidth, frame.getUpperPillarMaterial());
         addMaterialWithOptimalLengthVariation(desiredLength, frame.getLowerPillarMaterial());
@@ -40,14 +40,14 @@ public class FrameMaterialCalculator implements MaterialCalculator {
                 .orderBy().length.asc().setMaxRows(1)
                 .findUnique();
         if (materialLength == null) {
-            throw new MaterialLengthVariationNotFoundException("");
+            throw new MaterialLengthVariationNotFoundException(material, desiredLength);
         }
         return materialLength;
     }
 
     private void addRoofPlanksWithOptimalLength(int frameWidth, int frameLength) throws MaterialLengthVariationNotFoundException {
         MaterialLength roofPlankLengthVariation = getOptimalMaterialLengthVariation(frame.getRoofPlankMaterial(), frameWidth);
-        int numberOfRoofPlanks = (frameLength / frame.getRoofPlankDistance()) -1;
+        int numberOfRoofPlanks = (frameLength / frame.getRoofPlankDistance()) - 1;
         calculatedMaterials.add(new ListedMaterial(roofPlankLengthVariation, numberOfRoofPlanks));
     }
 

@@ -6,5 +6,5 @@ import java.util.List;
  * Created by adam on 09/05/2017.
  */
 public interface MaterialCalculator {
-    List<ListedMaterial> calculateMaterialsForDimensions(int width, int length) throws MaterialLengthVariationNotFoundException;
+    List<ListedMaterial> getRawMaterialsWithDesiredDimensions(int width, int length) throws MaterialLengthVariationNotFoundException;
 }

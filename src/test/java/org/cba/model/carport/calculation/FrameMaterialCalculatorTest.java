@@ -3,6 +3,7 @@ package org.cba.model.carport.calculation;
 import org.cba.domain.Carport;
 import org.cba.domain.MaterialLength;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -11,13 +12,20 @@ import java.util.List;
  * Created by adam on 13/05/2017.
  */
 public class FrameMaterialCalculatorTest {
+    private Carport carport;
+    private MaterialCalculator calculator;
+
+    @BeforeMethod
+    public void setUp() throws Exception {
+        carport = Carport.find.byId(1);
+        calculator = new FrameMaterialCalculator(carport.getFrame());
+    }
+
     @Test
     public void testMaterialCalculationWithDefaultValues() throws Exception {
-        Carport carport = Carport.find.byId(1);
-        MaterialCalculator calculator = new FrameMaterialCalculator(carport.getFrame());
         int desiredLength = carport.getDefaultLength();
         int desiredWidth = carport.getDefaultWidth();
-        List<ListedMaterial> calculatedMaterials = calculator.calculateMaterialsForDimensions(
+        List<ListedMaterial> calculatedMaterials = calculator.getRawMaterialsWithDesiredDimensions(
                 desiredWidth,
                 desiredLength
         );
@@ -37,5 +45,43 @@ public class FrameMaterialCalculatorTest {
 
         ListedMaterial verticalPillar = calculatedMaterials.get(4);
         Assert.assertEquals(verticalPillar.getCount(), 10);
+    }
+
+    @Test
+    public void testMaterialCalculationWithWrongLength() throws Exception {
+        int desiredLength = 900;
+        try {
+            calculator.getRawMaterialsWithDesiredDimensions(
+                    carport.getDefaultWidth(),
+                    desiredLength
+            );
+        } catch (MaterialLengthVariationNotFoundException e) {
+            Assert.assertEquals(
+                    e.getMessage(),
+                    "Material " + carport.getFrame().getUpperPillarMaterial().getName() +
+                            " length variation of [" + desiredLength + " cm] wasn't found."
+            );
+            return;
+        }
+        Assert.fail("No length variation exception was thrown");
+    }
+
+    @Test
+    public void testMaterialCalculationWithWrongWidth() throws Exception {
+        int desiredWidth = 500;
+        try {
+            calculator.getRawMaterialsWithDesiredDimensions(
+                    desiredWidth,
+                    carport.getDefaultLength()
+            );
+        } catch (MaterialLengthVariationNotFoundException e) {
+            Assert.assertEquals(
+                    e.getMessage(),
+                    "Material " + carport.getFrame().getRoofPlankMaterial().getName() +
+                            " length variation of [" + desiredWidth + " cm] wasn't found."
+            );
+            return;
+        }
+        Assert.fail("No length variation exception was thrown");
     }
 }
