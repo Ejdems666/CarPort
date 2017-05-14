@@ -15,7 +15,7 @@ public class MaterialDependency {
 
     public static final MaterialDependencyFinder find = new MaterialDependencyFinder();
     @Id
-    private Integer id;
+    private int id;
 
     @ManyToOne
     @NotNull
@@ -26,13 +26,13 @@ public class MaterialDependency {
     private AssemblyMaterial assemblyMaterial;
 
     @NotNull
-    private Integer amountPerUnit;
+    private int amountPerUnit;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,11 +52,11 @@ public class MaterialDependency {
         this.assemblyMaterial = assemblyMaterial;
     }
 
-    public Integer getAmountPerUnit() {
+    public int getAmountPerUnit() {
         return amountPerUnit;
     }
 
-    public void setAmountPerUnit(Integer amountPerUnit) {
+    public void setAmountPerUnit(int amountPerUnit) {
         this.amountPerUnit = amountPerUnit;
     }
 }

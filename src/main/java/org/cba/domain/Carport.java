@@ -18,19 +18,19 @@ public class Carport {
 
     public static final CarportFinder find = new CarportFinder();
     @Id
-    private Integer id;
+    private int id;
 
     @NotNull
     private String name;
 
     @NotNull
-    private Integer defaultPrice;
+    private int defaultPrice;
     @NotNull
-    private Integer profitFromMaterials;
+    private int profitFromMaterials;
     @NotNull
-    private Integer defaultWidth;
+    private int defaultWidth;
     @NotNull
-    private Integer defaultLength;
+    private int defaultLength;
 
     @JsonManagedReference
     private String description;
@@ -39,12 +39,15 @@ public class Carport {
     private List<Picture> pictures;
 
     @ManyToOne
+    @NotNull
     private Picture thumbnail;
 
     @ManyToOne
+    @NotNull
     private Frame frame;
 
     @ManyToOne
+    @NotNull
     private RoofTile roofTile;
 
     public Picture getThumbnail() {
@@ -69,35 +72,35 @@ public class Carport {
     }
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getDefaultPrice() {
+    public int getDefaultPrice() {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(Integer defaultPrice) {
+    public void setDefaultPrice(int defaultPrice) {
         this.defaultPrice = defaultPrice;
     }
 
-    public Integer getDefaultWidth() {
+    public int getDefaultWidth() {
         return defaultWidth;
     }
 
-    public void setDefaultWidth(Integer defaultWidth) {
+    public void setDefaultWidth(int defaultWidth) {
         this.defaultWidth = defaultWidth;
     }
 
-    public Integer getDefaultLength() {
+    public int getDefaultLength() {
         return defaultLength;
     }
 
-    public void setDefaultLength(Integer defaultLength) {
+    public void setDefaultLength(int defaultLength) {
         this.defaultLength = defaultLength;
     }
 
@@ -110,11 +113,11 @@ public class Carport {
     }
 
 
-    public Integer getProfitFromMaterials() {
+    public int getProfitFromMaterials() {
         return profitFromMaterials;
     }
 
-    public void setProfitFromMaterials(Integer profitFromMaterials) {
+    public void setProfitFromMaterials(int profitFromMaterials) {
         this.profitFromMaterials = profitFromMaterials;
     }
 

@@ -13,22 +13,22 @@ public class AssemblyMaterial {
 
   public static final AssemblyMaterialFinder find = new AssemblyMaterialFinder();
     @Id
-    private Integer id;
+    private int id;
 
     @NotNull
     private String name;
 
     @NotNull
-    private Integer price;
+    private int price;
 
     @NotNull
-    private Integer stock;
+    private int stock;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,19 +40,19 @@ public class AssemblyMaterial {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 }

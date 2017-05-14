@@ -3,8 +3,6 @@ package main;
 import io.ebean.Platform;
 import io.ebean.dbmigration.DbMigration;
 
-import java.io.IOException;
-
 /**
  * Generate the DB Migration.
  */
@@ -13,14 +11,14 @@ public class MainDbMigration {
   public static void main(String[] args) throws Exception {
 
     // optionally specify the version and name
-    //System.setProperty("ddl.migration.version", "1.2_33");
-    //System.setProperty("ddl.migration.name", "");
+    System.setProperty("ddl.migration.version", "1.0");
+    System.setProperty("ddl.migration.name", "add not null to carport m:os");
 
     // generate a migration using drops from a prior version
     //System.setProperty("ddl.migration.pendingDropsFor", "1.1");
 
     DbMigration dbMigration = new DbMigration();
-    dbMigration.setPlatform(Platform.POSTGRES);
+    dbMigration.setPlatform(Platform.MYSQL);
     // generate the migration ddl and xml
     dbMigration.generateMigration();
   }

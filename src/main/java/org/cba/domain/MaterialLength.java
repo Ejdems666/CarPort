@@ -15,50 +15,50 @@ public class MaterialLength {
   public static final MaterialLengthFinder find = new MaterialLengthFinder();
 
     @Id
-    private Integer id;
+    private int id;
 
     @NotNull
-    private Integer length;
+    private int length;
 
     @NotNull
-    private Integer price;
+    private int price;
 
     @NotNull
-    private Integer stock;
+    private int stock;
 
     @ManyToOne
     @NotNull
     private Material material;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
-    public Integer getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 

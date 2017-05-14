@@ -1,3 +1,4 @@
+-- apply changes
 create table assembly_material (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
@@ -14,9 +15,9 @@ create table carport (
   default_width                 integer not null,
   default_length                integer not null,
   description                   varchar(255),
-  thumbnail_id                  integer not null,
-  frame_id                      integer not null,
-  roof_tile_id                  integer not null,
+  thumbnail_id                  integer,
+  frame_id                      integer,
+  roof_tile_id                  integer,
   constraint pk_carport primary key (id)
 );
 

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by adam on 09/05/2017.
  */
-public class FrameMaterialCalculator extends DuplicatingMaterialCalculator implements MaterialCalculator {
+public class FrameMaterialCalculator implements MaterialCalculator {
     private final Frame frame;
     private List<ListedMaterial> calculatedMaterials = new ArrayList<>();
 
@@ -19,39 +19,41 @@ public class FrameMaterialCalculator extends DuplicatingMaterialCalculator imple
     }
 
     @Override
-    public List<ListedMaterial> calculateMaterialsForDimensions(int frameWidth, int frameLength) {
-        addMaterialWithOptimalLengthVariation(frameLength, frame.getUpperPillarMaterial(), 2);
-        addMaterialWithOptimalLengthVariation(frameWidth, frame.getUpperPillarMaterial(), 2);
-        addMaterialWithOptimalLengthVariation(frameLength, frame.getLowerPillarMaterial(), 2);
-        addRoofPlanks(frameWidth, frameLength);
-        addVerticalPillars(frameLength);
+    public List<ListedMaterial> calculateMaterialsForDimensions(int desiredWidth, int desiredLength) throws MaterialLengthVariationNotFoundException {
+        addMaterialWithOptimalLengthVariation(desiredLength, frame.getUpperPillarMaterial());
+        addMaterialWithOptimalLengthVariation(desiredWidth, frame.getUpperPillarMaterial());
+        addMaterialWithOptimalLengthVariation(desiredLength, frame.getLowerPillarMaterial());
+        addRoofPlanksWithOptimalLength(desiredWidth, desiredLength);
+        addVerticalPillars(desiredLength);
         return calculatedMaterials;
     }
 
-    private void addMaterialWithOptimalLengthVariation(int desiredLength, Material material, int countOfMaterials) {
+    private void addMaterialWithOptimalLengthVariation(int desiredLength, Material material) throws MaterialLengthVariationNotFoundException {
         MaterialLength materialLength = getOptimalMaterialLengthVariation(material, desiredLength);
-        if (materialLength != null) {
-            calculatedMaterials.add(new ListedMaterial(materialLength, countOfMaterials));
-        }
+        calculatedMaterials.add(new ListedMaterial(materialLength, 2));
     }
 
-    private MaterialLength getOptimalMaterialLengthVariation(Material material, int desiredLength) {
-        return MaterialLength.find.where()
+    private MaterialLength getOptimalMaterialLengthVariation(Material material, int desiredLength) throws MaterialLengthVariationNotFoundException {
+        MaterialLength materialLength = MaterialLength.find.where()
                 .material.id.eq(material.getId())
                 .length.greaterOrEqualTo(desiredLength)
-                .orderBy().length.desc()
+                .orderBy().length.asc().setMaxRows(1)
                 .findUnique();
+        if (materialLength == null) {
+            throw new MaterialLengthVariationNotFoundException("");
+        }
+        return materialLength;
     }
 
-    private void addRoofPlanks(int frameWidth, int frameLength) {
+    private void addRoofPlanksWithOptimalLength(int frameWidth, int frameLength) throws MaterialLengthVariationNotFoundException {
         MaterialLength roofPlankLengthVariation = getOptimalMaterialLengthVariation(frame.getRoofPlankMaterial(), frameWidth);
-        int numberOfRoofPlanks = calculateNumberOfMaterial(frame.getRoofPlankDistance(), frameLength);
+        int numberOfRoofPlanks = (frameLength / frame.getRoofPlankDistance()) -1;
         calculatedMaterials.add(new ListedMaterial(roofPlankLengthVariation, numberOfRoofPlanks));
     }
 
     private void addVerticalPillars(int frameLength) {
         MaterialLength verticalPillar = frame.getVerticalPillarMaterial().getMaterialLengths().get(0);
-        int numberOfVerticalPillars = calculateNumberOfMaterial(frame.getVerticalPillarDistance(), frameLength) * 2;
-        calculatedMaterials.add(new ListedMaterial(verticalPillar, numberOfVerticalPillars));
+        int numberOfVPBothSides = ((frameLength / frame.getVerticalPillarDistance()) + 1) * 2;
+        calculatedMaterials.add(new ListedMaterial(verticalPillar, numberOfVPBothSides));
     }
 }

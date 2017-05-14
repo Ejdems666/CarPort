@@ -16,11 +16,11 @@ public class Material {
 
     public static final MaterialFinder find = new MaterialFinder();
     @Id
-    private Integer id;
+    private int id;
     @NotNull
-    private Integer width;
+    private int width;
     @NotNull
-    private Integer height;
+    private int height;
     @NotNull
     private String name;
 
@@ -32,27 +32,27 @@ public class Material {
     @NotNull
     private List<MaterialDependency> materialDependencies;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public Integer getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

@@ -14,7 +14,7 @@ public class Frame {
 
   public static final FrameFinder find = new FrameFinder();
     @Id
-    private Integer id;
+    private int id;
 
     @ManyToOne
     @NotNull
@@ -33,16 +33,16 @@ public class Frame {
     private Material roofPlankMaterial;
 
     @NotNull
-    private Integer verticalPillarDistance;
+    private int verticalPillarDistance;
 
     @NotNull
-    private Integer roofPlankDistance;
+    private int roofPlankDistance;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -78,19 +78,19 @@ public class Frame {
         this.roofPlankMaterial = roofPlankMaterial;
     }
 
-    public Integer getVerticalPillarDistance() {
+    public int getVerticalPillarDistance() {
         return verticalPillarDistance;
     }
 
-    public void setVerticalPillarDistance(Integer verticalPillarDistance) {
+    public void setVerticalPillarDistance(int verticalPillarDistance) {
         this.verticalPillarDistance = verticalPillarDistance;
     }
 
-    public Integer getRoofPlankDistance() {
+    public int getRoofPlankDistance() {
         return roofPlankDistance;
     }
 
-    public void setRoofPlankDistance(Integer roofPlankDistance) {
+    public void setRoofPlankDistance(int roofPlankDistance) {
         this.roofPlankDistance = roofPlankDistance;
     }
 }

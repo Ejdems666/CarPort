@@ -15,7 +15,7 @@ public class User {
 
     public static final UserFinder find = new UserFinder();
     @Id
-    private Integer id;
+    private int id;
     @NotNull
     private String name;
     private String surname;
@@ -26,11 +26,11 @@ public class User {
     private String password;
     private String salt;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
