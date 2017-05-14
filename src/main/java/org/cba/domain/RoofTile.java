@@ -78,4 +78,8 @@ public class RoofTile {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public int getSurface() {
+        return width*length;
+    }
 }
