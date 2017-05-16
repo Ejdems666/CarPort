@@ -23,6 +23,12 @@ public class RoofTile {
     private int width;
 
     @NotNull
+    private int widthOverlap;
+
+    @NotNull
+    private int lengthOverlap;
+
+    @NotNull
     private int length;
 
     @NotNull
@@ -79,7 +85,19 @@ public class RoofTile {
         this.stock = stock;
     }
 
-    public int getSurface() {
-        return width*length;
+    public int getWidthOverlap() {
+        return widthOverlap;
+    }
+
+    public void setWidthOverlap(int widthOverlap) {
+        this.widthOverlap = widthOverlap;
+    }
+
+    public int getLengthOverlap() {
+        return lengthOverlap;
+    }
+
+    public void setLengthOverlap(int lengthOverlap) {
+        this.lengthOverlap = lengthOverlap;
     }
 }
