@@ -40,7 +40,6 @@ public class PartsTableFormatterTest {
                         "</tr>" +
                         "</table>"
         );
-        System.out.println(formatter.getFormattedRecords("test"));
     }
 
 }
