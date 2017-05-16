@@ -18,6 +18,7 @@ public abstract class BaseController extends Controller {
     public static final int ADMIN_TYPE = 2;
     protected final String ROOT = "/";
     protected final String ASSETS = ROOT + "assets/";
+    protected final String CP_IMGS = ASSETS + "carport-images/";
     protected User loggedUser = null;
 
     public BaseController(HttpServletRequest request, HttpServletResponse response) {
@@ -35,23 +36,25 @@ public abstract class BaseController extends Controller {
 
     @Override
     protected void renderTemplate(String template) {
-        setConstants();
+        setTemplateConstants();
         super.renderTemplate(template);
     }
 
-    private void setConstants() {
+    private void setTemplateConstants() {
         request.setAttribute("root", ROOT);
         request.setAttribute("assets", ASSETS);
+        request.setAttribute("cpImgs", CP_IMGS);
     }
 
     @Override
     protected void renderTemplate() {
-        setConstants();
+        setTemplateConstants();
         super.renderTemplate();
     }
 
+    @Override
     protected void renderTemplate(String template, String layout) {
-        setConstants();
+        setTemplateConstants();
         super.renderTemplate(template, layout);
     }
 

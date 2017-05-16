@@ -11,50 +11,52 @@ import javax.validation.constraints.NotNull;
  * Created by adam on 15/04/2017.
  */
 @Entity
-public class MaterialDependency {
+public class MaterialDependency implements PartDependency{
 
     public static final MaterialDependencyFinder find = new MaterialDependencyFinder();
     @Id
-    private Integer id;
+    private int id;
 
     @ManyToOne
-    private Material baseMaterial;
+    @NotNull
+    private Material material;
 
     @ManyToOne
-    private Material dependentMaterial;
+    @NotNull
+    private AssemblyMaterial assemblyMaterial;
 
     @NotNull
-    private Integer amountPerUnit;
+    private int amountPerUnit;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Material getBaseMaterial() {
-        return baseMaterial;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setBaseMaterial(Material baseMaterial) {
-        this.baseMaterial = baseMaterial;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
-    public Material getDependentMaterial() {
-        return dependentMaterial;
+    public AssemblyMaterial getAssemblyMaterial() {
+        return assemblyMaterial;
     }
 
-    public void setDependentMaterial(Material dependentMaterial) {
-        this.dependentMaterial = dependentMaterial;
+    public void setAssemblyMaterial(AssemblyMaterial assemblyMaterial) {
+        this.assemblyMaterial = assemblyMaterial;
     }
 
-    public Integer getAmountPerUnit() {
+    public int getAmountPerUnit() {
         return amountPerUnit;
     }
 
-    public void setAmountPerUnit(Integer amountPerUnit) {
+    public void setAmountPerUnit(int amountPerUnit) {
         this.amountPerUnit = amountPerUnit;
     }
 }

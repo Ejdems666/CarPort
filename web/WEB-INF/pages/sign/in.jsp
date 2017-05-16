@@ -1,3 +1,6 @@
+<head>
+    <title>Log In</title>
+</head>
 <h1>Sign in to the administration</h1>
 <form method="post">
     <div class="row">

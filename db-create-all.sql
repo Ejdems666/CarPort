@@ -1,36 +1,60 @@
+create table assembly_material (
+  id                            integer auto_increment not null,
+  name                          varchar(255) not null,
+  price                         integer not null,
+  stock                         integer not null,
+  constraint pk_assembly_material primary key (id)
+);
+
 create table carport (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
   default_price                 integer not null,
+  profit_from_materials         integer not null,
   default_width                 integer not null,
   default_length                integer not null,
   description                   varchar(255),
-  picture_id                    integer,
+  thumbnail_id                  integer not null,
+  frame_id                      integer not null,
+  roof_tile_id                  integer not null,
   constraint pk_carport primary key (id)
 );
 
-create table dynamic_material (
+create table frame (
   id                            integer auto_increment not null,
-  material_id                   integer,
-  carport_id                    integer,
-  base_distance                 integer not null,
-  affected_by                   integer not null,
-  constraint pk_dynamic_material primary key (id)
+  upper_pillar_material_id      integer not null,
+  lower_pillar_material_id      integer not null,
+  vertical_pillar_material_id   integer not null,
+  roof_plank_material_id        integer not null,
+  vertical_pillar_distance      integer not null,
+  roof_plank_distance           integer not null,
+  constraint pk_frame primary key (id)
 );
 
 create table material (
   id                            integer auto_increment not null,
-  price                         integer not null,
+  width                         integer not null,
+  height                        integer not null,
   name                          varchar(255) not null,
+  description                   varchar(255) not null,
   constraint pk_material primary key (id)
 );
 
 create table material_dependency (
   id                            integer auto_increment not null,
-  base_material_id              integer,
-  dependent_material_id         integer,
+  material_id                   integer not null,
+  assembly_material_id          integer not null,
   amount_per_unit               integer not null,
   constraint pk_material_dependency primary key (id)
+);
+
+create table material_length (
+  id                            integer auto_increment not null,
+  length                        integer not null,
+  price                         integer not null,
+  stock                         integer not null,
+  material_id                   integer not null,
+  constraint pk_material_length primary key (id)
 );
 
 create table picture (
@@ -40,48 +64,76 @@ create table picture (
   constraint pk_picture primary key (id)
 );
 
-create table static_material (
+create table roof_tile (
   id                            integer auto_increment not null,
-  material_id                   integer,
-  carport_id                    integer,
-  amount                        integer,
-  constraint pk_static_material primary key (id)
+  name                          varchar(255) not null,
+  width                         integer not null,
+  width_overlap                 integer not null,
+  length_overlap                integer not null,
+  length                        integer not null,
+  description                   varchar(255) not null,
+  price                         integer not null,
+  stock                         integer not null,
+  constraint pk_roof_tile primary key (id)
+);
+
+create table roof_tile_dependency (
+  id                            integer auto_increment not null,
+  roof_tile_id                  integer not null,
+  assembly_material_id          integer not null,
+  amount_per_unit               integer not null,
+  constraint pk_roof_tile_dependency primary key (id)
 );
 
 create table user (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
-  surname                       varchar(255),
-  created_at                    date,
-  status                        integer,
-  type                          integer,
-  email                         varchar(255),
-  password                      varchar(255),
-  salt                          varchar(255),
+  surname                       varchar(255) not null,
+  created_at                    date not null,
+  status                        integer not null,
+  type                          integer not null,
+  email                         varchar(255) not null,
+  password                      varchar(255) not null,
+  salt                          varchar(255) not null,
   constraint pk_user primary key (id)
 );
 
-alter table carport add constraint fk_carport_picture_id foreign key (picture_id) references picture (id) on delete restrict on update restrict;
-create index ix_carport_picture_id on carport (picture_id);
+alter table carport add constraint fk_carport_thumbnail_id foreign key (thumbnail_id) references picture (id) on delete restrict on update restrict;
+create index ix_carport_thumbnail_id on carport (thumbnail_id);
 
-alter table dynamic_material add constraint fk_dynamic_material_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
-create index ix_dynamic_material_material_id on dynamic_material (material_id);
+alter table carport add constraint fk_carport_frame_id foreign key (frame_id) references frame (id) on delete restrict on update restrict;
+create index ix_carport_frame_id on carport (frame_id);
 
-alter table dynamic_material add constraint fk_dynamic_material_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
-create index ix_dynamic_material_carport_id on dynamic_material (carport_id);
+alter table carport add constraint fk_carport_roof_tile_id foreign key (roof_tile_id) references roof_tile (id) on delete restrict on update restrict;
+create index ix_carport_roof_tile_id on carport (roof_tile_id);
 
-alter table material_dependency add constraint fk_material_dependency_base_material_id foreign key (base_material_id) references material (id) on delete restrict on update restrict;
-create index ix_material_dependency_base_material_id on material_dependency (base_material_id);
+alter table frame add constraint fk_frame_upper_pillar_material_id foreign key (upper_pillar_material_id) references material (id) on delete restrict on update restrict;
+create index ix_frame_upper_pillar_material_id on frame (upper_pillar_material_id);
 
-alter table material_dependency add constraint fk_material_dependency_dependent_material_id foreign key (dependent_material_id) references material (id) on delete restrict on update restrict;
-create index ix_material_dependency_dependent_material_id on material_dependency (dependent_material_id);
+alter table frame add constraint fk_frame_lower_pillar_material_id foreign key (lower_pillar_material_id) references material (id) on delete restrict on update restrict;
+create index ix_frame_lower_pillar_material_id on frame (lower_pillar_material_id);
+
+alter table frame add constraint fk_frame_vertical_pillar_material_id foreign key (vertical_pillar_material_id) references material (id) on delete restrict on update restrict;
+create index ix_frame_vertical_pillar_material_id on frame (vertical_pillar_material_id);
+
+alter table frame add constraint fk_frame_roof_plank_material_id foreign key (roof_plank_material_id) references material (id) on delete restrict on update restrict;
+create index ix_frame_roof_plank_material_id on frame (roof_plank_material_id);
+
+alter table material_dependency add constraint fk_material_dependency_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
+create index ix_material_dependency_material_id on material_dependency (material_id);
+
+alter table material_dependency add constraint fk_material_dependency_assembly_material_id foreign key (assembly_material_id) references assembly_material (id) on delete restrict on update restrict;
+create index ix_material_dependency_assembly_material_id on material_dependency (assembly_material_id);
+
+alter table material_length add constraint fk_material_length_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
+create index ix_material_length_material_id on material_length (material_id);
 
 alter table picture add constraint fk_picture_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
 create index ix_picture_carport_id on picture (carport_id);
 
-alter table static_material add constraint fk_static_material_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
-create index ix_static_material_material_id on static_material (material_id);
+alter table roof_tile_dependency add constraint fk_roof_tile_dependency_roof_tile_id foreign key (roof_tile_id) references roof_tile (id) on delete restrict on update restrict;
+create index ix_roof_tile_dependency_roof_tile_id on roof_tile_dependency (roof_tile_id);
 
-alter table static_material add constraint fk_static_material_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
-create index ix_static_material_carport_id on static_material (carport_id);
+alter table roof_tile_dependency add constraint fk_roof_tile_dependency_assembly_material_id foreign key (assembly_material_id) references assembly_material (id) on delete restrict on update restrict;
+create index ix_roof_tile_dependency_assembly_material_id on roof_tile_dependency (assembly_material_id);
 

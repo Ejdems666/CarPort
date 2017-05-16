@@ -15,22 +15,29 @@ public class User {
 
     public static final UserFinder find = new UserFinder();
     @Id
-    private Integer id;
+    private int id;
     @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @NotNull
     private Date createdAt;
+    @NotNull
     private int status;
+    @NotNull
     private int type;
+    @NotNull
     private String email;
+    @NotNull
     private String password;
+    @NotNull
     private String salt;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

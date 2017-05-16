@@ -73,3 +73,22 @@
     width: 90%;
 }
 
+.slider {
+    max-width: 600px;
+    max-height: 400px;
+}
+
+.descriptionBox{
+    width: 500px;
+    max-width: 500px;
+    max-height: 285px;
+    height: 285px;
+    margin-top: 15px;
+}
+
+.customButton{
+    width: 500px;
+    max-width: 500px;
+    margin-bottom: 15px;
+}
+
