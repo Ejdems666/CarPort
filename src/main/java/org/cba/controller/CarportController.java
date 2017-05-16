@@ -16,12 +16,12 @@ public class CarportController extends BaseController {
 
     public void index(Integer carportId) {
         Carport carport = Carport.find.byId(carportId);
-        request.setAttribute("carport",carport);
+        request.setAttribute("carport", carport);
         renderTemplate("carport/detail");
     }
 
-    public void all(){
-        List<Carport> carport =  Carport.find.all();
+    public void all() {
+        List<Carport> carport = Carport.find.all();
         request.setAttribute("carports", carport);
         renderTemplate();
     }
@@ -30,5 +30,9 @@ public class CarportController extends BaseController {
         Carport carport = Carport.find.byId(carportId);
         request.setAttribute("carport", carport);
         renderTemplate();
+    }
+
+    public void unity() {
+        renderTemplate("carport/unity", "webgl");
     }
 }

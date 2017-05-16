@@ -27,7 +27,7 @@
         <dependency>
             <groupId>ejdems-hygge</groupId>
             <artifactId>HyggeMVC</artifactId>
-            <version>0.5.2</version>
+            <version>0.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>

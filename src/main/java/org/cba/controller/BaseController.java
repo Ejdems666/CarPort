@@ -53,6 +53,12 @@ public abstract class BaseController extends Controller {
     }
 
     @Override
+    protected void renderTemplate(String template, String layout) {
+        setTemplateConstants();
+        super.renderTemplate(template, layout);
+    }
+
+    @Override
     protected void redirect(String url) {
         super.redirect(ROOT + url);
     }
