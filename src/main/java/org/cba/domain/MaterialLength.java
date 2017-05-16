@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * Created by adam on 09/05/2017.
  */
 @Entity
-public class MaterialLength {
+public class MaterialLength{
 
   public static final MaterialLengthFinder find = new MaterialLengthFinder();
 

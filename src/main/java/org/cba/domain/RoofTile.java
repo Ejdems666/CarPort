@@ -1,6 +1,7 @@
 package org.cba.domain;
 
 import org.cba.domain.finder.RoofTileFinder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * Created by adam on 03/05/2017.
  */
 @Entity
-public class RoofTile {
+public class RoofTile{
 
   public static final RoofTileFinder find = new RoofTileFinder();
 
@@ -32,6 +33,9 @@ public class RoofTile {
     private int length;
 
     @NotNull
+    private String description;
+
+    @NotNull
     private int price;
 
     @NotNull
@@ -47,6 +51,14 @@ public class RoofTile {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setName(String name) {

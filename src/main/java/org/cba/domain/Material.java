@@ -23,6 +23,8 @@ public class Material {
     private int height;
     @NotNull
     private String name;
+    @NotNull
+    private String description;
 
     @OneToMany(mappedBy = "material")
     @NotNull
@@ -78,5 +80,13 @@ public class Material {
 
     public void setMaterialDependencies(List<MaterialDependency> materialDependencies) {
         this.materialDependencies = materialDependencies;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

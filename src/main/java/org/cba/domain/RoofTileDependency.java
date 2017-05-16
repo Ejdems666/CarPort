@@ -1,25 +1,21 @@
 package org.cba.domain;
 
-import org.cba.domain.finder.MaterialDependencyFinder;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by adam on 15/04/2017.
+ * Created by adam on 16/05/2017.
  */
 @Entity
-public class MaterialDependency implements PartDependency{
-
-    public static final MaterialDependencyFinder find = new MaterialDependencyFinder();
+public class RoofTileDependency implements PartDependency{
     @Id
     private int id;
 
     @ManyToOne
     @NotNull
-    private Material material;
+    private RoofTile roofTile;
 
     @ManyToOne
     @NotNull
@@ -36,14 +32,15 @@ public class MaterialDependency implements PartDependency{
         this.id = id;
     }
 
-    public Material getMaterial() {
-        return material;
+    public RoofTile getRoofTile() {
+        return roofTile;
     }
 
-    public void setMaterial(Material material) {
-        this.material = material;
+    public void setRoofTile(RoofTile roofTile) {
+        this.roofTile = roofTile;
     }
 
+    @Override
     public AssemblyMaterial getAssemblyMaterial() {
         return assemblyMaterial;
     }
@@ -52,6 +49,7 @@ public class MaterialDependency implements PartDependency{
         this.assemblyMaterial = assemblyMaterial;
     }
 
+    @Override
     public int getAmountPerUnit() {
         return amountPerUnit;
     }

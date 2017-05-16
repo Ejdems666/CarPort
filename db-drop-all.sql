@@ -31,6 +31,12 @@ drop index ix_material_length_material_id on material_length;
 alter table picture drop foreign key fk_picture_carport_id;
 drop index ix_picture_carport_id on picture;
 
+alter table roof_tile_dependency drop foreign key fk_roof_tile_dependency_roof_tile_id;
+drop index ix_roof_tile_dependency_roof_tile_id on roof_tile_dependency;
+
+alter table roof_tile_dependency drop foreign key fk_roof_tile_dependency_assembly_material_id;
+drop index ix_roof_tile_dependency_assembly_material_id on roof_tile_dependency;
+
 drop table if exists assembly_material;
 
 drop table if exists carport;
@@ -46,6 +52,8 @@ drop table if exists material_length;
 drop table if exists picture;
 
 drop table if exists roof_tile;
+
+drop table if exists roof_tile_dependency;
 
 drop table if exists user;
 

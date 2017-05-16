@@ -1,3 +1,4 @@
+-- apply changes
 create table assembly_material (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
@@ -36,7 +37,6 @@ create table material (
   width                         integer not null,
   height                        integer not null,
   name                          varchar(255) not null,
-  description                   varchar(255) not null,
   constraint pk_material primary key (id)
 );
 
@@ -71,18 +71,9 @@ create table roof_tile (
   width_overlap                 integer not null,
   length_overlap                integer not null,
   length                        integer not null,
-  description                   varchar(255) not null,
   price                         integer not null,
   stock                         integer not null,
   constraint pk_roof_tile primary key (id)
-);
-
-create table roof_tile_dependency (
-  id                            integer auto_increment not null,
-  roof_tile_id                  integer not null,
-  assembly_material_id          integer not null,
-  amount_per_unit               integer not null,
-  constraint pk_roof_tile_dependency primary key (id)
 );
 
 create table user (
@@ -130,10 +121,4 @@ create index ix_material_length_material_id on material_length (material_id);
 
 alter table picture add constraint fk_picture_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
 create index ix_picture_carport_id on picture (carport_id);
-
-alter table roof_tile_dependency add constraint fk_roof_tile_dependency_roof_tile_id foreign key (roof_tile_id) references roof_tile (id) on delete restrict on update restrict;
-create index ix_roof_tile_dependency_roof_tile_id on roof_tile_dependency (roof_tile_id);
-
-alter table roof_tile_dependency add constraint fk_roof_tile_dependency_assembly_material_id foreign key (assembly_material_id) references assembly_material (id) on delete restrict on update restrict;
-create index ix_roof_tile_dependency_assembly_material_id on roof_tile_dependency (assembly_material_id);
 
