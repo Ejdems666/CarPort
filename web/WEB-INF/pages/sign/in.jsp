@@ -15,4 +15,5 @@
     </div>
     <hr>
     <button class="btn btn-primary">Sign in</button>
+    <button class="btn btn-primary">Forgot password</button>
 </form>
