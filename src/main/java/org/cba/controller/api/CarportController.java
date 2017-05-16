@@ -3,7 +3,7 @@ package org.cba.controller.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.cba.domain.Carport;
-import org.cba.model.facade.PriceCalculator;
+import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParameterSieve;
 import org.cba.parameter.ParsedParameters;

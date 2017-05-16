@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE xml>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="roof_tile_dependency" pkName="pk_roof_tile_dependency">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="roof_tile_id" type="integer" notnull="true" references="roof_tile.id" foreignKeyName="fk_roof_tile_dependency_roof_tile_id" foreignKeyIndex="ix_roof_tile_dependency_roof_tile_id"/>
+            <column name="assembly_material_id" type="integer" notnull="true" references="assembly_material.id" foreignKeyName="fk_roof_tile_dependency_assembly_material_id" foreignKeyIndex="ix_roof_tile_dependency_assembly_material_id"/>
+            <column name="amount_per_unit" type="integer" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>

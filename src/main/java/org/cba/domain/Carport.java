@@ -18,43 +18,44 @@ public class Carport {
 
     public static final CarportFinder find = new CarportFinder();
     @Id
-    private Integer id;
+    private int id;
 
     @NotNull
     private String name;
 
     @NotNull
-    private Integer defaultPrice;
+    private int defaultPrice;
     @NotNull
-    private Integer defaultWidth;
+    private int profitFromMaterials;
     @NotNull
-    private Integer defaultLength;
+    private int defaultWidth;
+    @NotNull
+    private int defaultLength;
 
     @JsonManagedReference
     private String description;
 
     @OneToMany(mappedBy = "carport")
-    private List<StaticMaterial> staticMaterials;
-
-    @OneToMany(mappedBy = "carport")
-    private List<DynamicMaterial> dynamicMaterials;
-
-    @OneToMany(mappedBy = "carport")
     private List<Picture> pictures;
 
     @ManyToOne
-    private Picture picture;
+    @NotNull
+    private Picture thumbnail;
 
-    public List<DynamicMaterial> getDynamicMaterials() {
-        return dynamicMaterials;
+    @ManyToOne
+    @NotNull
+    private Frame frame;
+
+    @ManyToOne
+    @NotNull
+    private RoofTile roofTile;
+
+    public Picture getThumbnail() {
+        return thumbnail;
     }
 
-    public Picture getPicture() {
-            return picture;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
+    public void setThumbnail(Picture thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public List<Picture> getPictures() {
@@ -71,35 +72,35 @@ public class Carport {
     }
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getDefaultPrice() {
+    public int getDefaultPrice() {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(Integer defaultPrice) {
+    public void setDefaultPrice(int defaultPrice) {
         this.defaultPrice = defaultPrice;
     }
 
-    public Integer getDefaultWidth() {
+    public int getDefaultWidth() {
         return defaultWidth;
     }
 
-    public void setDefaultWidth(Integer defaultWidth) {
+    public void setDefaultWidth(int defaultWidth) {
         this.defaultWidth = defaultWidth;
     }
 
-    public Integer getDefaultLength() {
+    public int getDefaultLength() {
         return defaultLength;
     }
 
-    public void setDefaultLength(Integer defaultLength) {
+    public void setDefaultLength(int defaultLength) {
         this.defaultLength = defaultLength;
     }
 
@@ -111,8 +112,29 @@ public class Carport {
         this.name = name;
     }
 
-    public List<StaticMaterial> getStaticMaterials() {
-        return staticMaterials;
+
+    public int getProfitFromMaterials() {
+        return profitFromMaterials;
+    }
+
+    public void setProfitFromMaterials(int profitFromMaterials) {
+        this.profitFromMaterials = profitFromMaterials;
+    }
+
+    public Frame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(Frame frame) {
+        this.frame = frame;
+    }
+
+    public RoofTile getRoofTile() {
+        return roofTile;
+    }
+
+    public void setRoofTile(RoofTile roofTile) {
+        this.roofTile = roofTile;
     }
 }
 
