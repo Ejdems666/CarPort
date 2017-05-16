@@ -35,16 +35,24 @@ public abstract class BaseController extends Controller {
 
     @Override
     protected void renderTemplate(String template) {
+        setConstants();
+        super.renderTemplate(template);
+    }
+
+    private void setConstants() {
         request.setAttribute("root", ROOT);
         request.setAttribute("assets", ASSETS);
-        super.renderTemplate(template);
     }
 
     @Override
     protected void renderTemplate() {
-        request.setAttribute("root", ROOT);
-        request.setAttribute("assets", ASSETS);
+        setConstants();
         super.renderTemplate();
+    }
+
+    protected void renderTemplate(String template, String layout) {
+        setConstants();
+        super.renderTemplate(template, layout);
     }
 
     @Override
