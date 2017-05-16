@@ -1,0 +1,10 @@
+{
+"TOTAL_MEMORY": 268435456,
+"dataUrl": "Carport_FOG_002.data.unityweb",
+"asmCodeUrl": "Carport_FOG_002.asm.code.unityweb",
+"asmMemoryUrl": "Carport_FOG_002.asm.memory.unityweb",
+"asmFrameworkUrl": "Carport_FOG_002.asm.framework.unityweb",
+"backgroundUrl": "Carport_FOG_002.jpg",
+"splashScreenStyle": "Light",
+"backgroundColor": "#FFFFFF"
+}
