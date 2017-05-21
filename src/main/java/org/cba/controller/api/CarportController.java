@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.cba.domain.Carport;
 import org.cba.model.carport.calculation.PriceCalculator;
+import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParameterSieve;
 import org.cba.parameter.ParsedParameters;
@@ -31,7 +32,7 @@ public class CarportController extends ApiController {
             PriceCalculator calculator = new PriceCalculator();
             int price = calculator.getPrice(carport, parameters.getInteger("width"), parameters.getInteger("length"));
             objectNode.put("price", price);
-        } catch (ParameterParserException e) {
+        } catch (ParameterParserException | MaterialLengthVariationNotFoundException e) {
             objectNode.put("error", e.getMessage());
         }
         returnJSON(objectNode.toString());

@@ -1,4 +1,4 @@
-package org.cba.model.carport.formating.table;
+package org.cba.components.table;
 
 /**
  * Created by adam on 20/05/2017.

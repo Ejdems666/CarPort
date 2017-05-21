@@ -1,4 +1,4 @@
-package org.cba.model.carport.formating.table;
+package org.cba.components.table;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
