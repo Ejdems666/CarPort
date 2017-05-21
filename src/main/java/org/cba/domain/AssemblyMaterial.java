@@ -24,6 +24,9 @@ public class AssemblyMaterial {
     @NotNull
     private int stock;
 
+    @NotNull
+    private String description;
+
     public int getId() {
         return id;
     }
@@ -54,5 +57,13 @@ public class AssemblyMaterial {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
