@@ -33,6 +33,12 @@ public class Frame {
     private Material roofPlankMaterial;
 
     @NotNull
+    private int verticalPillarFrontReserve;
+
+    @NotNull
+    private int verticalPillarBackReserve;
+
+    @NotNull
     private int verticalPillarDistance;
 
     @NotNull
@@ -92,5 +98,21 @@ public class Frame {
 
     public void setRoofPlankDistance(int roofPlankDistance) {
         this.roofPlankDistance = roofPlankDistance;
+    }
+
+    public int getVerticalPillarFrontReserve() {
+        return verticalPillarFrontReserve;
+    }
+
+    public void setVerticalPillarFrontReserve(int verticalPillarFrontReserve) {
+        this.verticalPillarFrontReserve = verticalPillarFrontReserve;
+    }
+
+    public int getVerticalPillarBackReserve() {
+        return verticalPillarBackReserve;
+    }
+
+    public void setVerticalPillarBackReserve(int verticalPillarBackReserve) {
+        this.verticalPillarBackReserve = verticalPillarBackReserve;
     }
 }

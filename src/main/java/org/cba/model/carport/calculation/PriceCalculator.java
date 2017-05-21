@@ -17,7 +17,7 @@ public class PriceCalculator {
             addPriceForLVs(frameCalculator.getSideUpperPillars());
             addPriceForLVs(frameCalculator.getFrontAndBackUpperPillars());
             addPriceForLVs(frameCalculator.getLowerPillars());
-            addPriceForLVs(frameCalculator.getRoofPlanksPillars());
+            addPriceForLVs(frameCalculator.getRoofPlanks());
             addPriceForLVs(frameCalculator.getVerticalPillars());
         } catch (MaterialLengthVariationNotFoundException e) {
             e.printStackTrace();

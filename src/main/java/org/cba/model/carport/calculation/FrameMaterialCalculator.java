@@ -13,7 +13,7 @@ public interface FrameMaterialCalculator extends MaterialCalculator{
 
     MaterialLengthRecord getLowerPillars() throws MaterialLengthVariationNotFoundException;
 
-    MaterialLengthRecord getRoofPlanksPillars() throws MaterialLengthVariationNotFoundException;
+    MaterialLengthRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException;
 
     MaterialLengthRecord getVerticalPillars();
 }
