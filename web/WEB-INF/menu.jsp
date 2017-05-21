@@ -30,10 +30,6 @@
                         <a href="${root}carport/all">Store</a>
                     </li>
                     <% } else {%>
-                    <li>
-                        <a href="${root}sign/out">Logout <%=user.getName()%> <%=user.getSurname()%>
-                        </a>
-                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             Assembly Material<span class="caret"></span>
@@ -43,11 +39,24 @@
                             <li><a href="${root}assembly-material/add">Add</a></li>
                         </ul>
                     </li>
-                    <% }%>
                     <li><% if (request.getAttribute("alerts") != null) {%>
                         ${alerts}
                         <% } %></li>
-
+                    <% }%>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <% if (user != null) {%>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <%=user.getName()%> <%=user.getSurname()%><span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${root}profile/email">Change email</a></li>
+                            <li><a href="${root}profile/password">Change password</a></li>
+                            <li><a href="${root}sign/out">Logout</a></li>
+                        </ul>
+                    </li>
+                    <% }%>
                 </ul>
             </div>
         </div>
