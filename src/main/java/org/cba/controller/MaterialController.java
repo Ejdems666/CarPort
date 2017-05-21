@@ -1,4 +1,4 @@
-package org.cba.controller.api;
+package org.cba.controller;
 
 import io.ebean.Ebean;
 import org.cba.controller.BaseController;
@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * Created by Maksymilian on 21/05/2017.
  */
-public class NormalMaterialController extends BaseController {
-    public NormalMaterialController(HttpServletRequest request, HttpServletResponse response) {
+public class MaterialController extends BaseController {
+    public MaterialController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
 
