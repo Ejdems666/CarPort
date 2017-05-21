@@ -47,4 +47,10 @@ public class TableBuilderTest {
                         "</table>"
         );
     }
+
+    @Test
+    public void testTableWithCSSClass() {
+        tableBuilder = new TableBuilder("test");
+        Assert.assertEquals(tableBuilder.toString(),"<table class='test'></table>");
+    }
 }
