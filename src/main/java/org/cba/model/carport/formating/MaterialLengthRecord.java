@@ -43,8 +43,8 @@ public class MaterialLengthRecord implements PartRecord {
         return materialLengthVariation.getMaterial().getHeight();
     }
 
-    public MaterialLength getPart() {
-        return materialLengthVariation;
+    public int getPrice() {
+        return materialLengthVariation.getPrice();
     }
 
     @Override

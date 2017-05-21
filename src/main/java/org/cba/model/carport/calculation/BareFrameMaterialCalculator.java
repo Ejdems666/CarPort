@@ -7,6 +7,9 @@ import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFou
 import org.cba.model.carport.formating.MaterialLengthRecord;
 import org.cba.model.carport.formating.PartsFormatter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by adam on 09/05/2017.
  */
@@ -14,11 +17,6 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
     private final Frame frame;
     private int desiredLength;
     private int desiredWidth;
-    private MaterialLengthRecord upperSidePillars = null;
-    private MaterialLengthRecord upperFBPillars = null;
-    private MaterialLengthRecord lowerPillars = null;
-    private MaterialLengthRecord verticalPillars = null;
-    private MaterialLengthRecord roofPlanks = null;
 
     public BareFrameMaterialCalculator(Frame frame, int desiredWidth, int desiredLength) {
         this.frame = frame;
@@ -28,9 +26,6 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
 
     @Override
     public MaterialLengthRecord getSideUpperPillars() throws MaterialLengthVariationNotFoundException {
-        if (upperSidePillars != null) {
-            return upperSidePillars;
-        }
         MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), desiredLength);
         return new MaterialLengthRecord(materialLength, 2);
     }
@@ -49,42 +44,28 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
 
     @Override
     public MaterialLengthRecord getFrontAndBackUpperPillars() throws MaterialLengthVariationNotFoundException {
-        if (upperFBPillars != null) {
-            return upperFBPillars;
-        }
         MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), desiredWidth);
-        return upperFBPillars = new MaterialLengthRecord(materialLength, 2);
+        return new MaterialLengthRecord(materialLength, 2);
     }
 
     @Override
     public MaterialLengthRecord getLowerPillars() throws MaterialLengthVariationNotFoundException {
-        if (lowerPillars != null) {
-            return lowerPillars;
-        }
         MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getLowerPillarMaterial(), desiredLength);
-        return lowerPillars = new MaterialLengthRecord(materialLength, 2);
+        return new MaterialLengthRecord(materialLength, 2);
     }
 
     @Override
     public MaterialLengthRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException {
-        if (roofPlanks != null) {
-            return roofPlanks;
-        }
         MaterialLength roofPlankLengthVariation = getOptimalMaterialLengthVariation(frame.getRoofPlankMaterial(), desiredWidth);
         int numberOfRoofPlanks = (desiredLength / frame.getRoofPlankDistance()) - 1;
-        return roofPlanks = new MaterialLengthRecord(roofPlankLengthVariation, numberOfRoofPlanks);
+        return new MaterialLengthRecord(roofPlankLengthVariation, numberOfRoofPlanks);
     }
 
     @Override
     public MaterialLengthRecord getVerticalPillars() {
-        if (verticalPillars != null) {
-            return verticalPillars;
-        }
         MaterialLength verticalPillar = frame.getVerticalPillarMaterial().getMaterialLengths().get(0);
-        double VPLengthArea = desiredLength - frame.getVerticalPillarBackReserve() - frame.getVerticalPillarFrontReserve();
-        int numberOfFittingVPs = (int) Math.round(VPLengthArea / frame.getVerticalPillarDistance()) + 1;
-        int numberOfVPsOnBothSides = numberOfFittingVPs * 2;
-        return verticalPillars = new MaterialLengthRecord(verticalPillar, numberOfVPsOnBothSides);
+        int numberOfVPBothSides = ((desiredLength / frame.getVerticalPillarDistance()) + 1) * 2;
+        return new MaterialLengthRecord(verticalPillar, numberOfVPBothSides);
     }
 
     @Override
@@ -94,5 +75,16 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
         formatter.addPartRecord(getLowerPillars());
         formatter.addPartRecord(getRoofPlanks());
         formatter.addPartRecord(getVerticalPillars());
+    }
+
+    @Override
+    public List<MaterialLengthRecord> getAllMaterialRecords() throws MaterialLengthVariationNotFoundException {
+        List<MaterialLengthRecord> partRecords = new ArrayList<>();
+        partRecords.add(getFrontAndBackUpperPillars());
+        partRecords.add(getSideUpperPillars());
+        partRecords.add(getLowerPillars());
+        partRecords.add(getRoofPlanks());
+        partRecords.add(getVerticalPillars());
+        return partRecords;
     }
 }

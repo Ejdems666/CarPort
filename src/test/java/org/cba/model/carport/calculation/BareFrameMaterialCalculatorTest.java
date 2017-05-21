@@ -1,7 +1,6 @@
 package org.cba.model.carport.calculation;
 
 import org.cba.domain.Carport;
-import org.cba.domain.MaterialLength;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.cba.model.carport.formating.MaterialLengthRecord;
 import org.testng.Assert;
@@ -25,18 +24,17 @@ public class BareFrameMaterialCalculatorTest {
         int desiredWidth = carport.getDefaultWidth();
         FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), desiredWidth, desiredLength);
 
-        MaterialLength sideUpperPillarLV = calculator.getSideUpperPillars().getPart();
-        Assert.assertEquals(sideUpperPillarLV.getLength(), desiredLength);
+        int sideUpperPillarLength = calculator.getSideUpperPillars().getLength();
+        Assert.assertEquals(sideUpperPillarLength, desiredLength);
 
-        MaterialLength fbUpperPillarLV = calculator.getFrontAndBackUpperPillars().getPart();
-        Assert.assertEquals(fbUpperPillarLV.getLength(), desiredWidth);
+        int fbUpperPillarLength = calculator.getFrontAndBackUpperPillars().getLength();
+        Assert.assertEquals(fbUpperPillarLength, desiredWidth);
 
-        MaterialLength lowerPillarLV = calculator.getLowerPillars().getPart();
-        Assert.assertEquals(lowerPillarLV.getLength(), desiredLength);
+        int lowerPillarLength = calculator.getLowerPillars().getLength();
+        Assert.assertEquals(lowerPillarLength, desiredLength);
 
         MaterialLengthRecord roofPlank = calculator.getRoofPlanks();
-        MaterialLength roofPlankLV = roofPlank.getPart();
-        Assert.assertEquals(roofPlankLV.getLength(), desiredWidth);
+        Assert.assertEquals(roofPlank.getLength(), Integer.valueOf(desiredWidth));
         Assert.assertEquals(roofPlank.getCount(), 15);
 
         MaterialLengthRecord verticalPillar = calculator.getVerticalPillars();
