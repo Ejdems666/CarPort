@@ -11,8 +11,8 @@ public class MainDbMigration {
   public static void main(String[] args) throws Exception {
 
     // optionally specify the version and name
-    System.setProperty("ddl.migration.version", "1.2");
-    System.setProperty("ddl.migration.name", "add roof tile dependencies");
+    System.setProperty("ddl.migration.version", "1.4");
+    System.setProperty("ddl.migration.name", "add distance reserves for vertical pillars");
 
     // generate a migration using drops from a prior version
     //System.setProperty("ddl.migration.pendingDropsFor", "1.1");

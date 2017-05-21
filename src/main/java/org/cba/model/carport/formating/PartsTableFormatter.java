@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * Created by adam on 16/05/2017.
  */
-public class PartsTableFormatter implements PartRecordsFormatter {
-    public static final String unit = "Stk.";
+public class PartsTableFormatter implements PartsFormatter {
+    private static final String unit = "Stk.";
     private List<PartRecord> partRecords = new ArrayList<>();
     private TableBuilder tableBuilder;
 
@@ -40,11 +40,5 @@ public class PartsTableFormatter implements PartRecordsFormatter {
         row.addColumn(String.valueOf(partRecord.getCount()));
         row.addColumn(unit);
         row.addColumn(partRecord.getDescription());
-    }
-
-    @Override
-    // TODO: probably have sepparate class for dependencies, because roof tiles might also have dependencies
-    public String printAssemblyMaterialTable(String tableName) {
-        return null;
     }
 }

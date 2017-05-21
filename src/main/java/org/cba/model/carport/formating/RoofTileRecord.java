@@ -1,6 +1,6 @@
 package org.cba.model.carport.formating;
 
-import org.cba.domain.MaterialDependency;
+import org.cba.domain.PartDependency;
 import org.cba.domain.RoofTile;
 
 import java.util.List;
@@ -29,7 +29,17 @@ public class RoofTileRecord implements PartRecord {
 
     @Override
     public Integer getLength() {
-        return null;
+        return roofTile.getLength();
+    }
+
+    @Override
+    public Integer getWidth() {
+        return roofTile.getWidth();
+    }
+
+    @Override
+    public Integer getHeight() {
+        return 0;
     }
 
     public RoofTile getPart() {
@@ -37,7 +47,7 @@ public class RoofTileRecord implements PartRecord {
     }
 
     @Override
-    public List<MaterialDependency> getPartDependencies() {
+    public List<PartDependency> getPartDependencies() {
         return null;
     }
 

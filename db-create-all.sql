@@ -1,6 +1,7 @@
 create table assembly_material (
   id                            integer auto_increment not null,
   name                          varchar(255) not null,
+  description                   varchar(255) not null,
   price                         integer not null,
   stock                         integer not null,
   constraint pk_assembly_material primary key (id)
@@ -26,6 +27,8 @@ create table frame (
   lower_pillar_material_id      integer not null,
   vertical_pillar_material_id   integer not null,
   roof_plank_material_id        integer not null,
+  vertical_pillar_front_reserve integer not null,
+  vertical_pillar_back_reserve  integer not null,
   vertical_pillar_distance      integer not null,
   roof_plank_distance           integer not null,
   constraint pk_frame primary key (id)
