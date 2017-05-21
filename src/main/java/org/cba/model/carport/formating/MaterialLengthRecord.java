@@ -1,8 +1,9 @@
 package org.cba.model.carport.formating;
 
-import org.cba.domain.MaterialDependency;
 import org.cba.domain.MaterialLength;
+import org.cba.domain.PartDependency;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,13 +33,24 @@ public class MaterialLengthRecord implements PartRecord {
         return materialLengthVariation.getLength();
     }
 
+    @Override
+    public Integer getWidth() {
+        return materialLengthVariation.getMaterial().getWidth();
+    }
+
+    @Override
+    public Integer getHeight() {
+        return materialLengthVariation.getMaterial().getHeight();
+    }
+
     public MaterialLength getPart() {
         return materialLengthVariation;
     }
 
     @Override
-    public List<MaterialDependency> getPartDependencies() {
-        return null;
+    public List<PartDependency> getPartDependencies() {
+        // TODO: find better solution
+        return new ArrayList<>(materialLengthVariation.getMaterial().getMaterialDependencies());
     }
 
     public int getCount() {

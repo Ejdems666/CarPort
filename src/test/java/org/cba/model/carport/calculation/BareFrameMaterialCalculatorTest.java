@@ -34,13 +34,13 @@ public class BareFrameMaterialCalculatorTest {
         MaterialLength lowerPillarLV = calculator.getLowerPillars().getPart();
         Assert.assertEquals(lowerPillarLV.getLength(), desiredLength);
 
-        MaterialLengthRecord roofPlank = calculator.getRoofPlanksPillars();
+        MaterialLengthRecord roofPlank = calculator.getRoofPlanks();
         MaterialLength roofPlankLV = roofPlank.getPart();
         Assert.assertEquals(roofPlankLV.getLength(), desiredWidth);
         Assert.assertEquals(roofPlank.getCount(), 15);
 
         MaterialLengthRecord verticalPillar = calculator.getVerticalPillars();
-        Assert.assertEquals(verticalPillar.getCount(), 10);
+        Assert.assertEquals(verticalPillar.getCount(), 6);
     }
 
     @Test(expectedExceptions = {MaterialLengthVariationNotFoundException.class})

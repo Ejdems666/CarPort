@@ -3,7 +3,7 @@ package org.cba.model.carport.calculation;
 import org.cba.domain.Carport;
 import org.cba.domain.RoofTile;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
-import org.cba.model.carport.formating.PartRecordsFormatter;
+import org.cba.model.carport.formating.PartsFormatter;
 import org.cba.model.carport.formating.RoofTileRecord;
 
 /**
@@ -11,14 +11,14 @@ import org.cba.model.carport.formating.RoofTileRecord;
  */
 public class MaterialListAssembler {
     private Carport carport;
-    private PartRecordsFormatter formatter;
+    private PartsFormatter formatter;
 
-    public MaterialListAssembler(Carport carport, PartRecordsFormatter formatter) {
+    public MaterialListAssembler(Carport carport, PartsFormatter formatter) {
         this.carport = carport;
         this.formatter = formatter;
     }
 
-    public PartRecordsFormatter getPartsOfCarport(int desiredWidth, int desiredLength) {
+    public PartsFormatter getPartsOfCarport(int desiredWidth, int desiredLength) {
         addFrameMaterials(desiredWidth, desiredLength);
         addRoofTiles(desiredWidth, desiredLength);
         return formatter;

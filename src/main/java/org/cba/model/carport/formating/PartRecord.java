@@ -1,6 +1,6 @@
 package org.cba.model.carport.formating;
 
-import org.cba.domain.MaterialDependency;
+import org.cba.domain.PartDependency;
 
 import java.util.List;
 
@@ -11,8 +11,10 @@ public interface PartRecord{
     String getName();
     String getDescription();
     Integer getLength();
+    Integer getWidth();
+    Integer getHeight();
 
-    public List<MaterialDependency> getPartDependencies();
+    public List<PartDependency> getPartDependencies();
 
     public int getCount();
 }
