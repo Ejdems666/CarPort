@@ -2,6 +2,8 @@ package org.cba.controller;
 
 import io.ebean.Ebean;
 import org.cba.domain.AssemblyMaterial;
+import org.cba.model.carport.formating.table.Row;
+import org.cba.model.carport.formating.table.TableBuilder;
 import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParameterSieve;
 import org.cba.parameter.ParsedParameters;
@@ -76,5 +78,17 @@ public class AssemblyMaterialController extends BaseController {
 
     public void index() {
         List<AssemblyMaterial> assemblyMaterialList = AssemblyMaterial.find.all();
+        TableBuilder tableBuilder = new TableBuilder();
+        tableBuilder.addHeader("Assembly Materials", "Name,Price,Stock,Description,Edit link");
+        for (AssemblyMaterial assemblyMaterial : assemblyMaterialList) {
+            Row row = tableBuilder.createNewRow();
+            row.addColumn(assemblyMaterial.getName());
+            row.addColumn(String.valueOf(assemblyMaterial.getPrice()));
+            row.addColumn(String.valueOf(assemblyMaterial.getStock()));
+            row.addColumn(assemblyMaterial.getDescription());
+            row.addColumn("<a href='" + ROOT + "assembly-material/edit/" + assemblyMaterial.getId() + "'>" + assemblyMaterial.getId() + "</a>");
+        }
+        request.setAttribute("table", tableBuilder);
+        renderTemplate();
     }
 }

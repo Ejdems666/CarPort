@@ -48,6 +48,7 @@
     opacity: 0.95;
     filter: alpha(opacity=95);
     background-color: #ecf0f1;
+    z-index: 9;
 }
 .bgContainer{
     margin-top: 1%;

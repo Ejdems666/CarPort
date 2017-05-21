@@ -1,1 +1,1 @@
-
+<%= request.getAttribute("table") %>
