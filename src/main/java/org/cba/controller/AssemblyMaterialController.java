@@ -1,11 +1,11 @@
 package org.cba.controller;
 
 import io.ebean.Ebean;
+import org.cba.components.table.Row;
+import org.cba.components.table.TableBuilder;
 import org.cba.domain.AssemblyMaterial;
-import org.cba.model.carport.formating.table.Row;
-import org.cba.model.carport.formating.table.TableBuilder;
+import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParameterParser;
-import org.cba.parameter.ParameterSieve;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
 import org.jetbrains.annotations.NotNull;
@@ -38,19 +38,19 @@ public class AssemblyMaterialController extends BaseController {
     }
 
     private ParsedParameters getAssemblyMaterialParameters() throws ParameterParserException {
-        ParameterSieve parameterSieve = createSieve();
+        ParameterFilter parameterFilter = createSieve();
         ParameterParser parameterParser = new ParameterParser();
-        return parameterParser.parseParameters(request, parameterSieve);
+        return parameterParser.parseParameters(request, parameterFilter);
     }
 
     @NotNull
-    private ParameterSieve createSieve() {
-        ParameterSieve parameterSieve = new ParameterSieve();
-        parameterSieve.addString("name").setRequired();
-        parameterSieve.addInteger("price").setRequired();
-        parameterSieve.addInteger("stock").setRequired();
-        parameterSieve.addString("description").setRequired();
-        return parameterSieve;
+    private ParameterFilter createSieve() {
+        ParameterFilter parameterFilter = new ParameterFilter();
+        parameterFilter.addString("name").setRequired();
+        parameterFilter.addInteger("price").setRequired();
+        parameterFilter.addInteger("stock").setRequired();
+        parameterFilter.addString("description").setRequired();
+        return parameterFilter;
     }
 
     private void fillUpEntity(AssemblyMaterial assemblyMaterial, ParsedParameters parameters) {
