@@ -20,21 +20,20 @@ public class BareFrameMaterialCalculatorTest {
 
     @Test
     public void testMaterialCalculationWithDefaultValues() throws Exception {
-        int desiredLength = carport.getDefaultLength();
-        int desiredWidth = carport.getDefaultWidth();
-        FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), desiredWidth, desiredLength);
+        Dimensions carportDimension = new Dimensions(carport.getDefaultLength(), carport.getDefaultWidth());
+        FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimension);
 
         int sideUpperPillarLength = calculator.getSideUpperPillars().getLength();
-        Assert.assertEquals(sideUpperPillarLength, desiredLength);
+        Assert.assertEquals(sideUpperPillarLength, carportDimension.length);
 
         int fbUpperPillarLength = calculator.getFrontAndBackUpperPillars().getLength();
-        Assert.assertEquals(fbUpperPillarLength, desiredWidth);
+        Assert.assertEquals(fbUpperPillarLength, carportDimension.width);
 
         int lowerPillarLength = calculator.getLowerPillars().getLength();
-        Assert.assertEquals(lowerPillarLength, desiredLength);
+        Assert.assertEquals(lowerPillarLength, carportDimension.length);
 
         MaterialLengthRecord roofPlank = calculator.getRoofPlanks();
-        Assert.assertEquals(roofPlank.getLength(), Integer.valueOf(desiredWidth));
+        Assert.assertEquals(roofPlank.getLength(), Integer.valueOf(carportDimension.width));
         Assert.assertEquals(roofPlank.getCount(), 15);
 
         MaterialLengthRecord verticalPillar = calculator.getVerticalPillars();
@@ -43,15 +42,15 @@ public class BareFrameMaterialCalculatorTest {
 
     @Test(expectedExceptions = {MaterialLengthVariationNotFoundException.class})
     public void testMaterialCalculationWithWrongLength() throws Exception {
-        int desiredLength = 900;
-        FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carport.getDefaultWidth(), desiredLength);
+        Dimensions carportDimension = new Dimensions(900, carport.getDefaultWidth());
+        FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimension);
         calculator.getSideUpperPillars();
     }
 
     @Test
     public void testMaterialCalculationWithWrongWidth() throws Exception {
-        int desiredWidth = 500;
-        FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), desiredWidth, carport.getDefaultLength());
+        Dimensions carportDimension = new Dimensions(carport.getDefaultLength(), 500);
+        FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimension);
         calculator.getFrontAndBackUpperPillars();
     }
 }

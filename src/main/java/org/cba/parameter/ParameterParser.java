@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by adam on 19/04/2017.
  */
 public class ParameterParser {
-    public ParsedParameters parseParameters(ServletRequest request, ParameterSieve mask) throws ParameterParserException {
+    public ParsedParameters parseParameters(ServletRequest request, ParameterFilter mask) throws ParameterParserException {
         ParsedParameters parsedParameters = new ParsedParameters();
         Map<String, ParameterMask> parameters = mask.getParameters();
         for (ParameterMask parameterMask : parameters.values()) {

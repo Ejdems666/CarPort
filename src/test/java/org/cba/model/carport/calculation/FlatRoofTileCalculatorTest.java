@@ -20,13 +20,8 @@ public class FlatRoofTileCalculatorTest {
 
     @Test
     public void testGetNumberOfTiles() {
-        Assert.assertEquals(
-                calculator.getNumberOfTiles(
-                        carport.getRoofTile(),
-                        carport.getDefaultWidth(),
-                        carport.getDefaultLength()),
-                128
-        );
+        Dimensions carportDimension = new Dimensions(carport.getDefaultLength(), carport.getDefaultWidth());
+        Assert.assertEquals(calculator.getNumberOfTiles(carport.getRoofTile(), carportDimension), 128);
     }
 
 }

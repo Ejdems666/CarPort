@@ -15,18 +15,16 @@ import java.util.List;
  */
 public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
     private final Frame frame;
-    private int desiredLength;
-    private int desiredWidth;
+    private Dimensions carportDimensions;
 
-    public BareFrameMaterialCalculator(Frame frame, int desiredWidth, int desiredLength) {
+    public BareFrameMaterialCalculator(Frame frame, Dimensions carportDimensions) {
         this.frame = frame;
-        this.desiredLength = desiredLength;
-        this.desiredWidth = desiredWidth;
+        this.carportDimensions = carportDimensions;
     }
 
     @Override
     public MaterialLengthRecord getSideUpperPillars() throws MaterialLengthVariationNotFoundException {
-        MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), desiredLength);
+        MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), carportDimensions.length);
         return new MaterialLengthRecord(materialLength, 2);
     }
 
@@ -44,27 +42,27 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
 
     @Override
     public MaterialLengthRecord getFrontAndBackUpperPillars() throws MaterialLengthVariationNotFoundException {
-        MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), desiredWidth);
+        MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), carportDimensions.width);
         return new MaterialLengthRecord(materialLength, 2);
     }
 
     @Override
     public MaterialLengthRecord getLowerPillars() throws MaterialLengthVariationNotFoundException {
-        MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getLowerPillarMaterial(), desiredLength);
+        MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getLowerPillarMaterial(), carportDimensions.length);
         return new MaterialLengthRecord(materialLength, 2);
     }
 
     @Override
     public MaterialLengthRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException {
-        MaterialLength roofPlankLengthVariation = getOptimalMaterialLengthVariation(frame.getRoofPlankMaterial(), desiredWidth);
-        int numberOfRoofPlanks = (desiredLength / frame.getRoofPlankDistance()) - 1;
+        MaterialLength roofPlankLengthVariation = getOptimalMaterialLengthVariation(frame.getRoofPlankMaterial(), carportDimensions.width);
+        int numberOfRoofPlanks = (carportDimensions.length / frame.getRoofPlankDistance()) - 1;
         return new MaterialLengthRecord(roofPlankLengthVariation, numberOfRoofPlanks);
     }
 
     @Override
     public MaterialLengthRecord getVerticalPillars() {
         MaterialLength verticalPillar = frame.getVerticalPillarMaterial().getMaterialLengths().get(0);
-        int numberOfVPBothSides = ((desiredLength / frame.getVerticalPillarDistance()) + 1) * 2;
+        int numberOfVPBothSides = ((carportDimensions.length / frame.getVerticalPillarDistance()) + 1) * 2;
         return new MaterialLengthRecord(verticalPillar, numberOfVPBothSides);
     }
 

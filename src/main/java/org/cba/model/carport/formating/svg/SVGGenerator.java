@@ -6,6 +6,7 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.cba.domain.Frame;
 import org.cba.model.carport.calculation.BareFrameMaterialCalculator;
+import org.cba.model.carport.calculation.Dimensions;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -49,10 +50,10 @@ public class SVGGenerator {
 
     public static void main(String[] args) throws SVGGraphics2DIOException {
         SVGGenerator svgGenerator = new SVGGenerator();
-        int desiredLength = 800;
         Frame frame = Frame.find.byId(1);
+        Dimensions carportDimension = new Dimensions(800,400);
         BlueprintDrawing blueprint = new SideFrameBlueprint(
-                new BareFrameMaterialCalculator(frame,400,desiredLength), desiredLength, frame
+                new BareFrameMaterialCalculator(frame,carportDimension), carportDimension.length, frame
         );
         String svg = svgGenerator.generate(blueprint);
         System.out.println(svg);

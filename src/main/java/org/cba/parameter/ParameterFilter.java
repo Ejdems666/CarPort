@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by adam on 19/04/2017.
  */
-public class ParameterSieve {
+public class ParameterFilter {
     private Map<String, ParameterMask> parameters = new HashMap<>();
 
     public ParameterMask addInteger(String key) {

@@ -16,13 +16,13 @@ public class PriceCalculator {
     private int price = 0;
     private AssemblyMaterialRecords assemblyMaterialRecords = new AssemblyMaterialRecords();
 
-    public int getPrice(Carport carport, int desiredWidth, int desiredLength) throws MaterialLengthVariationNotFoundException {
-        FrameMaterialCalculator frameCalculator = new BareFrameMaterialCalculator(carport.getFrame(), desiredWidth, desiredLength);
+    public int getPrice(Carport carport, Dimensions carportDimensions) throws MaterialLengthVariationNotFoundException {
+        MaterialCalculator frameCalculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimensions);
         for (MaterialLengthRecord partRecord : frameCalculator.getAllMaterialRecords()) {
-            addPriceOfPartRecordAndExtractAssemblyMaterials(partRecord);
+            addPriceOfPartRecord(partRecord);
             assemblyMaterialRecords.addPartRecord(partRecord);
         }
-        addPriceForRoofTiles(carport, desiredWidth, desiredLength);
+        addPriceForRoofTiles(carport, carportDimensions);
         addPriceForAssemblyMaterials();
         float profitMultiplier = carport.getProfitFromMaterials() / 100f + 1;
         return Math.round(price * profitMultiplier);
@@ -36,13 +36,13 @@ public class PriceCalculator {
         }
     }
 
-    private void addPriceOfPartRecordAndExtractAssemblyMaterials(MaterialLengthRecord materialLengthRecord) {
+    private void addPriceOfPartRecord(MaterialLengthRecord materialLengthRecord) {
         price += materialLengthRecord.getCount() * materialLengthRecord.getPrice();
     }
 
-    private void addPriceForRoofTiles(Carport carport, int desiredWidth, int desiredLength) {
+    private void addPriceForRoofTiles(Carport carport, Dimensions carportDimensions) {
         RoofTileCalculator roofTileCalculator = new FlatRoofTileCalculator();
-        int roofTiles = roofTileCalculator.getNumberOfTiles(carport.getRoofTile(), desiredWidth, desiredLength);
+        int roofTiles = roofTileCalculator.getNumberOfTiles(carport.getRoofTile(), carportDimensions);
         price += carport.getRoofTile().getPrice() * roofTiles;
     }
 }
