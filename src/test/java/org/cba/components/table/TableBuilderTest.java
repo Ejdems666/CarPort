@@ -1,4 +1,4 @@
-package org.cba.model.carport.formating.table;
+package org.cba.components.table;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -46,5 +46,11 @@ public class TableBuilderTest {
                         "<tr><td>test</td></tr>" +
                         "</table>"
         );
+    }
+
+    @Test
+    public void testTableWithCSSClass() {
+        tableBuilder = new TableBuilder("test");
+        Assert.assertEquals(tableBuilder.toString(),"<table class='test'></table>");
     }
 }

@@ -18,28 +18,26 @@ public class MaterialListAssembler {
         this.formatter = formatter;
     }
 
-    public PartsFormatter getPartsOfCarport(int desiredWidth, int desiredLength) {
-        addFrameMaterials(desiredWidth, desiredLength);
-        addRoofTiles(desiredWidth, desiredLength);
+    public PartsFormatter getPartsOfCarport(Dimensions carportDimensions) {
+        addFrameMaterials(carportDimensions);
+        addRoofTiles(carportDimensions);
         return formatter;
     }
 
-    private void addRoofTiles(int desiredWidth, int desiredLength) {
+    private void addRoofTiles(Dimensions carportDimensions) {
         RoofTileCalculator roofTileCalculator = new FlatRoofTileCalculator();
         RoofTile roofTile = carport.getRoofTile();
         int numberOfTiles = roofTileCalculator.getNumberOfTiles(
                 roofTile,
-                desiredWidth,
-                desiredLength
+                carportDimensions
         );
         formatter.addPartRecord(new RoofTileRecord(roofTile,numberOfTiles));
     }
 
-    private void addFrameMaterials(int desiredWidth, int desiredLength) {
+    private void addFrameMaterials(Dimensions carportDimensions) {
         MaterialCalculator frameCalculator = new BareFrameMaterialCalculator(
                 carport.getFrame(),
-                desiredWidth,
-                desiredLength
+                carportDimensions
         );
         try {
             frameCalculator.addCalculatedMaterialsToFormatter(formatter);

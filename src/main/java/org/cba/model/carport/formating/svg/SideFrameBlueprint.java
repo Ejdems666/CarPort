@@ -13,10 +13,10 @@ import java.awt.*;
  * Created by adam on 21/05/2017.
  */
 public class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
+    private static final int CARPORT_X_OFFSET = 100;
     private FrameMaterialCalculator materialCalculator;
     private Frame frame;
     private int carportLength;
-    private int yOffset = 0;
 
     public SideFrameBlueprint(FrameMaterialCalculator materialCalculator, int carportLength, Frame frame) {
         this.materialCalculator = materialCalculator;
@@ -26,56 +26,51 @@ public class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
 
     @Override
     public void draw(SVGGraphics2D svgGen) {
-        svgGen.setStroke(new BasicStroke(2));
         setScale(svgGen, carportLength);
-        int yOffset = 0;
+        int yOffset;
         try {
-            yOffset = drawUpperSidePillarAndGetYOffset(svgGen);
-            yOffset = drawLowerSidePillarAndGetYOffset(svgGen, yOffset);
+            PartRecord upperPillars = materialCalculator.getSideUpperPillars();
+            yOffset = drawUpperSidePillarAndGetYOffset(svgGen, upperPillars);
+
+            PartRecord lowerPillars = materialCalculator.getLowerPillars();
+            yOffset = drawLowerSidePillarAndGetYOffset(svgGen, yOffset, lowerPillars);
+
+            PartRecord verticalPillars = materialCalculator.getVerticalPillars();
+            drawVerticalPillars(svgGen, yOffset, verticalPillars);
+
+            drawDistanceNoteVertically(svgGen, verticalPillars.getLength() + lowerPillars.getHeight(), upperPillars.getHeight(), -50);
+            drawDistanceNoteVertically(svgGen, verticalPillars.getLength() + lowerPillars.getHeight() + upperPillars.getHeight(), 0, -20);
         } catch (MaterialLengthVariationNotFoundException e) {
             e.printStackTrace();
         }
-        drawVerticalPillars(svgGen, yOffset);
     }
 
-    private int drawUpperSidePillarAndGetYOffset(SVGGraphics2D svgGen) throws MaterialLengthVariationNotFoundException {
-        PartRecord pillars = materialCalculator.getSideUpperPillars();
-        svgGen.draw(new Rectangle(0, yOffset, carportLength, pillars.getHeight()));
+    private int drawUpperSidePillarAndGetYOffset(SVGGraphics2D svgGen, PartRecord pillars) {
+        svgGen.draw(new Rectangle(CARPORT_X_OFFSET, 0, carportLength, pillars.getHeight()));
         return pillars.getHeight();
     }
 
-    private int drawLowerSidePillarAndGetYOffset(SVGGraphics2D svgGen, int yOffset) throws MaterialLengthVariationNotFoundException {
-        PartRecord pillars = materialCalculator.getLowerPillars();
-        svgGen.draw(new Rectangle(0, yOffset, carportLength, pillars.getHeight()));
+    private int drawLowerSidePillarAndGetYOffset(SVGGraphics2D svgGen, int yOffset, PartRecord pillars) throws MaterialLengthVariationNotFoundException {
+        svgGen.draw(new Rectangle(CARPORT_X_OFFSET, yOffset, carportLength, pillars.getHeight()));
         return yOffset + pillars.getHeight();
     }
 
-    protected void drawDistanceNoteVertically(Graphics2D svgGen, int distance, int x, int y) {
-        svgGen.drawString(String.valueOf(distance), x + (distance - 50) / 2, y);
-        svgGen.drawLine(x, y, x + distance, y);
-        svgGen.drawLine(x, y - 20, x, y + 20);
-        svgGen.drawLine(x + distance, y - 20, x + distance, y + 20);
-    }
-
-    private void drawVerticalPillars(Graphics2D svgGen, int yOffset) {
-        Font font = new Font("Verdana", Font.BOLD, 20);
-        svgGen.setFont(font);
-        PartRecord pillars = materialCalculator.getVerticalPillars();
+    private void drawVerticalPillars(Graphics2D svgGen, int yOffset, PartRecord pillars) {
         int amount = pillars.getCount() / 2;
         int distance = getDistanceOfVP(amount);
         int length = pillars.getLength();
-        int pillarsXOffset = 0;
+        int xOffset = 0;
         int bottomNoteY = yOffset + length + 25;
-        drawDistanceNoteHorizontally(svgGen, frame.getVerticalPillarFrontReserve(), pillarsXOffset, bottomNoteY);
+        drawDistanceNoteHorizontally(svgGen, frame.getVerticalPillarFrontReserve(), CARPORT_X_OFFSET, bottomNoteY);
         for (int i = 0; i < amount; i++) {
-            pillarsXOffset = frame.getVerticalPillarFrontReserve() + distance * i;
-            svgGen.draw(new Rectangle(pillarsXOffset, yOffset, pillars.getWidth(), length));
+            xOffset = CARPORT_X_OFFSET + frame.getVerticalPillarFrontReserve() + distance * i;
+            svgGen.draw(new Rectangle(xOffset, yOffset, pillars.getWidth(), length));
             if (notTheLastVp(amount, i)) {
-                drawDistanceNoteHorizontally(svgGen, distance, pillarsXOffset, bottomNoteY);
+                drawDistanceNoteHorizontally(svgGen, distance, xOffset, bottomNoteY);
             }
         }
-        drawDistanceNoteHorizontally(svgGen, frame.getVerticalPillarBackReserve(), pillarsXOffset, bottomNoteY);
-        drawHelpingLines(svgGen, yOffset + length, carportLength);
+        drawDistanceNoteHorizontally(svgGen, frame.getVerticalPillarBackReserve(), xOffset, bottomNoteY);
+        drawHelpingLines(svgGen, yOffset + length, carportLength + CARPORT_X_OFFSET);
     }
 
     private boolean notTheLastVp(int countOfVP, int i) {
@@ -89,8 +84,9 @@ public class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
 
     private void drawHelpingLines(Graphics2D svgGen, int bottomY, int rightX) {
         svgGen.setColor(Color.RED);
-        svgGen.drawLine(0, bottomY, rightX, bottomY);
-        svgGen.drawLine(0, 0, 0, bottomY);
+        svgGen.drawLine(CARPORT_X_OFFSET, bottomY, rightX, bottomY);
+        svgGen.drawLine(CARPORT_X_OFFSET, 0, CARPORT_X_OFFSET, bottomY);
         svgGen.drawLine(rightX, 0, rightX, bottomY);
+        svgGen.setColor(Color.BLACK);
     }
 }
