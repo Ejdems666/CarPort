@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class Purchase {
     private User customer;
 
     @OneToMany(mappedBy = "purchase")
-    private List<PurchaseCarport> purchaseCarports;
+    private List<PurchaseCarport> purchaseCarports = new ArrayList<>();
 
     public List<PurchaseCarport> getPurchaseCarports() {
         return purchaseCarports;
@@ -61,5 +62,9 @@ public class Purchase {
 
     public void setCustomer(User customer) {
         this.customer = customer;
+    }
+
+    public void addPurchaseCarport(PurchaseCarport purchaseCarport) {
+        purchaseCarports.add(purchaseCarport);
     }
 }

@@ -1,8 +1,8 @@
 package org.cba.servlet;
 
 import hyggemvc.router.AppContainer;
+import hyggemvc.router.EndpointReflection;
 import hyggemvc.router.Route;
-import hyggemvc.router.RouteCallable;
 import hyggemvc.router.Router;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class RequestDispatcher extends hyggemvc.servlet.RequestDispatcher {
                 new Route("(?<controller>[a-z\\-]+)(?<method>/[a-z\\-]+)?(?<int0>/\\d+)?","Default","index")
         );
 
-        RouteCallable routeCallable = router.getRouteCallable("org.cba.controller",url);
+        EndpointReflection routeCallable = router.getControllerReflection("org.cba.controller",url);
         AppContainer app = new AppContainer(request,response);
         app.run(routeCallable);
     }
