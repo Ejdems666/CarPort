@@ -43,6 +43,15 @@
                             <li><a href="${root}assembly-material/add">Add</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Roof tiles<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${root}roof-tile">List</a></li>
+                            <li><a href="${root}roof-tile/add">Add</a></li>
+                        </ul>
+                    </li>
                     <% }%>
                     <li><% if (request.getAttribute("alerts") != null) {%>
                         ${alerts}
