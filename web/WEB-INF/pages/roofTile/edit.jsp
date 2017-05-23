@@ -5,7 +5,7 @@
   Time: 5:37 PM
   To change this template use File | Settings | File Templates.
 --%>
-<form action="${root}roof-tiles/edit/${material.id}" method="POST">
+<form action="${root}roof-tile/edit/${tile.id}" method="POST">
 
     <div class="input-group">
         <label for="name">Name</label>
@@ -19,7 +19,7 @@
 
     <div class="input-group">
         <label for="width overlap">Width Overlap</label>
-        <input type="number" required id="width overlap" name="width overlap" value="${tile.width_overlap}" class="form-control">
+        <input type="number" required id="width overlap" name="width overlap" value="${tile.widthOverlap}" class="form-control">
     </div>
 
     <div class="input-group">
@@ -29,7 +29,7 @@
 
     <div class="input-group">
         <label for="length overlap">Length</label>
-        <input type="number" required id="length overlap" name="length overlap" value="${tile.length_overlap}" class="form-control">
+        <input type="number" required id="length overlap" name="length overlap" value="${tile.lengthOverlap}" class="form-control">
     </div>
 
     <div class="input-group">
@@ -47,6 +47,6 @@
         <textarea required id="desc" name="description" class="form-control">${tile.description}</textarea>
     </div>
 
-    <button>Add</button>
+    <button>Edit</button>
 
 </form>

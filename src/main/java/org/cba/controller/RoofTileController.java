@@ -87,7 +87,7 @@ public class RoofTileController extends BaseController {
     public void index() {
         List<RoofTile> roofTileList = RoofTile.find.all();
         TableBuilder tableBuilder = new TableBuilder();
-        tableBuilder.addHeader("Roof Tiles", "Name, Width, Width overlap, Length, Length overlap, Price, Stock, Description, Edit link");
+        tableBuilder.addHeader("Roof Tile", "Name, Width, Width overlap, Length, Length overlap, Price, Stock, Description, Edit link");
         for (RoofTile roofTile : roofTileList) {
             Row row = tableBuilder.createNewRow();
             row.addColumn(roofTile.getName());
@@ -98,7 +98,7 @@ public class RoofTileController extends BaseController {
             row.addColumn(String.valueOf(roofTile.getPrice()));
             row.addColumn(String.valueOf(roofTile.getStock()));
             row.addColumn(roofTile.getDescription());
-            row.addColumn("<a href='" + ROOT + "roof-tiles/edit/" + roofTile.getId() + "'>" + roofTile.getId() + "</a>");
+            row.addColumn("<a href='" + ROOT + "roof-tile/edit/" + roofTile.getId() + "'>" + roofTile.getId() + "</a>");
         }
         request.setAttribute("table", tableBuilder);
         renderTemplate();

@@ -6,29 +6,29 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<form action="${root}roof-tiles/add/" method="POST">
+<form action="${root}roof-tile/add/" method="POST">
     <div class="input-group">
         <label for="name">Name</label>
         <input type="text" required id="name" name="name" class="form-control">
     </div>
 
     <div class="input-group">
-        <label for="width">Price</label>
+        <label for="width">Width</label>
         <input type="number" required id="width" name="width" class="form-control">
     </div>
 
     <div class="input-group">
-        <label for="width overlap">Price</label>
+        <label for="width overlap">Width Overlap</label>
         <input type="number" required id="width overlap" name="width overlap" class="form-control">
     </div>
 
     <div class="input-group">
-        <label for="length">Price</label>
+        <label for="length">Length</label>
         <input type="number" required id="length" name="length" class="form-control">
     </div>
 
     <div class="input-group">
-        <label for="length overlap">Price</label>
+        <label for="length overlap">Length Overlap</label>
         <input type="number" required id="length overlap" name="length overlap" class="form-control">
     </div>
 
