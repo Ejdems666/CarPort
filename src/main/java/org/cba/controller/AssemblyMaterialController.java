@@ -1,9 +1,9 @@
 package org.cba.controller;
 
-import io.ebean.Ebean;
 import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
 import org.cba.domain.AssemblyMaterial;
+import org.cba.model.facade.AssemblyMaterialFacade;
 import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParsedParameters;
@@ -26,9 +26,8 @@ public class AssemblyMaterialController extends BaseController {
         if (request.getMethod().equals("POST")) {
             try {
                 ParsedParameters parameters = getAssemblyMaterialParameters();
-                AssemblyMaterial assemblyMaterial = new AssemblyMaterial();
-                fillUpEntity(assemblyMaterial, parameters);
-                Ebean.save(assemblyMaterial);
+                AssemblyMaterialFacade facade = new AssemblyMaterialFacade();
+                facade.add(parameters);
                 alertSuccess("Assembly material added!");
             } catch (ParameterParserException e) {
                 alertError("Wrong input!");
@@ -53,20 +52,14 @@ public class AssemblyMaterialController extends BaseController {
         return parameterFilter;
     }
 
-    private void fillUpEntity(AssemblyMaterial assemblyMaterial, ParsedParameters parameters) {
-        assemblyMaterial.setName(parameters.getString("name"));
-        assemblyMaterial.setPrice(parameters.getInteger("price"));
-        assemblyMaterial.setStock(parameters.getInteger("stock"));
-        assemblyMaterial.setDescription(parameters.getString("description"));
-    }
 
     public void edit(Integer id) {
         AssemblyMaterial assemblyMaterial = AssemblyMaterial.find.byId(id);
         if (request.getMethod().equals("POST")) {
             try {
                 ParsedParameters parameters = getAssemblyMaterialParameters();
-                fillUpEntity(assemblyMaterial, parameters);
-                Ebean.update(assemblyMaterial);
+                AssemblyMaterialFacade facade = new AssemblyMaterialFacade();
+                facade.update(assemblyMaterial, parameters);
                 alertSuccess("Assembly material edited!");
             } catch (ParameterParserException e) {
                 alertError("Wrong input!");
@@ -78,7 +71,7 @@ public class AssemblyMaterialController extends BaseController {
 
     public void index() {
         List<AssemblyMaterial> assemblyMaterialList = AssemblyMaterial.find.all();
-        TableBuilder tableBuilder = new TableBuilder();
+        TableBuilder tableBuilder = new TableBuilder("table");
         tableBuilder.addHeader("Assembly Materials", "Name,Price,Stock,Description,Edit link");
         for (AssemblyMaterial assemblyMaterial : assemblyMaterialList) {
             Row row = tableBuilder.createNewRow();
