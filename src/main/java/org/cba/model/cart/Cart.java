@@ -18,7 +18,7 @@ public interface Cart extends TemplateCart {
      */
     public void recalculatePriceForItem(int index) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound;
 
-    public void deleteCart();
+    public void saveInDatabaseAndEmptyCart();
 
     public PurchaseCarport getItem(int index) throws IndexOfOrderNotFound;
 }

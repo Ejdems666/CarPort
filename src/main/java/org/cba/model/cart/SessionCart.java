@@ -1,5 +1,6 @@
 package org.cba.model.cart;
 
+import io.ebean.Ebean;
 import org.cba.domain.Carport;
 import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
@@ -33,7 +34,7 @@ public class SessionCart implements Cart {
     @Override
     public void addItem(Carport carport, Dimensions frameDimensions) throws MaterialLengthVariationNotFoundException {
         int newItemPrice = priceCalculator.getPrice(carport, frameDimensions);
-        cartContents.addPurchaseCarport(new PurchaseCarport(carport, frameDimensions, newItemPrice));
+        cartContents.addPurchaseCarport(new PurchaseCarport(carport, frameDimensions, newItemPrice, cartContents));
         cartContents.setFinalPrice(newItemPrice + cartContents.getFinalPrice());
     }
 
@@ -66,8 +67,11 @@ public class SessionCart implements Cart {
     }
 
     @Override
-    public void deleteCart() {
+    public void saveInDatabaseAndEmptyCart() {
+        Ebean.save(cartContents);
+        Ebean.saveAll(cartContents.getPurchaseCarports());
         session.removeAttribute(SESSION_IDENTIFIER);
+        cartContents = new Purchase();
     }
 
 

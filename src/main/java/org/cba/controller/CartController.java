@@ -4,6 +4,7 @@ import org.cba.components.CarportEditForm;
 import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
 import org.cba.domain.Carport;
+import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
 import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
@@ -14,6 +15,8 @@ import org.cba.parameter.exception.ParameterParserException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -77,7 +80,7 @@ public class CartController extends BaseController {
                 alertError(e.getMessage());
             } catch (MaterialLengthVariationNotFoundException e) {
                 alertError("Sorry, can't submit order with those dimensions.");
-                redirect("carport/edit-confirm/" + orderNumber);
+                redirect("cart/edit-confirm/" + orderNumber);
             }
         }
         renderTemplate("error/notFound");
@@ -108,7 +111,7 @@ public class CartController extends BaseController {
         }
     }
 
-    public void remove(Integer index) {
+    public void delete(Integer index) {
         try {
             cart.removeItem(index);
             alertSuccess("Order removed.");
@@ -116,5 +119,19 @@ public class CartController extends BaseController {
             alertError(e.getMessage());
         }
         redirect("cart");
+    }
+
+    public void buy() {
+        if (cart.getNumberOfItems() == 0) {
+            alertError("You can't buy anything, because the cart is empty!");
+            redirect("carport/all");
+        }
+        Purchase purchase = cart.getCartContents();
+        purchase.setOrderedOn(new Date(Calendar.getInstance().getTimeInMillis()));
+        if (isLoggedIn()) {
+            purchase.setCustomer(loggedUser);
+        }
+        cart.saveInDatabaseAndEmptyCart();
+        renderTemplate();
     }
 }

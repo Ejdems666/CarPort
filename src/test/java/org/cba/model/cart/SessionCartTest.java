@@ -68,7 +68,7 @@ public class SessionCartTest {
     @NotNull
     private Purchase mockCartContents(Carport carport, int price) {
         Purchase purchase = new Purchase();
-        purchase.addPurchaseCarport(new PurchaseCarport(carport, carport.getDefaultDimensions(), price));
+        purchase.addPurchaseCarport(new PurchaseCarport(carport, carport.getDefaultDimensions(), price, purchase));
         purchase.setFinalPrice(price);
         return purchase;
     }

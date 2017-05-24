@@ -12,11 +12,12 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class PurchaseCarport {
-    public PurchaseCarport(Carport carport, Dimensions frameDimensions, int price) {
+    public PurchaseCarport(Carport carport, Dimensions frameDimensions, int price, Purchase purchase) {
         this.carport = carport;
         frameWidth = frameDimensions.width;
         frameLength = frameDimensions.length;
         this.price = price;
+        this.purchase = purchase;
     }
 
     @Id
