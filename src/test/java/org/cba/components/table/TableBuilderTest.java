@@ -28,10 +28,24 @@ public class TableBuilderTest {
     }
 
     @Test
-    public void testRow() {
+    public void testStringRow() {
         Row row = tableBuilder.createNewRow();
         row.addColumn("test value");
         Assert.assertEquals(row.toString(), "<tr><td>test value</td></tr>");
+    }
+
+    @Test
+    public void testNonStringRow() {
+        Row row = tableBuilder.createNewRow();
+        row.addColumn(1);
+        Assert.assertEquals(row.toString(), "<tr><td>1</td></tr>");
+    }
+
+    @Test
+    public void testIconInRow() {
+        Row row = tableBuilder.createNewRow();
+        row.addColumnLink("url", Row.Icon.EDIT);
+        Assert.assertEquals(row.toString(), "<tr><td><a href='url'><i class=\"fa fa-"+Row.Icon.EDIT+"\" aria-hidden=\"true\"></i></a></td></tr>");
     }
 
     @Test

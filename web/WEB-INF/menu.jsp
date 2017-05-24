@@ -54,14 +54,17 @@
                     </li>
 
                 </ul>
+                <% if (cart.getNumberOfItems() > 0) {%>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="${root}cart">
+                            <%= cart.getNumberOfItems() %>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <%= cart.getPrice() %> DKK
                         </a>
                     </li>
                 </ul>
+                <% } %>
             </div>
         </div>
     </div>

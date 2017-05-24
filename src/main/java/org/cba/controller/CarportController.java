@@ -1,9 +1,7 @@
 package org.cba.controller;
 
-import org.cba.components.SelectBuilder;
+import org.cba.components.CarportEditForm;
 import org.cba.domain.Carport;
-import org.cba.domain.Material;
-import org.cba.domain.MaterialLength;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,21 +29,10 @@ public class CarportController extends BaseController {
 
     public void edit(Integer carportId) {
         Carport carport = Carport.find.byId(carportId);
-        createSelectComponents(carport);
+        CarportEditForm form = new CarportEditForm(request);
+        form.createAndPassSelectComponents(carport,carport.getDefaultDimensions());
         request.setAttribute("carport", carport);
         renderTemplate();
-    }
-
-    private void createSelectComponents(Carport carport) {
-        Material borderMaterial = carport.getFrame().getUpperPillarMaterial();
-        SelectBuilder widthSelect = new SelectBuilder("Width", "width", carport.getDefaultWidth());
-        SelectBuilder lengthSelect = new SelectBuilder("Length", "length",carport.getDefaultLength());
-        for (MaterialLength materialLength : borderMaterial.getMaterialLengths()) {
-            widthSelect.addOption(materialLength.getLength(), materialLength.getLength());
-            lengthSelect.addOption(materialLength.getLength(), materialLength.getLength());
-        }
-        request.setAttribute("lengthSelect", lengthSelect);
-        request.setAttribute("widthSelect", widthSelect);
     }
 
     public void unity() {

@@ -6,6 +6,7 @@ import org.cba.domain.PurchaseCarport;
 import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
+import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,16 +38,29 @@ public class SessionCart implements Cart {
     }
 
     @Override
-    public void removeItem(int index) {
-        PurchaseCarport removedItem = cartContents.getPurchaseCarports().get(index);
+    public void removeItem(int index) throws IndexOfOrderNotFound {
+        PurchaseCarport removedItem = getItem(index);
         cartContents.setFinalPrice(cartContents.getFinalPrice() - removedItem.getPrice());
+        cartContents.getPurchaseCarports().remove(index);
+    }
+
+    @NotNull
+    @Override
+    public PurchaseCarport getItem(int index) throws IndexOfOrderNotFound {
+        PurchaseCarport removedItem;
+        try {
+            removedItem = cartContents.getPurchaseCarports().get(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOfOrderNotFound(index);
+        }
+        return removedItem;
     }
 
     @Override
-    public void recalculatePriceForItem(int index) throws MaterialLengthVariationNotFoundException {
-        PurchaseCarport recalculatedItem = cartContents.getPurchaseCarports().get(index);
+    public void recalculatePriceForItem(int index) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound {
+        PurchaseCarport recalculatedItem = getItem(index);
         int oldPrice = recalculatedItem.getPrice();
-        int newPrice = priceCalculator.getPrice(recalculatedItem.getCarport(),recalculatedItem.getFrameDimensions());
+        int newPrice = priceCalculator.getPrice(recalculatedItem.getCarport(), recalculatedItem.getFrameDimensions());
         recalculatedItem.setPrice(newPrice);
         cartContents.setFinalPrice(cartContents.getFinalPrice() - oldPrice + newPrice);
     }
@@ -55,6 +69,7 @@ public class SessionCart implements Cart {
     public void deleteCart() {
         session.removeAttribute(SESSION_IDENTIFIER);
     }
+
 
     @Override
     public Purchase getCartContents() {

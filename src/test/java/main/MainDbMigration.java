@@ -11,8 +11,8 @@ public class MainDbMigration {
   public static void main(String[] args) throws Exception {
 
     // optionally specify the version and name
-    System.setProperty("ddl.migration.version", "1.5");
-    System.setProperty("ddl.migration.name", "add order tables");
+    System.setProperty("ddl.migration.version", "1.5.1");
+    System.setProperty("ddl.migration.name", "add price to PurchaseCarport");
 
     // generate a migration using drops from a prior version
     //System.setProperty("ddl.migration.pendingDropsFor", "1.1");

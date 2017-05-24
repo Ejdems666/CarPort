@@ -29,8 +29,8 @@ public class CarportController extends ApiController {
             Carport carport = Carport.find.byId(carportId);
             PriceCalculator calculator = new PriceCalculator();
             Dimensions requestedCarportDimensions = new Dimensions(
-                    parameters.getInteger("width"),
-                    parameters.getInteger("length")
+                    parameters.getInteger("frameWidth"),
+                    parameters.getInteger("frameLength")
             );
             int price = calculator.getPrice(carport,requestedCarportDimensions);
             objectNode.put("price", price);
@@ -43,8 +43,8 @@ public class CarportController extends ApiController {
     @NotNull
     private ParsedParameters getRequestParameters() throws ParameterParserException {
         ParameterFilter parameterFilter = new ParameterFilter();
-        parameterFilter.addInteger("width").setRequired();
-        parameterFilter.addInteger("length").setRequired();
+        parameterFilter.addInteger("frameWidth").setRequired();
+        parameterFilter.addInteger("frameLength").setRequired();
         return parameterFilter.parseParameters(request);
     }
 }
