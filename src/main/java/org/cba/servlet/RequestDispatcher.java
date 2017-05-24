@@ -21,8 +21,8 @@ public class RequestDispatcher extends hyggemvc.servlet.RequestDispatcher {
                 new Route("(?<controller>[a-z\\-]+)(?<method>/[a-z\\-]+)?(?<int0>/\\d+)?","Default","index")
         );
 
-        EndpointReflection routeCallable = router.getControllerReflection("org.cba.controller",url);
+        EndpointReflection endpointReflection = router.getControllerReflection("org.cba.controller",url);
         AppContainer app = new AppContainer(request,response);
-        app.run(routeCallable);
+        app.run(endpointReflection);
     }
 }
