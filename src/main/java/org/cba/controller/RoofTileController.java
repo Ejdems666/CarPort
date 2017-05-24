@@ -5,7 +5,6 @@ import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
 import org.cba.domain.RoofTile;
 import org.cba.parameter.ParameterFilter;
-import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
 
@@ -38,9 +37,8 @@ public class RoofTileController extends BaseController {
     }
 
     private ParsedParameters getRoofTileParameters() throws ParameterParserException {
-        ParameterFilter parameterSieve = createSieve();
-        ParameterParser parameterParser = new ParameterParser();
-        return parameterParser.parseParameters(request, parameterSieve);
+        ParameterFilter parameterFilter = createSieve();
+        return parameterFilter.parseParameters(request);
     }
 
     @NotNull
