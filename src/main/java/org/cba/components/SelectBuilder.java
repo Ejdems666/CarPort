@@ -17,12 +17,12 @@ public class SelectBuilder implements Component {
 
     private void createLabelAndOpeningSelectTag(String label, String name) {
         selectBuilder = new StringBuilder("<label for='").append(name).append("'>").append(label).append("</label>")
-                .append("<select id='").append(name).append("' class='selectpicker' name='").append(name).append("' ");
+                .append("<select id='").append(name).append("' class='selectpicker' name='").append(name).append("'");
     }
 
     public SelectBuilder(String label, String name, Object defaultValue, String attributes) {
         createLabelAndOpeningSelectTag(label,name);
-        selectBuilder.append(attributes).append(">");
+        selectBuilder.append(" ").append(attributes).append(">");
         this.defaultValue = defaultValue;
     }
 

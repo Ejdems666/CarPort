@@ -52,3 +52,5 @@ buildNumber.properties
 !/web/assets/Build/
 !/org/cba/components/table/Row.java
 !/src/main/resources/dbmigration/model/1.0__init.model.xml
+!/src/main/java/org/cba/parameter/ParameterFilter.java
+!/src/main/java/org/cba/parameter/StringParameter.java

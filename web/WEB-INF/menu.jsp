@@ -1,5 +1,7 @@
 <%@ page import="org.cba.domain.User" %>
-<% User user = ((User) session.getAttribute("user")); %>
+<%@ page import="org.cba.model.cart.TemplateCart" %>
+<% User loggedUser = ((User) session.getAttribute("loggedUser")); %>
+<% TemplateCart cart = ((TemplateCart) request.getAttribute("cart")); %>
 <nav class="navbar navbar-default navBg">
     <div class="container">
         <div class="navbar-header">
@@ -19,23 +21,24 @@
                     <li>
                         <a href="${root}">Home</a>
                     </li>
-                    <% if (user == null) {%>
+                    <li>
+                        <a href="${root}carport/all">Store</a>
+                    </li>
+                    <% if (loggedUser == null) {%>
                     <li>
                         <a href="${root}sign/up">Register</a>
                     </li>
                     <li>
                         <a href="${root}sign/in">Login</a>
                     </li>
-                    <li>
-                        <a href="${root}carport/all">Store</a>
-                    </li>
                     <% } else {%>
                     <li>
-                        <a href="${root}sign/out">Logout <%=user.getName()%> <%=user.getSurname()%>
+                        <a href="${root}sign/out">Logout <%=loggedUser.getName()%> <%=loggedUser.getSurname()%>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                           aria-expanded="false">
                             Assembly Material<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -53,11 +56,24 @@
                         </ul>
                     </li>
                     <% }%>
-                    <li><% if (request.getAttribute("alerts") != null) {%>
+                    <li>
+                        <% if (request.getAttribute("alerts") != null) {%>
                         ${alerts}
-                        <% } %></li>
+                        <% } %>
+                    </li>
 
                 </ul>
+                <% if (cart.getNumberOfItems() > 0) {%>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="${root}cart">
+                            <%= cart.getNumberOfItems() %>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <%= cart.getPrice() %> DKK
+                        </a>
+                    </li>
+                </ul>
+                <% } %>
             </div>
         </div>
     </div>

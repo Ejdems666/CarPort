@@ -5,21 +5,21 @@ import org.cba.domain.User;
 import org.cba.domain.query.QUser;
 import org.cba.model.Hasher;
 import org.cba.model.exception.EmailTakenException;
+import org.cba.parameter.ParsedParameters;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.Map;
 
 /**
  * Created by adam on 28/02/2017.
  */
 public class RegisterFacade {
 
-    public User registerUser(Map attributes) throws EmailTakenException {
-        String email = (String) attributes.get("email");
+    public User registerUser(ParsedParameters parameters) throws EmailTakenException {
+        String email = parameters.getString("email");
         int exist = new QUser().email.equalTo(email).findCount();
         if (exist == 0) {
-            User user = mapUser(attributes);
+            User user = mapUser(parameters);
             Ebean.save(user);
             return user;
         } else {
@@ -27,14 +27,14 @@ public class RegisterFacade {
         }
     }
 
-    private User mapUser(Map attributes) {
+    private User mapUser(ParsedParameters parameters) {
         Hasher hasher = new Hasher();
         String salt = hasher.generateSalt();
-        String hashedPassword = hasher.hashPassword(((String) attributes.get("password")), salt);
+        String hashedPassword = hasher.hashPassword(parameters.getString("password"), salt);
         User user = new User();
-        user.setName(((String) attributes.get("name")));
-        user.setSurname(((String) attributes.get("surname")));
-        user.setEmail(((String) attributes.get("email")));
+        user.setName(parameters.getString("name"));
+        user.setSurname(parameters.getString("surname"));
+        user.setEmail(parameters.getString("email"));
         user.setType(1);
         user.setStatus(1);
         user.setCreatedAt(new Date(Calendar.getInstance().getTimeInMillis()));

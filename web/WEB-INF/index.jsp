@@ -16,6 +16,10 @@
     <link rel="shortcut icon" type="image/png" href="${assets}favicon.ico"/>
     <link rel="shortcut icon" type="image/png" href="${assets}favicon.ico"/>
     <script src="${assets}jquery.slides.min.js"></script>
+    <script>
+        var root = '${root}';
+    </script>
+    <script src="${assets}js/functions.js"></script>
 </head>
 <body class="bg">
 <jsp:include page="/WEB-INF/menu.jsp"/>
