@@ -1,9 +1,9 @@
 package org.cba.controller;
 
-import io.ebean.Ebean;
 import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
 import org.cba.domain.RoofTile;
+import org.cba.model.facade.RoofTileFacade;
 import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParsedParameters;
@@ -26,9 +26,8 @@ public class RoofTileController extends BaseController {
         if (request.getMethod().equals("POST")) {
             try {
                 ParsedParameters parameters = getRoofTileParameters();
-                RoofTile roofTile = new RoofTile();
-                fillUpEntity(roofTile, parameters);
-                Ebean.save(roofTile);
+                RoofTileFacade facade = new RoofTileFacade();
+                facade.add(parameters);
                 alertSuccess("Roof tile added!");
             } catch (ParameterParserException e) {
                 alertError("Wrong input!");
@@ -57,24 +56,15 @@ public class RoofTileController extends BaseController {
         return parameterFilter;
     }
 
-    private void fillUpEntity(RoofTile roofTile, ParsedParameters parameters) {
-        roofTile.setName(parameters.getString("name"));
-        roofTile.setWidth(parameters.getInteger("width"));
-        roofTile.setWidthOverlap(parameters.getInteger("width overlap"));
-        roofTile.setLength(parameters.getInteger("length"));
-        roofTile.setLengthOverlap(parameters.getInteger("length overlap"));
-        roofTile.setPrice(parameters.getInteger("price"));
-        roofTile.setStock(parameters.getInteger("stock"));
-        roofTile.setDescription(parameters.getString("description"));
-    }
+
 
     public void edit(Integer id) {
         RoofTile roofTile = RoofTile.find.byId(id);
         if (request.getMethod().equals("POST")) {
             try {
                 ParsedParameters parameters = getRoofTileParameters();
-                fillUpEntity(roofTile, parameters);
-                Ebean.update(roofTile);
+                RoofTileFacade facade = new RoofTileFacade();
+                facade.update(roofTile, parameters);
                 alertSuccess("Roof Tile edited");
             } catch (ParameterParserException e) {
                 alertError("Wrong input");
