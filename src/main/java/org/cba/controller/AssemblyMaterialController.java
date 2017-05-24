@@ -5,7 +5,6 @@ import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
 import org.cba.domain.AssemblyMaterial;
 import org.cba.parameter.ParameterFilter;
-import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
 import org.jetbrains.annotations.NotNull;
@@ -38,19 +37,12 @@ public class AssemblyMaterialController extends BaseController {
     }
 
     private ParsedParameters getAssemblyMaterialParameters() throws ParameterParserException {
-        ParameterFilter parameterFilter = createSieve();
-        ParameterParser parameterParser = new ParameterParser();
-        return parameterParser.parseParameters(request, parameterFilter);
-    }
-
-    @NotNull
-    private ParameterFilter createSieve() {
         ParameterFilter parameterFilter = new ParameterFilter();
         parameterFilter.addString("name").setRequired();
         parameterFilter.addInteger("price").setRequired();
         parameterFilter.addInteger("stock").setRequired();
         parameterFilter.addString("description").setRequired();
-        return parameterFilter;
+        return parameterFilter.parseParameters(request);
     }
 
     private void fillUpEntity(AssemblyMaterial assemblyMaterial, ParsedParameters parameters) {
@@ -86,9 +78,14 @@ public class AssemblyMaterialController extends BaseController {
             row.addColumn(String.valueOf(assemblyMaterial.getPrice()));
             row.addColumn(String.valueOf(assemblyMaterial.getStock()));
             row.addColumn(assemblyMaterial.getDescription());
-            row.addColumn("<a href='" + ROOT + "assembly-material/edit/" + assemblyMaterial.getId() + "'>" + assemblyMaterial.getId() + "</a>");
+            row.addColumn(getEditLink(assemblyMaterial));
         }
         request.setAttribute("table", tableBuilder);
         renderTemplate();
+    }
+
+    @NotNull
+    private String getEditLink(AssemblyMaterial assemblyMaterial) {
+        return "<a href='" + ROOT + "assembly-material/edit/" + assemblyMaterial.getId() + "'>" + assemblyMaterial.getId() + "</a>";
     }
 }

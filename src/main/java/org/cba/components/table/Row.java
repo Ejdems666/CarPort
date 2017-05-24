@@ -6,6 +6,10 @@ package org.cba.components.table;
 public class Row {
     private StringBuilder rowBuilder = new StringBuilder("<tr>");
 
+    public void addColumn(Object record) {
+        addColumn(String.valueOf(record));
+    }
+
     public void addColumn(String record) {
         rowBuilder.append("<td>").append(record).append("</td>");
     }

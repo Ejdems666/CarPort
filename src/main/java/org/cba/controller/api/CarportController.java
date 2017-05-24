@@ -6,7 +6,6 @@ import org.cba.domain.Carport;
 import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
-import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
@@ -46,7 +45,6 @@ public class CarportController extends ApiController {
         ParameterFilter parameterFilter = new ParameterFilter();
         parameterFilter.addInteger("width").setRequired();
         parameterFilter.addInteger("length").setRequired();
-        ParameterParser parameterParser = new ParameterParser();
-        return parameterParser.parseParameters(request, parameterFilter);
+        return parameterFilter.parseParameters(request);
     }
 }

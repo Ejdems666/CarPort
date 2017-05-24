@@ -16,14 +16,12 @@ import static org.easymock.EasyMock.replay;
  * Created by adam on 19/04/2017.
  */
 public class ParameterParserTest {
-    private ParameterParser parameterParser;
     private ParameterFilter parameterFilter;
     private ParsedParameters parsedParameters;
     HttpServletRequest request;
 
     @BeforeMethod
     public void setUp() throws Exception {
-        parameterParser = new ParameterParser();
         parameterFilter = new ParameterFilter();
         parsedParameters = null;
         request = createMock(HttpServletRequest.class);
@@ -32,7 +30,7 @@ public class ParameterParserTest {
     private void parseParameters() {
         replay(request);
         try {
-            parsedParameters = parameterParser.parseParameters(request, parameterFilter);
+            parsedParameters = parameterFilter.parseParameters(request);
         } catch (ParameterParserException e) {
             e.printStackTrace();
         }
@@ -65,14 +63,14 @@ public class ParameterParserTest {
     @Test(expectedExceptions = RequiredParameterNonExistentException.class)
     public void testRequiredNonExistentParameter() throws ParameterParserException {
         parameterFilter.addString("key").setRequired();
-        parsedParameters = parameterParser.parseParameters(request, parameterFilter);
+        parsedParameters = parameterFilter.parseParameters(request);
     }
 
     @Test(expectedExceptions = RequiredParameterNonExistentException.class)
     public void testRequiredEmptyParameter() throws ParameterParserException {
         parameterFilter.addString("key").setRequired();
         expect(request.getParameter("key")).andReturn("");
-        parsedParameters = parameterParser.parseParameters(request, parameterFilter);
+        parsedParameters = parameterFilter.parseParameters(request);
     }
 
     @Test
@@ -83,5 +81,13 @@ public class ParameterParserTest {
         expect(request.getParameter("key")).andReturn("");
         parseParameters();
         Assert.assertEquals(parsedParameters.getString("key"), null);
+    }
+
+    @Test
+    public void testDefaultValue() {
+        parameterFilter.addString("key").setRequired().setDefaultValue("default");
+        expect(request.getParameter("key")).andReturn(null);
+        parseParameters();
+        Assert.assertEquals(parsedParameters.getString("key"), "default");
     }
 }

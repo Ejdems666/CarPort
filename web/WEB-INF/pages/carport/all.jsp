@@ -22,7 +22,7 @@
                     </p>
                     <hr>
                     <a href="${root}carport/<%=carport.getId() %>" class="btn btn-primary">Go to detail</a>
-                    <a href="#" class="btn btn-primary">Add to basket</a>
+                    <a href="${root}cart/add/<%=carport.getId() %>" class="btn btn-primary">Add to cart</a>
                     <a href="${root}carport/edit/<%=carport.getId() %>" class="btn btn-primary">Or edit first</a>
                 </div>
             </div>

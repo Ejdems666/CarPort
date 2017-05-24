@@ -1,5 +1,7 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.PurchaseFinder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -14,9 +16,14 @@ import java.util.List;
  */
 @Entity
 public class Purchase {
+    public static final PurchaseFinder find = new PurchaseFinder();
+
     @Id
     private int id;
 
+    /**
+     * Every Purchase will have saved price, because calculation might change in the future, or % of material profit
+     */
     @NotNull
     private int finalPrice;
 
