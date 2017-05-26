@@ -16,15 +16,13 @@ import static org.easymock.EasyMock.replay;
  * Created by adam on 19/04/2017.
  */
 public class ParameterParserTest {
-    private ParameterParser parameterParser;
-    private ParameterSieve parameterSieve;
+    private ParameterFilter parameterFilter;
     private ParsedParameters parsedParameters;
     HttpServletRequest request;
 
     @BeforeMethod
     public void setUp() throws Exception {
-        parameterParser = new ParameterParser();
-        parameterSieve = new ParameterSieve();
+        parameterFilter = new ParameterFilter();
         parsedParameters = null;
         request = createMock(HttpServletRequest.class);
     }
@@ -32,7 +30,7 @@ public class ParameterParserTest {
     private void parseParameters() {
         replay(request);
         try {
-            parsedParameters = parameterParser.parseParameters(request, parameterSieve);
+            parsedParameters = parameterFilter.parseParameters(request);
         } catch (ParameterParserException e) {
             e.printStackTrace();
         }
@@ -40,7 +38,7 @@ public class ParameterParserTest {
 
     @Test
     public void testStringParameter() {
-        parameterSieve.addString("key");
+        parameterFilter.addString("key");
         expect(request.getParameter("key")).andReturn("value");
         parseParameters();
         Assert.assertEquals(parsedParameters.getString("key"), "value");
@@ -48,7 +46,7 @@ public class ParameterParserTest {
 
     @Test
     public void testIntegerParameter() {
-        parameterSieve.addInteger("key");
+        parameterFilter.addInteger("key");
         expect(request.getParameter("key")).andReturn("1");
         parseParameters();
         Assert.assertEquals(parsedParameters.getInteger("key"), Integer.valueOf(1));
@@ -56,7 +54,7 @@ public class ParameterParserTest {
 
     @Test
     public void testBooleanParameter() {
-        parameterSieve.addBoolean("key");
+        parameterFilter.addBoolean("key");
         expect(request.getParameter("key")).andReturn("1");
         parseParameters();
         Assert.assertTrue(parsedParameters.getBoolean("key"));
@@ -64,24 +62,32 @@ public class ParameterParserTest {
 
     @Test(expectedExceptions = RequiredParameterNonExistentException.class)
     public void testRequiredNonExistentParameter() throws ParameterParserException {
-        parameterSieve.addString("key").setRequired();
-        parsedParameters = parameterParser.parseParameters(request, parameterSieve);
+        parameterFilter.addString("key").setRequired();
+        parsedParameters = parameterFilter.parseParameters(request);
     }
 
     @Test(expectedExceptions = RequiredParameterNonExistentException.class)
     public void testRequiredEmptyParameter() throws ParameterParserException {
-        parameterSieve.addString("key").setRequired();
+        parameterFilter.addString("key").setRequired();
         expect(request.getParameter("key")).andReturn("");
-        parsedParameters = parameterParser.parseParameters(request, parameterSieve);
+        parsedParameters = parameterFilter.parseParameters(request);
     }
 
     @Test
     public void testCancelRequire() {
-        ParameterMask mask = parameterSieve.addString("key");
+        ParameterMask mask = parameterFilter.addString("key");
         mask.setRequired();
         mask.setRequired(false);
         expect(request.getParameter("key")).andReturn("");
         parseParameters();
         Assert.assertEquals(parsedParameters.getString("key"), null);
+    }
+
+    @Test
+    public void testDefaultValue() {
+        parameterFilter.addString("key").setRequired().setDefaultValue("default");
+        expect(request.getParameter("key")).andReturn(null);
+        parseParameters();
+        Assert.assertEquals(parsedParameters.getString("key"), "default");
     }
 }

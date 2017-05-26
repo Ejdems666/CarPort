@@ -2,6 +2,7 @@ package org.cba.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.cba.domain.finder.CarportFinder;
+import org.cba.model.carport.calculation.Dimensions;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -135,6 +136,10 @@ public class Carport {
 
     public void setRoofTile(RoofTile roofTile) {
         this.roofTile = roofTile;
+    }
+
+    public Dimensions getDefaultDimensions() {
+        return new Dimensions(defaultLength,defaultWidth);
     }
 }
 

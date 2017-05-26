@@ -7,29 +7,29 @@ import java.util.Map;
  * Created by adam on 19/04/2017.
  */
 public class ParsedParameters {
-    private Map<String,Object> values = new HashMap<>();
+    private Map<String,Object> parameters = new HashMap<>();
 
-    public void addString(String key, String value) {
-        values.put(key,value);
-    }
-    public void addInteger(String key, Integer value) {
-        values.put(key,value);
-    }
-    public void addBoolean(String key, Boolean value) {
-        values.put(key,value);
+    public void addParameter(String key, ParsedParameter parameter) {
+        parameters.put(key,getValue(parameter));
     }
 
     public String getString(String key) {
-        return ((String) values.get(key));
+        return ((String) parameters.get(key));
     }
     public Integer getInteger(String key) {
-        return ((Integer) values.get(key));
+        return ((Integer) parameters.get(key));
     }
     public Boolean getBoolean(String key) {
-        return ((Boolean) values.get(key));
+        return ((Boolean) parameters.get(key));
+    }
+    private Object getValue(ParsedParameter parameter) {
+        if (parameter.getValue() == null) {
+            return parameter.getDefaultValue();
+        }
+        return parameter.getValue();
     }
 
-    public Map<String, Object> getValues() {
-        return values;
+    public Map<String, Object> getParameters() {
+        return parameters;
     }
 }

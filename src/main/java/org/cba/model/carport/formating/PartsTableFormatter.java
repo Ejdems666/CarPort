@@ -1,7 +1,7 @@
 package org.cba.model.carport.formating;
 
-import org.cba.model.carport.formating.table.Row;
-import org.cba.model.carport.formating.table.TableBuilder;
+import org.cba.components.table.Row;
+import org.cba.components.table.TableBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
