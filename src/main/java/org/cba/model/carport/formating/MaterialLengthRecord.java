@@ -50,7 +50,7 @@ public class MaterialLengthRecord implements PartRecord {
     @Override
     public List<PartDependency> getPartDependencies() {
         // TODO: find better solution
-        return new ArrayList<>(materialLengthVariation.getMaterial().getMaterialDependencies());
+            return new ArrayList<>(materialLengthVariation.getMaterial().getMaterialDependencies());
     }
 
     public int getCount() {
