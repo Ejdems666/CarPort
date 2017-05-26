@@ -3,6 +3,8 @@ package org.cba.controller;
 import io.ebean.Ebean;
 import org.cba.domain.query.QUser;
 import org.cba.model.Hasher;
+import org.cba.model.exception.WrongPasswordException;
+import org.cba.model.facade.ProfileFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,29 +43,19 @@ public class ProfileController extends BaseController {
             return;
         }
         if (request.getMethod().equals("POST")) {
+            String newPassword = request.getParameter("newPassword");
+            String newPassword2 = request.getParameter("newPassword2");
+
             String oldPassword = request.getParameter("oldPassword");
-            Hasher hasher = new Hasher();
-            String oldPassHash = hasher.hashPassword(oldPassword, loggedUser.getSalt());
-
-            if (oldPassHash.equals(loggedUser.getPassword())) {
-                String newPassword = request.getParameter("newPassword");
-                String newPassword2 = request.getParameter("newPassword2");
-
-
-                if (newPassword.equals(newPassword2)) {
-
-                    String newPassHash = hasher.hashPassword(newPassword, loggedUser.getSalt());
-                    loggedUser.setPassword(newPassHash);
-                    Ebean.update(loggedUser);
-                    alertSuccess("Password was updated");
-                } else {
-                    alertError("New passwords does not match");
-                }
-
-
-            } else {
-                alertError("Old password does not match");
+            ProfileFacade profileFacade= new ProfileFacade();
+            try {
+                profileFacade.changePassword(oldPassword,loggedUser,newPassword, newPassword2);
+                alertSuccess("Password was updated");
+            } catch (WrongPasswordException e) {
+                alertError(e.getMessage());
             }
+
+
         }
         renderTemplate();
     }
