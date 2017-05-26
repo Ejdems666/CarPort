@@ -1,6 +1,6 @@
 <%@ page import="org.cba.domain.User" %>
 <%@ page import="org.cba.model.cart.TemplateCart" %>
-<% User loggedUser = ((User) session.getAttribute("loggedUser")); %>
+<% User loggedUser = ((User) session.getAttribute("user")); %>
 <% TemplateCart cart = ((TemplateCart) request.getAttribute("cart")); %>
 <nav class="navbar navbar-default navBg">
     <div class="container">
@@ -53,16 +53,17 @@
                             <li><a href="${root}roof-tile/add">Add</a></li>
                         </ul>
                     </li>
+                    <% }%>
                     <li>
                         <% if (request.getAttribute("alerts") != null) {%>
                         ${alerts}
                         <% } %>
                     </li>
-                    <% }%>
 
                 </ul>
-                <% if (cart.getNumberOfItems() > 0) {%>
+
                 <ul class="nav navbar-nav navbar-right">
+                    <% if (cart.getNumberOfItems() > 0) {%>
                     <li>
                         <a href="${root}cart">
                             <%= cart.getNumberOfItems() %>
@@ -70,6 +71,7 @@
                             <%= cart.getPrice() %> DKK
                         </a>
                     </li>
+                    <% } %>
                     <% if (loggedUser != null) {%>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -84,7 +86,6 @@
                     <% }%>
 
                 </ul>
-                <% } %>
             </div>
         </div>
     </div>
