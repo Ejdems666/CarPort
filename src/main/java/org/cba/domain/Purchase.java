@@ -2,10 +2,7 @@ package org.cba.domain;
 
 import org.cba.domain.finder.PurchaseFinder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class Purchase {
     @ManyToOne
     private User customer;
 
-    @OneToMany(mappedBy = "purchase")
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
     private List<PurchaseCarport> purchaseCarports = new ArrayList<>();
 
     public List<PurchaseCarport> getPurchaseCarports() {

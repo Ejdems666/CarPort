@@ -1,4 +1,4 @@
-<%--
+<%@ page import="static org.cba.Path.ASSETS" %><%--
   Created by IntelliJ IDEA.
   User: AR Istvan Farkas
   Date: 5/16/2017
@@ -8,7 +8,7 @@
 
 
 <script>
-    var gameInstance = UnityLoader.instantiate("gameContainer", "${assets}Build/Carport_FOG_002.json", {onProgress: UnityProgress});
+    var gameInstance = UnityLoader.instantiate("gameContainer", "<%=ASSETS%>Build/Carport_FOG_002.json", {onProgress: UnityProgress});
 </script>
 <div class="webgl-content">
     <div id="gameContainer" style="width: 960px; height: 600px"></div>

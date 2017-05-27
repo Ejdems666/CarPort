@@ -80,6 +80,7 @@ create table purchase_carport (
   carport_id                    integer not null,
   frame_width                   integer not null,
   frame_length                  integer not null,
+  pdf_catalogue                 varchar(255),
   price                         integer not null,
   purchase_id                   integer not null,
   constraint pk_purchase_carport primary key (id)

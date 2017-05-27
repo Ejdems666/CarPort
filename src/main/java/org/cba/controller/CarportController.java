@@ -29,8 +29,7 @@ public class CarportController extends BaseController {
 
     public void edit(Integer carportId) {
         Carport carport = Carport.find.byId(carportId);
-        CarportEditForm form = new CarportEditForm(request);
-        form.createAndPassSelectComponents(carport,carport.getDefaultDimensions());
+        CarportEditForm.createAndPassSelectComponents(request,carport, carport.getDefaultDimensions());
         request.setAttribute("carport", carport);
         renderTemplate();
     }

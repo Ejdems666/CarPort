@@ -1,4 +1,4 @@
-<%--
+<%@ page import="static org.cba.Path.ROOT" %><%--
   Created by IntelliJ IDEA.
   User: AR
   Date: 5/21/2017
@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<form action="${root}roof-tile/add/" method="POST">
+<form action="<%=ROOT%>roof-tile/add/" method="POST">
     <div class="input-group">
         <label for="name">Name</label>
         <input type="text" required id="name" name="name" class="form-control">

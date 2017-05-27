@@ -3,6 +3,7 @@ package org.cba.model.carport.formating;
 import org.cba.domain.PartDependency;
 import org.cba.domain.RoofTile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,13 +43,14 @@ public class RoofTileRecord implements PartRecord {
         return 0;
     }
 
-    public RoofTile getPart() {
-        return roofTile;
+    @Override
+    public Integer getPrice() {
+        return roofTile.getPrice();
     }
 
     @Override
     public List<PartDependency> getPartDependencies() {
-        return null;
+        return new ArrayList<>(roofTile.getRoofTileDependencies());
     }
 
     public int getCount() {

@@ -6,10 +6,9 @@ import org.cba.domain.Carport;
 import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
-import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
-import org.jetbrains.annotations.NotNull;
+import org.cba.parameter.filters.CarportDimensionsFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,7 @@ public class CarportController extends ApiController {
     public void getPrice(Integer carportId) {
         ObjectNode objectNode = new ObjectMapper().createObjectNode();
         try {
-            ParsedParameters parameters = getRequestParameters();
+            ParsedParameters parameters = CarportDimensionsFilter.getParameters(request);
             Carport carport = Carport.find.byId(carportId);
             PriceCalculator calculator = new PriceCalculator();
             Dimensions requestedCarportDimensions = new Dimensions(
@@ -38,13 +37,5 @@ public class CarportController extends ApiController {
             objectNode.put("error", e.getMessage());
         }
         returnJSON(objectNode.toString());
-    }
-
-    @NotNull
-    private ParsedParameters getRequestParameters() throws ParameterParserException {
-        ParameterFilter parameterFilter = new ParameterFilter();
-        parameterFilter.addInteger("frameWidth").setRequired();
-        parameterFilter.addInteger("frameLength").setRequired();
-        return parameterFilter.parseParameters(request);
     }
 }

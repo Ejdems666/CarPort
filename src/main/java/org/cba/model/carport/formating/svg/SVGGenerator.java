@@ -48,6 +48,7 @@ public class SVGGenerator {
         return result;
     }
 
+    // TODO: JUST FOR TESTING, remove
     public static void main(String[] args) throws SVGGraphics2DIOException {
         SVGGenerator svgGenerator = new SVGGenerator();
         Frame frame = Frame.find.byId(1);

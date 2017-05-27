@@ -5,7 +5,7 @@ import org.cba.domain.Material;
 import org.cba.domain.MaterialLength;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.cba.model.carport.formating.MaterialLengthRecord;
-import org.cba.model.carport.formating.PartsFormatter;
+import org.cba.model.carport.formating.PartRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,17 +67,8 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
     }
 
     @Override
-    public void addCalculatedMaterialsToFormatter(PartsFormatter formatter) throws MaterialLengthVariationNotFoundException {
-        formatter.addPartRecord(getFrontAndBackUpperPillars());
-        formatter.addPartRecord(getSideUpperPillars());
-        formatter.addPartRecord(getLowerPillars());
-        formatter.addPartRecord(getRoofPlanks());
-        formatter.addPartRecord(getVerticalPillars());
-    }
-
-    @Override
-    public List<MaterialLengthRecord> getAllMaterialRecords() throws MaterialLengthVariationNotFoundException {
-        List<MaterialLengthRecord> partRecords = new ArrayList<>();
+    public List<PartRecord> getAllPartRecords() throws MaterialLengthVariationNotFoundException {
+        List<PartRecord> partRecords = new ArrayList<>();
         partRecords.add(getFrontAndBackUpperPillars());
         partRecords.add(getSideUpperPillars());
         partRecords.add(getLowerPillars());

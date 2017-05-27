@@ -1,7 +1,8 @@
+<%@ page import="static org.cba.Path.ROOT" %>
 <div class="panel panel-default">
     <div class="panel-heading">Carport <strong>${carport.name}</strong></div>
     <div class="panel-body">
-        <form id="dimensions-form" method="POST" action="${root}cart/add/${carport.id}">
+        <form id="dimensions-form" method="POST" action="<%=ROOT%>cart/add/${carport.id}">
             <div class="form-group">
                 <%= request.getAttribute("lengthSelect") %>
             </div>
