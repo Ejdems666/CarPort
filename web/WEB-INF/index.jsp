@@ -1,25 +1,27 @@
-
+<%@ page import="static org.cba.Path.ASSETS" %>
+<%@ page import="static org.cba.Path.ROOT" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="${assets}style.css">
+    <link rel="stylesheet" href="<%=ASSETS%>style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="${assets}bootstrap.min.css">
-    <link rel="stylesheet" href="${assets}bootstrap-select/bootstrap-select.min.css">
-    <link rel="stylesheet" href="${assets}custom.css">
-    <link rel="stylesheet" href="${assets}style.css">
-    <link rel="stylesheet" href="${assets}font-awesome/css/font-awesome.min.css">
-    <script src="${assets}jquery-3.1.1.min.js"></script>
-    <script src="${assets}bootstrap.min.js"></script>
-    <script src="${assets}bootstrap-select/bootstrap-select.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="${assets}favicon.ico"/>
-    <link rel="shortcut icon" type="image/png" href="${assets}favicon.ico"/>
-    <script src="${assets}jquery.slides.min.js"></script>
+    <link rel="stylesheet" href="<%=ASSETS%>bootstrap.min.css">
+    <link rel="stylesheet" href="<%=ASSETS%>bootstrap-select/bootstrap-select.min.css">
+    <link rel="stylesheet" href="<%=ASSETS%>custom.css">
+    <link rel="stylesheet" href="<%=ASSETS%>style.css">
+    <link rel="stylesheet" href="<%=ASSETS%>font-awesome/css/font-awesome.min.css">
+    <script src="<%=ASSETS%>jquery-3.1.1.min.js"></script>
+    <script src="<%=ASSETS%>bootstrap.min.js"></script>
+    <script src="<%=ASSETS%>bootstrap-select/bootstrap-select.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="<%=ASSETS%>favicon.ico"/>
+    <link rel="shortcut icon" type="image/png" href="<%=ASSETS%>favicon.ico"/>
+    <script src="<%=ASSETS%>jquery.slides.min.js"></script>
     <script>
-        var root = '${root}';
+        var root = '<%=ROOT%>';
     </script>
-    <script src="${assets}js/functions.js"></script>
+    <script src="<%=ASSETS%>js/functions.js"></script>
+    <title>${title}</title>
 </head>
 <body class="bg">
 <jsp:include page="/WEB-INF/menu.jsp"/>

@@ -4,6 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.cba.Path.PDF;
+import static org.cba.Path.ROOT;
+
 /**
  * Created by adam on 20/05/2017.
  */
@@ -42,10 +45,17 @@ public class TableBuilderTest {
     }
 
     @Test
-    public void testIconInRow() {
+    public void testLinkColumn() {
         Row row = tableBuilder.createNewRow();
         row.addColumnLink("url", Row.Icon.EDIT);
-        Assert.assertEquals(row.toString(), "<tr><td><a href='url'><i class=\"fa fa-"+Row.Icon.EDIT+"\" aria-hidden=\"true\"></i></a></td></tr>");
+        Assert.assertEquals(row.toString(), "<tr><td><a href='" + ROOT + "url'><i class=\"fa fa-" + Row.Icon.EDIT + "\" aria-hidden=\"true\"></i></a></td></tr>");
+    }
+
+    @Test
+    public void testLinkColumnWithCustomPathSuffix() {
+        Row row = tableBuilder.createNewRow();
+        row.addColumnLink("url", Row.Icon.EDIT, PDF);
+        Assert.assertEquals(row.toString(), "<tr><td><a href='" + PDF + "url'><i class=\"fa fa-" + Row.Icon.EDIT + "\" aria-hidden=\"true\"></i></a></td></tr>");
     }
 
     @Test
@@ -65,6 +75,6 @@ public class TableBuilderTest {
     @Test
     public void testTableWithCSSClass() {
         tableBuilder = new TableBuilder("test");
-        Assert.assertEquals(tableBuilder.toString(),"<table class='test'></table>");
+        Assert.assertEquals(tableBuilder.toString(), "<table class='test'></table>");
     }
 }

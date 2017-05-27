@@ -1,5 +1,6 @@
 package org.cba.controller;
 
+import org.cba.Path;
 import org.cba.components.CarportEditForm;
 import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
@@ -8,15 +9,16 @@ import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
 import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
+import org.cba.model.carport.formating.pdf.PdfGenerator;
 import org.cba.model.cart.IndexOfOrderNotFound;
 import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.util.Calendar;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -30,7 +32,7 @@ public class CartController extends BaseController {
     public void index() {
         if (cart.getNumberOfItems() > 0) {
             TableBuilder tableBuilder = new TableBuilder("table");
-            tableBuilder.addHeader("Current orders in cart", "Carport name, Frame width, Frame length, Price, Link to edit order, Remove");
+            tableBuilder.addHeader("Current orders in cart", "Carport name, Frame width, Frame length, Price, Edit order, View pdf catalogue, Remove");
             List<PurchaseCarport> purchaseCarports = cart.getCartContents().getPurchaseCarports();
             for (int i = 0; i < purchaseCarports.size(); i++) {
                 PurchaseCarport purchaseCarport = purchaseCarports.get(i);
@@ -39,8 +41,9 @@ public class CartController extends BaseController {
                 row.addColumn(purchaseCarport.getFrameWidth());
                 row.addColumn(purchaseCarport.getFrameLength());
                 row.addColumn(purchaseCarport.getPrice());
-                row.addColumnLink(ROOT + "cart/edit/" + i, Row.Icon.EDIT);
-                row.addColumnLink(ROOT + "cart/delete/" + i, Row.Icon.DELETE);
+                row.addColumnLink("cart/edit/" + i, Row.Icon.EDIT);
+                row.addColumnLink("cart/pdf/" + i, Row.Icon.PDF);
+                row.addColumnLink("cart/delete/" + i, Row.Icon.DELETE);
             }
             request.setAttribute("table", tableBuilder);
         } else {
@@ -49,29 +52,30 @@ public class CartController extends BaseController {
         renderTemplate();
     }
 
-    public void edit(Integer orderNumber) {
+    public void edit(Integer purchaseNumber) {
         PurchaseCarport order = null;
         try {
-            order = cart.getItem(orderNumber);
+            order = cart.getItem(purchaseNumber);
         } catch (IndexOfOrderNotFound e) {
             alertError(e.getMessage());
             renderTemplate("error/notFound");
         }
-        CarportEditForm form = new CarportEditForm(request);
-        form.createAndPassSelectComponents(order.getCarport(),order.getFrameDimensions());
-        request.setAttribute("orderNumber", orderNumber);
+        CarportEditForm.createAndPassSelectComponents(request, order.getCarport(), order.getFrameDimensions());
+        request.setAttribute("purchaseNumber", purchaseNumber);
         request.setAttribute("carport", order.getCarport());
         renderTemplate();
     }
 
-    public void editConfirm(Integer orderNumber) {
+    // TODO: regenerate pdf if exists
+    public void editConfirm(Integer purchaseNumber) {
         if (request.getMethod().equals("POST")) {
-            PurchaseCarport purchaseCarport = cart.getCartContents().getPurchaseCarports().get(orderNumber);
+            PurchaseCarport purchase = cart.getCartContents().getPurchaseCarports().get(purchaseNumber);
             try {
-                ParsedParameters parameters = getDimensionsParameters(purchaseCarport.getCarport());
+                ParsedParameters parameters = getDimensionsParameters(purchase.getCarport());
                 Dimensions frameDimensions = new Dimensions(parameters.getInteger("frameLength"), parameters.getInteger("frameWidth"));
-                purchaseCarport.setFrameDimensions(frameDimensions);
-                cart.recalculatePriceForItem(orderNumber);
+                purchase.setFrameDimensions(frameDimensions);
+                cart.recalculatePriceForItem(purchaseNumber);
+                regeneratePdfCatalogue(purchase);
                 alertSuccess("Order changed.");
                 redirect("cart");
             } catch (ParameterParserException e) {
@@ -80,10 +84,17 @@ public class CartController extends BaseController {
                 alertError(e.getMessage());
             } catch (MaterialLengthVariationNotFoundException e) {
                 alertError("Sorry, can't submit order with those dimensions.");
-                redirect("cart/edit-confirm/" + orderNumber);
+                redirect("cart/edit-confirm/" + purchaseNumber);
             }
         }
         renderTemplate("error/notFound");
+    }
+
+    private void regeneratePdfCatalogue(PurchaseCarport purchase) {
+        if (purchase.getPdfCatalogue() != null) {
+            PdfGenerator pdfGenerator = new PdfGenerator();
+            pdfGenerator.generatePdf(purchase, request.getSession().getServletContext(), purchase.getPdfCatalogue());
+        }
     }
 
     private ParsedParameters getDimensionsParameters(Carport carport) throws ParameterParserException {
@@ -111,9 +122,9 @@ public class CartController extends BaseController {
         }
     }
 
-    public void delete(Integer index) {
+    public void delete(Integer purchaseNumber) {
         try {
-            cart.removeItem(index);
+            cart.removeItem(purchaseNumber);
             alertSuccess("Order removed.");
         } catch (IndexOfOrderNotFound e) {
             alertError(e.getMessage());
@@ -127,11 +138,32 @@ public class CartController extends BaseController {
             redirect("carport/all");
         }
         Purchase purchase = cart.getCartContents();
-        purchase.setOrderedOn(new Date(Calendar.getInstance().getTimeInMillis()));
         if (isLoggedIn()) {
             purchase.setCustomer(loggedUser);
         }
         cart.saveInDatabaseAndEmptyCart();
         renderTemplate();
+    }
+
+    public void pdf(Integer purchaseNumber) {
+        try {
+            PurchaseCarport purchase = cart.getItem(purchaseNumber);
+            if (purchase.getPdfCatalogue() == null || pdfCatalogueFileDoesNotExist(purchase.getPdfCatalogue())) {
+                PdfGenerator pdfGenerator = new PdfGenerator();
+                String fileName = pdfGenerator.generatePdf(purchase, request.getSession().getServletContext());
+                pdfGenerator.waitUntilThePdfIsAccessible(fileName);
+                purchase.setPdfCatalogue(fileName);
+            }
+            redirect(Path.PDF, purchase.getPdfCatalogue());
+        } catch (IndexOfOrderNotFound e) {
+            alertError(e.getMessage());
+            renderTemplate("error/notFound");
+        }
+    }
+
+    private boolean pdfCatalogueFileDoesNotExist(String fileName) {
+        ServletContext servletContext = request.getSession().getServletContext();
+        File file = new File(servletContext.getRealPath(Path.GENERATING_PDF + fileName));
+        return !file.exists();
     }
 }

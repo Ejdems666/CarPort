@@ -11,4 +11,8 @@ public class Dimensions {
         this.length = length;
         this.width = width;
     }
+
+    public String toHTTPGetForm(String prefix) {
+        return prefix + "Length=" + length + "&" + prefix + "Width=" + width;
+    }
 }

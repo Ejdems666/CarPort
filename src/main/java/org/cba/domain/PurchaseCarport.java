@@ -1,5 +1,6 @@
 package org.cba.domain;
 
+import org.cba.domain.finder.PurchaseCaportFinder;
 import org.cba.model.carport.calculation.Dimensions;
 
 import javax.persistence.Entity;
@@ -12,13 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class PurchaseCarport {
-    public PurchaseCarport(Carport carport, Dimensions frameDimensions, int price, Purchase purchase) {
-        this.carport = carport;
-        frameWidth = frameDimensions.width;
-        frameLength = frameDimensions.length;
-        this.price = price;
-        this.purchase = purchase;
-    }
+    public static final PurchaseCaportFinder find = new PurchaseCaportFinder();
 
     @Id
     private int id;
@@ -29,8 +24,10 @@ public class PurchaseCarport {
 
     @NotNull
     private int frameWidth;
+
     @NotNull
     private int frameLength;
+    private String pdfCatalogue;
 
     /**
      * Every Purchase will have saved price, because calculation might change in the future, or % of material profit
@@ -41,6 +38,14 @@ public class PurchaseCarport {
     @NotNull
     @ManyToOne
     private Purchase purchase;
+
+    public PurchaseCarport(Carport carport, Dimensions frameDimensions, int price, Purchase purchase) {
+        this.carport = carport;
+        frameWidth = frameDimensions.width;
+        frameLength = frameDimensions.length;
+        this.price = price;
+        this.purchase = purchase;
+    }
 
     public int getId() {
         return id;
@@ -97,5 +102,13 @@ public class PurchaseCarport {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getPdfCatalogue() {
+        return pdfCatalogue;
+    }
+
+    public void setPdfCatalogue(String pdfCatalogue) {
+        this.pdfCatalogue = pdfCatalogue;
     }
 }

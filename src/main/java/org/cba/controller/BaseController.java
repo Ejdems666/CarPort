@@ -2,6 +2,7 @@ package org.cba.controller;
 
 import hyggemvc.component.Alerts;
 import hyggemvc.controller.Controller;
+import org.cba.Path;
 import org.cba.domain.User;
 import org.cba.model.cart.Cart;
 import org.cba.model.cart.SessionCart;
@@ -10,14 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static org.cba.Path.ROOT;
+
 /**
  * Created by adam on 26/02/2017.
  */
 public abstract class BaseController extends Controller {
     public static final int ADMIN_TYPE = 2;
-    protected final String ROOT = "/";
-    protected final String ASSETS = ROOT + "assets/";
-    protected final String CP_IMGS = ASSETS + "carport-images/";
     protected User loggedUser;
     protected Cart cart;
 
@@ -38,26 +38,19 @@ public abstract class BaseController extends Controller {
 
     @Override
     protected void renderTemplate(String template) {
-        setTemplateVariablesAndConstants();
-        super.renderTemplate(template);
-    }
-
-    private void setTemplateVariablesAndConstants() {
-        request.setAttribute("root", ROOT);
-        request.setAttribute("assets", ASSETS);
-        request.setAttribute("cpImgs", CP_IMGS);
         request.setAttribute("cart", cart);
+        super.renderTemplate(template);
     }
 
     @Override
     protected void renderTemplate() {
-        setTemplateVariablesAndConstants();
+        request.setAttribute("cart", cart);
         super.renderTemplate();
     }
 
     @Override
     protected void renderTemplate(String template, String layout) {
-        setTemplateVariablesAndConstants();
+        request.setAttribute("cart", cart);
         super.renderTemplate(template, layout);
     }
 
@@ -67,7 +60,11 @@ public abstract class BaseController extends Controller {
     }
 
     protected void redirect() {
-        super.redirect(ROOT);
+        super.redirect(ROOT.toString());
+    }
+
+    protected void redirect(Path path, String url) {
+        super.redirect(path + url);
     }
 
     protected void redirectIfNotSignedIn() {

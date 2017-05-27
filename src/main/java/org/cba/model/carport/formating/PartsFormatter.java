@@ -6,5 +6,5 @@ package org.cba.model.carport.formating;
 public interface PartsFormatter {
     public void addPartRecord(PartRecord partRecord);
 
-    public String getFormattedRecords(String tableName);
+    public String getFormattedRecords();
 }

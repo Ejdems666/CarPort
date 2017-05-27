@@ -13,6 +13,7 @@ public class ErrorController extends BaseController {
     }
 
     public void notFound(Exception e) {
+        response.setStatus(404);
         renderTemplate();
     }
 

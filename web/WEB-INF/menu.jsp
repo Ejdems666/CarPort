@@ -1,6 +1,7 @@
 <%@ page import="org.cba.domain.User" %>
 <%@ page import="org.cba.model.cart.TemplateCart" %>
-<% User loggedUser = ((User) session.getAttribute("user")); %>
+<%@ page import="static org.cba.Path.ROOT" %>
+<% User loggedUser = ((User) session.getAttribute("loggedUser")); %>
 <% TemplateCart cart = ((TemplateCart) request.getAttribute("cart")); %>
 <nav class="navbar navbar-default navBg">
     <div class="container">
@@ -12,24 +13,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${root}"><img src="https://image.flaticon.com/icons/svg/149/149412.svg"
+            <a class="navbar-brand" href="<%=ROOT%>"><img src="https://image.flaticon.com/icons/svg/149/149412.svg"
                                                         height="20" width="20"> </a>
         </div>
         <div class="container">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="${root}">Home</a>
+                        <a href="<%=ROOT%>">Home</a>
                     </li>
                     <li>
-                        <a href="${root}carport/all">Store</a>
+                        <a href="<%=ROOT%>carport/all">Store</a>
                     </li>
                     <% if (loggedUser == null) {%>
                     <li>
-                        <a href="${root}sign/up">Register</a>
+                        <a href="<%=ROOT%>sign/up">Register</a>
                     </li>
                     <li>
-                        <a href="${root}sign/in">Login</a>
+                        <a href="<%=ROOT%>sign/in">Login</a>
                     </li>
                     <% } else {%>
 
@@ -39,8 +40,8 @@
                             Assembly Material<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="${root}assembly-material">List</a></li>
-                            <li><a href="${root}assembly-material/add">Add</a></li>
+                            <li><a href="<%=ROOT%>assembly-material">List</a></li>
+                            <li><a href="<%=ROOT%>assembly-material/add">Add</a></li>
                         </ul>
                     </li>
 
@@ -49,8 +50,8 @@
                             Roof tiles<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="${root}roof-tile">List</a></li>
-                            <li><a href="${root}roof-tile/add">Add</a></li>
+                            <li><a href="<%=ROOT%>roof-tile">List</a></li>
+                            <li><a href="<%=ROOT%>roof-tile/add">Add</a></li>
                         </ul>
                     </li>
                     <% }%>
@@ -65,7 +66,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <% if (cart.getNumberOfItems() > 0) {%>
                     <li>
-                        <a href="${root}cart">
+                        <a href="<%=ROOT%>cart">
                             <%= cart.getNumberOfItems() %>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <%= cart.getPrice() %> DKK
@@ -78,9 +79,9 @@
                             <%=loggedUser.getName()%> <%=loggedUser.getSurname()%><span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="${root}profile/email">Change email</a></li>
-                            <li><a href="${root}profile/password">Change password</a></li>
-                            <li><a href="${root}sign/out">Logout</a></li>
+                            <li><a href="<%=ROOT%>profile/email">Change email</a></li>
+                            <li><a href="<%=ROOT%>profile/password">Change password</a></li>
+                            <li><a href="<%=ROOT%>sign/out">Logout</a></li>
                         </ul>
                     </li>
                     <% }%>
