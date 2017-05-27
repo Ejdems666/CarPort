@@ -78,6 +78,7 @@ public class CartController extends BaseController {
                 regeneratePdfCatalogue(purchase);
                 alertSuccess("Order changed.");
                 redirect("cart");
+                return;
             } catch (ParameterParserException e) {
                 alertError("Wrong Input!");
             } catch (IndexOfOrderNotFound e) {
@@ -85,6 +86,7 @@ public class CartController extends BaseController {
             } catch (MaterialLengthVariationNotFoundException e) {
                 alertError("Sorry, can't submit order with those dimensions.");
                 redirect("cart/edit-confirm/" + purchaseNumber);
+                return;
             }
         }
         renderTemplate("error/notFound");
@@ -136,6 +138,7 @@ public class CartController extends BaseController {
         if (cart.getNumberOfItems() == 0) {
             alertError("You can't buy anything, because the cart is empty!");
             redirect("carport/all");
+            return;
         }
         Purchase purchase = cart.getCartContents();
         if (isLoggedIn()) {
@@ -155,6 +158,7 @@ public class CartController extends BaseController {
                 purchase.setPdfCatalogue(fileName);
             }
             redirect(Path.PDF, purchase.getPdfCatalogue());
+            return;
         } catch (IndexOfOrderNotFound e) {
             alertError(e.getMessage());
             renderTemplate("error/notFound");

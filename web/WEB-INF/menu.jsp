@@ -1,7 +1,7 @@
 <%@ page import="org.cba.domain.User" %>
 <%@ page import="org.cba.model.cart.TemplateCart" %>
 <%@ page import="static org.cba.Path.ROOT" %>
-<% User loggedUser = ((User) session.getAttribute("loggedUser")); %>
+<% User loggedUser = ((User) session.getAttribute("user")); %>
 <% TemplateCart cart = ((TemplateCart) request.getAttribute("cart")); %>
 <nav class="navbar navbar-default navBg">
     <div class="container">

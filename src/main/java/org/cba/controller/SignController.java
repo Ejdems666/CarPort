@@ -33,6 +33,7 @@ public class SignController extends BaseController {
                 );
                 setLoginSession(user);
                 redirect();
+                return;
             } catch (WrongPasswordException | NonExistentEmailException e) {
                 alertError("This email and password pair doesn't exist.");
             }
@@ -55,6 +56,7 @@ public class SignController extends BaseController {
                 alertSuccess("Account was created");
                 setLoginSession(user);
                 redirect();
+                return;
             } catch (EmailTakenException e) {
                 alertError(e.getMessage());
             } catch (ParameterParserException e) {

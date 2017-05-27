@@ -1,5 +1,6 @@
+<%@ page import="static org.cba.Path.ROOT" %>
 <h2>change password</h2>
-<form action="${root}profile/password" method="post">
+<form action="<%=ROOT%>profile/password" method="post">
     <div class="input-group">
         <label for="oldpassword">old password</label>
         <input type="password" required id="oldpassword" name="oldPassword" class="form-control">

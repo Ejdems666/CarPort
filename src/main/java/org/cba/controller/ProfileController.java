@@ -17,23 +17,23 @@ public class ProfileController extends BaseController {
     }
 
     public void email() {
-        redirectIfNotSignedIn();
+        if (redirectIfNotSignedIn()) return;
         if (request.getMethod().equals("POST")) {
             String email = request.getParameter("email");
             int exist = User.find.where().email.equalTo(email).findCount();
             if (exist == 0) {
-
                 loggedUser.setEmail(email);
                 Ebean.update(loggedUser);
                 alertSuccess("Email was updated");
-            } else
+            } else {
                 alertError("Email already exist");
+            }
         }
         renderTemplate();
     }
 
     public void password() {
-        redirectIfNotSignedIn();
+        if (redirectIfNotSignedIn()) return;
         if (request.getMethod().equals("POST")) {
             String newPassword = request.getParameter("newPassword");
             String newPassword2 = request.getParameter("newPassword2");

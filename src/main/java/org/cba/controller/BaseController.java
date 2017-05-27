@@ -67,19 +67,25 @@ public abstract class BaseController extends Controller {
         super.redirect(path + url);
     }
 
-    protected void redirectIfNotSignedIn() {
+    protected boolean redirectIfNotSignedIn() {
         if (!isLoggedIn()) {
             addAlert(Alerts.Type.ERROR, "First sign in mate.");
             redirect("sign/in");
+            return true;
         }
+        return false;
     }
 
-    protected void redirectIfNotAdmin() {
-        redirectIfNotSignedIn();
+    protected boolean redirectIfNotAdmin() {
+        if(redirectIfNotSignedIn()) {
+            return true;
+        }
         if (!isAdmin()) {
             addAlert(Alerts.Type.ERROR, "You're not an admin mate.");
             redirect();
+            return true;
         }
+        return false;
     }
 
     private boolean isAdmin() {
