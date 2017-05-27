@@ -26,10 +26,10 @@
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>ejdems-hygge</groupId>
-            <artifactId>HyggeMVC</artifactId>
-            <version>0.6.0</version>
-        </dependency>
+        <groupId>ejdems-hygge</groupId>
+        <artifactId>HyggeMVC</artifactId>
+        <version>0.6.0</version>
+    </dependency>
 
         <!-- SVG -->
         <dependency>
