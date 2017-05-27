@@ -1,8 +1,7 @@
 package org.cba.controller;
 
 import io.ebean.Ebean;
-import org.cba.domain.query.QUser;
-import org.cba.model.Hasher;
+import org.cba.domain.User;
 import org.cba.model.exception.WrongPasswordException;
 import org.cba.model.facade.ProfileFacade;
 
@@ -18,38 +17,31 @@ public class ProfileController extends BaseController {
     }
 
     public void email() {
-        if (!isLoggedIn()) {
-            redirectIfNotSignedIn();
-            return;
-        }
+        redirectIfNotSignedIn();
         if (request.getMethod().equals("POST")) {
             String email = request.getParameter("email");
-            int exist = new QUser().email.equalTo(email).findCount();
+            int exist = User.find.where().email.equalTo(email).findCount();
             if (exist == 0) {
 
                 loggedUser.setEmail(email);
                 Ebean.update(loggedUser);
                 alertSuccess("Email was updated");
-            }
-            else
+            } else
                 alertError("Email already exist");
         }
         renderTemplate();
     }
 
     public void password() {
-        if (!isLoggedIn()) {
-            redirectIfNotSignedIn();
-            return;
-        }
+        redirectIfNotSignedIn();
         if (request.getMethod().equals("POST")) {
             String newPassword = request.getParameter("newPassword");
             String newPassword2 = request.getParameter("newPassword2");
 
             String oldPassword = request.getParameter("oldPassword");
-            ProfileFacade profileFacade= new ProfileFacade();
+            ProfileFacade profileFacade = new ProfileFacade();
             try {
-                profileFacade.changePassword(oldPassword,loggedUser,newPassword, newPassword2);
+                profileFacade.changePassword(oldPassword, loggedUser, newPassword, newPassword2);
                 alertSuccess("Password was updated");
             } catch (WrongPasswordException e) {
                 alertError(e.getMessage());
