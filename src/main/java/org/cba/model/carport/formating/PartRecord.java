@@ -13,6 +13,7 @@ public interface PartRecord{
     Integer getLength();
     Integer getWidth();
     Integer getHeight();
+    Integer getPrice();
 
     public List<PartDependency> getPartDependencies();
 

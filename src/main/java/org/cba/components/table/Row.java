@@ -1,5 +1,7 @@
 package org.cba.components.table;
 
+import org.cba.Path;
+
 /**
  * Created by adam on 20/05/2017.
  */
@@ -15,6 +17,11 @@ public class Row {
     }
 
     public void addColumnLink(String url, Icon icon) {
+        addColumnLink(url, icon, Path.ROOT);
+    }
+
+    public void addColumnLink(String url, Icon icon, Path path) {
+        url = path + url;
         rowBuilder.append("<td><a href='").append(url).append("'>")
                 .append("<i class=\"fa fa-").append(icon).append("\" aria-hidden=\"true\"></i></a>")
                 .append("</td>");
@@ -25,8 +32,8 @@ public class Row {
         return rowBuilder.toString() + "</tr>";
     }
 
-    public enum Icon{
-        DELETE("times"), EDIT("pencil");
+    public enum Icon {
+        DELETE("times"), EDIT("pencil"), PDF("file-pdf-o");
         private String icon;
 
         Icon(String icon) {

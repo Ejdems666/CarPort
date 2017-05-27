@@ -10,7 +10,6 @@ import org.cba.parameter.exception.ParameterParserException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -37,22 +36,16 @@ public class RoofTileController extends BaseController {
     }
 
     private ParsedParameters getRoofTileParameters() throws ParameterParserException {
-        ParameterFilter parameterFilter = createSieve();
-        return parameterFilter.parseParameters(request);
-    }
-
-    @NotNull
-    private ParameterFilter createSieve() {
-        ParameterFilter parameterFilter = new ParameterFilter();
-        parameterFilter.addString("name").setRequired();
-        parameterFilter.addInteger("width").setRequired();
-        parameterFilter.addInteger("width overlap").setRequired();
-        parameterFilter.addInteger("length").setRequired();
-        parameterFilter.addInteger("length overlap").setRequired();
-        parameterFilter.addInteger("price").setRequired();
-        parameterFilter.addInteger("stock").setRequired();
-        parameterFilter.addString("description").setRequired();
-        return parameterFilter;
+        ParameterFilter filter = new ParameterFilter();
+        filter.addString("name").setRequired();
+        filter.addInteger("width").setRequired();
+        filter.addInteger("width overlap").setRequired();
+        filter.addInteger("length").setRequired();
+        filter.addInteger("length overlap").setRequired();
+        filter.addInteger("price").setRequired();
+        filter.addInteger("stock").setRequired();
+        filter.addString("description").setRequired();
+        return filter.parseParameters(request);
     }
 
     private void fillUpEntity(RoofTile roofTile, ParsedParameters parameters) {
@@ -85,18 +78,18 @@ public class RoofTileController extends BaseController {
     public void index() {
         List<RoofTile> roofTileList = RoofTile.find.all();
         TableBuilder tableBuilder = new TableBuilder();
-        tableBuilder.addHeader("Roof Tile", "Name, Width, Width overlap, Length, Length overlap, Price, Stock, Description, Edit link");
+        tableBuilder.addHeader("Roof Tiles", "Name, Width, Width overlap, Length, Length overlap, Price, Stock, Description, Edit link");
         for (RoofTile roofTile : roofTileList) {
             Row row = tableBuilder.createNewRow();
             row.addColumn(roofTile.getName());
-            row.addColumn(String.valueOf(roofTile.getWidth()));
-            row.addColumn(String.valueOf(roofTile.getWidthOverlap()));
-            row.addColumn(String.valueOf(roofTile.getLength()));
-            row.addColumn(String.valueOf(roofTile.getLengthOverlap()));
-            row.addColumn(String.valueOf(roofTile.getPrice()));
-            row.addColumn(String.valueOf(roofTile.getStock()));
+            row.addColumn(roofTile.getWidth());
+            row.addColumn(roofTile.getWidthOverlap());
+            row.addColumn(roofTile.getLength());
+            row.addColumn(roofTile.getLengthOverlap());
+            row.addColumn(roofTile.getPrice());
+            row.addColumn(roofTile.getStock());
             row.addColumn(roofTile.getDescription());
-            row.addColumn("<a href='" + ROOT + "roof-tile/edit/" + roofTile.getId() + "'>" + roofTile.getId() + "</a>");
+            row.addColumnLink("roof-tile/edit/" + roofTile.getId(), Row.Icon.EDIT);
         }
         request.setAttribute("table", tableBuilder);
         renderTemplate();

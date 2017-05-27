@@ -12,6 +12,9 @@ import org.testng.annotations.Test;
 
 import javax.servlet.http.HttpSession;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import static org.easymock.EasyMock.*;
 
 /**
@@ -19,9 +22,9 @@ import static org.easymock.EasyMock.*;
  */
 public class SessionCartTest {
     HttpSession session;
+
     PriceCalculator priceCalculator;
     private final Carport carport = Carport.find.byId(1);
-
     @BeforeMethod
     public void setUp() throws Exception {
         priceCalculator = new PriceCalculator();
@@ -29,12 +32,16 @@ public class SessionCartTest {
     }
 
     @Test
-    public void testAddItem() throws Exception {
-        SessionCart cart = mockEmptyCart();
-        Carport carport = Carport.find.byId(1);
-        cart.addItem(carport, carport.getDefaultDimensions());
-        Assert.assertEquals(cart.getNumberOfItems(), 1);
-        Assert.assertEquals(cart.getPrice(), priceCalculator.getPrice(carport, carport.getDefaultDimensions()));
+    public void testAddItem() {
+        try {
+            SessionCart cart = mockEmptyCart();
+            Carport carport = Carport.find.byId(1);
+            cart.addItem(carport, carport.getDefaultDimensions());
+            Assert.assertEquals(cart.getNumberOfItems(), 1);
+            Assert.assertEquals(cart.getPrice(), priceCalculator.getPrice(carport, carport.getDefaultDimensions()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @NotNull
@@ -48,7 +55,7 @@ public class SessionCartTest {
     public void testRemoveItem() throws Exception {
         Carport carport = Carport.find.byId(1);
         int price = priceCalculator.getPrice(carport, carport.getDefaultDimensions());
-        Purchase mockedCartContents = mockCartContents(carport, price);
+        Purchase mockedCartContents = mockPurchase(carport, price);
         expect(session.getAttribute("cart")).andReturn(mockedCartContents).times(2);
         replay(session);
         SessionCart cart = new SessionCart(session);
@@ -66,7 +73,7 @@ public class SessionCartTest {
     }
 
     @NotNull
-    private Purchase mockCartContents(Carport carport, int price) {
+    private Purchase mockPurchase(Carport carport, int price) {
         Purchase purchase = new Purchase();
         purchase.addPurchaseCarport(new PurchaseCarport(carport, carport.getDefaultDimensions(), price, purchase));
         purchase.setFinalPrice(price);
@@ -76,8 +83,8 @@ public class SessionCartTest {
     @Test
     public void testRecalculatePriceForItem() throws Exception {
         int price = priceCalculator.getPrice(carport, carport.getDefaultDimensions());
-        Purchase mockedCartContents = mockCartContents(carport, price);
-        expect(session.getAttribute("cart")).andReturn(mockedCartContents).times(2);
+        Purchase mockedPurchase = mockPurchase(carport, price);
+        expect(session.getAttribute("cart")).andReturn(mockedPurchase).times(2);
         replay(session);
         SessionCart cart = new SessionCart(session);
         PurchaseCarport mockedOrder = cart.getCartContents().getPurchaseCarports().get(0);
@@ -85,5 +92,21 @@ public class SessionCartTest {
         cart.recalculatePriceForItem(0);
         Assert.assertEquals(cart.getPrice(),priceCalculator.getPrice(carport, new Dimensions(400,carport.getDefaultWidth())));
     }
+
+    @Test
+    public void testSaveInDatabaseAndEmptyCart() throws Exception {
+        int price = priceCalculator.getPrice(carport, carport.getDefaultDimensions());
+        Purchase mockedPurchase = mockPurchase(carport, price);
+        expect(session.getAttribute("cart")).andReturn(mockedPurchase).times(2);
+        replay(session);
+        SessionCart cart = new SessionCart(session);
+        cart.saveInDatabaseAndEmptyCart();
+        Assert.assertTrue(mockedPurchase.getId() != 0);
+        Assert.assertEquals(mockedPurchase.getOrderedOn().toString(),new Date(Calendar.getInstance().getTimeInMillis()).toString());
+        for (PurchaseCarport purchaseCarport : mockedPurchase.getPurchaseCarports()) {
+            Assert.assertTrue(purchaseCarport.getId() != 0);
+        }
+    }
+
 
 }

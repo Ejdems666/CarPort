@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static org.cba.Path.ROOT;
+
 /**
  * Created by adam on 21/05/2017.
  */

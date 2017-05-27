@@ -4,8 +4,9 @@ import org.cba.domain.AssemblyMaterial;
 import org.cba.domain.Carport;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.cba.model.carport.formating.AssemblyMaterialRecords;
-import org.cba.model.carport.formating.MaterialLengthRecord;
+import org.cba.model.carport.formating.PartRecord;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,16 +14,20 @@ import java.util.Map;
  */
 public class PriceCalculator {
 
-    private int price = 0;
-    private AssemblyMaterialRecords assemblyMaterialRecords = new AssemblyMaterialRecords();
+    private int price;
+    private AssemblyMaterialRecords assemblyMaterialRecords;
+    private final MaterialCalculatorFactory factory = new MaterialCalculatorFactory();
 
-    public int getPrice(Carport carport, Dimensions carportDimensions) throws MaterialLengthVariationNotFoundException {
-        MaterialCalculator frameCalculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimensions);
-        for (MaterialLengthRecord partRecord : frameCalculator.getAllMaterialRecords()) {
-            addPriceOfPartRecord(partRecord);
-            assemblyMaterialRecords.addPartRecord(partRecord);
+    public int getPrice(Carport carport, Dimensions frameDimensions) throws MaterialLengthVariationNotFoundException {
+        price = 0;
+        assemblyMaterialRecords = new AssemblyMaterialRecords();
+        List<MaterialCalculator> calculators = factory.getMaterialCalculators(carport,frameDimensions);
+        for (MaterialCalculator calculator : calculators) {
+            for (PartRecord partRecord : calculator.getAllPartRecords()) {
+                addPriceOfPartRecord(partRecord);
+                assemblyMaterialRecords.addPartRecord(partRecord);
+            }
         }
-        addPriceForRoofTiles(carport, carportDimensions);
         addPriceForAssemblyMaterials();
         float profitMultiplier = carport.getProfitFromMaterials() / 100f + 1;
         return Math.round(price * profitMultiplier);
@@ -36,13 +41,7 @@ public class PriceCalculator {
         }
     }
 
-    private void addPriceOfPartRecord(MaterialLengthRecord materialLengthRecord) {
-        price += materialLengthRecord.getCount() * materialLengthRecord.getPrice();
-    }
-
-    private void addPriceForRoofTiles(Carport carport, Dimensions carportDimensions) {
-        RoofTileCalculator roofTileCalculator = new FlatRoofTileCalculator();
-        int roofTiles = roofTileCalculator.getNumberOfTiles(carport.getRoofTile(), carportDimensions);
-        price += carport.getRoofTile().getPrice() * roofTiles;
+    private void addPriceOfPartRecord(PartRecord partRecord) {
+        price += partRecord.getCount() * partRecord.getPrice();
     }
 }

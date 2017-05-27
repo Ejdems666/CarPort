@@ -11,13 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by adam on 24/05/2017.
  */
 public class CarportEditForm {
-    private HttpServletRequest request;
-
-    public CarportEditForm(HttpServletRequest request) {
-        this.request = request;
-    }
-
-    public void createAndPassSelectComponents(Carport carport, Dimensions selectedFrameDimensions) {
+    public static void createAndPassSelectComponents(HttpServletRequest request, Carport carport, Dimensions selectedFrameDimensions) {
         Material borderMaterial = carport.getFrame().getUpperPillarMaterial();
         SelectBuilder widthSelect = new SelectBuilder("Width", "frameWidth", selectedFrameDimensions.width);
         SelectBuilder lengthSelect = new SelectBuilder("Length", "frameLength",selectedFrameDimensions.length);

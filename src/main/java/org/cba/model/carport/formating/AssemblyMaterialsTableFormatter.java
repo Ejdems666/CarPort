@@ -1,8 +1,8 @@
 package org.cba.model.carport.formating;
 
-import org.cba.domain.AssemblyMaterial;
 import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
+import org.cba.domain.AssemblyMaterial;
 
 import java.util.Map;
 
@@ -12,6 +12,17 @@ import java.util.Map;
 public class AssemblyMaterialsTableFormatter implements PartsFormatter {
     private TableBuilder tableBuilder;
     private AssemblyMaterialRecords assemblyMaterialRecords = new AssemblyMaterialRecords();
+    private String tableName;
+
+    public AssemblyMaterialsTableFormatter(String tableName) {
+        this.tableName = tableName;
+        tableBuilder = new TableBuilder();
+    }
+
+    public AssemblyMaterialsTableFormatter(String tableName, TableBuilder tableBuilder) {
+        this.tableBuilder = tableBuilder;
+        this.tableName = tableName;
+    }
 
     @Override
     public void addPartRecord(PartRecord partRecord) {
@@ -19,8 +30,7 @@ public class AssemblyMaterialsTableFormatter implements PartsFormatter {
     }
 
     @Override
-    public String getFormattedRecords(String tableName) {
-        tableBuilder = new TableBuilder();
+    public String getFormattedRecords() {
         tableBuilder.addHeader(tableName, "Name,Amount,Unit,Description");
         addRows();
         return tableBuilder.toString();

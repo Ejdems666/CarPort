@@ -10,6 +10,8 @@ import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFou
 import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * Created by adam on 23/05/2017.
@@ -68,8 +70,8 @@ public class SessionCart implements Cart {
 
     @Override
     public void saveInDatabaseAndEmptyCart() {
+        cartContents.setOrderedOn(new Date(Calendar.getInstance().getTimeInMillis()));
         Ebean.save(cartContents);
-        Ebean.saveAll(cartContents.getPurchaseCarports());
         session.removeAttribute(SESSION_IDENTIFIER);
         cartContents = new Purchase();
     }
