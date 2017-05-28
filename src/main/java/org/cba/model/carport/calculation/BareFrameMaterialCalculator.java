@@ -23,7 +23,7 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
     }
 
     @Override
-    public MaterialLengthRecord getSideUpperPillars() throws MaterialLengthVariationNotFoundException {
+    public PartRecord getSideUpperPillars() throws MaterialLengthVariationNotFoundException {
         MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), carportDimensions.length);
         return new MaterialLengthRecord(materialLength, 2);
     }
@@ -41,26 +41,26 @@ public class BareFrameMaterialCalculator implements FrameMaterialCalculator {
     }
 
     @Override
-    public MaterialLengthRecord getFrontAndBackUpperPillars() throws MaterialLengthVariationNotFoundException {
+    public PartRecord getFrontAndBackUpperPillars() throws MaterialLengthVariationNotFoundException {
         MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getUpperPillarMaterial(), carportDimensions.width);
         return new MaterialLengthRecord(materialLength, 2);
     }
 
     @Override
-    public MaterialLengthRecord getLowerPillars() throws MaterialLengthVariationNotFoundException {
+    public PartRecord getLowerPillars() throws MaterialLengthVariationNotFoundException {
         MaterialLength materialLength = getOptimalMaterialLengthVariation(frame.getLowerPillarMaterial(), carportDimensions.length);
         return new MaterialLengthRecord(materialLength, 2);
     }
 
     @Override
-    public MaterialLengthRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException {
+    public PartRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException {
         MaterialLength roofPlankLengthVariation = getOptimalMaterialLengthVariation(frame.getRoofPlankMaterial(), carportDimensions.width);
         int numberOfRoofPlanks = (carportDimensions.length / frame.getRoofPlankDistance()) - 1;
         return new MaterialLengthRecord(roofPlankLengthVariation, numberOfRoofPlanks);
     }
 
     @Override
-    public MaterialLengthRecord getVerticalPillars() {
+    public PartRecord getVerticalPillars() {
         MaterialLength verticalPillar = frame.getVerticalPillarMaterial().getMaterialLengths().get(0);
         int numberOfVPBothSides = ((carportDimensions.length / frame.getVerticalPillarDistance()) + 1) * 2;
         return new MaterialLengthRecord(verticalPillar, numberOfVPBothSides);
