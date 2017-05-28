@@ -77,7 +77,7 @@ public class RoofTileController extends BaseController {
 
     public void index() {
         List<RoofTile> roofTileList = RoofTile.find.all();
-        TableBuilder tableBuilder = new TableBuilder();
+        TableBuilder tableBuilder = new TableBuilder("table");
         tableBuilder.addHeader("Roof Tiles", "Name, Width, Width overlap, Length, Length overlap, Price, Stock, Description, Edit link");
         for (RoofTile roofTile : roofTileList) {
             Row row = tableBuilder.createNewRow();

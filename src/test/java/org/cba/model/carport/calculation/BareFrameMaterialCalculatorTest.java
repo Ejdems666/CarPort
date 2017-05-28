@@ -2,7 +2,7 @@ package org.cba.model.carport.calculation;
 
 import org.cba.domain.Carport;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
-import org.cba.model.carport.formating.MaterialLengthRecord;
+import org.cba.model.carport.formating.PartRecord;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -32,11 +32,11 @@ public class BareFrameMaterialCalculatorTest {
         int lowerPillarLength = calculator.getLowerPillars().getLength();
         Assert.assertEquals(lowerPillarLength, carportDimension.length);
 
-        MaterialLengthRecord roofPlank = calculator.getRoofPlanks();
+        PartRecord roofPlank = calculator.getRoofPlanks();
         Assert.assertEquals(roofPlank.getLength(), Integer.valueOf(carportDimension.width));
         Assert.assertEquals(roofPlank.getCount(), 15);
 
-        MaterialLengthRecord verticalPillar = calculator.getVerticalPillars();
+        PartRecord verticalPillar = calculator.getVerticalPillars();
         Assert.assertEquals(verticalPillar.getCount(), 6);
     }
 
