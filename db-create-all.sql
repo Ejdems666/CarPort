@@ -12,8 +12,11 @@ create table carport (
   name                          varchar(255) not null,
   default_price                 integer not null,
   profit_from_materials         integer not null,
-  default_width                 integer not null,
-  default_length                integer not null,
+  frame_width                   integer not null,
+  frame_length                  integer not null,
+  with_shed                     tinyint(1) default 0,
+  shed_width                    integer not null,
+  shed_length                   integer not null,
   description                   varchar(255),
   thumbnail_id                  integer not null,
   frame_id                      integer not null,
@@ -27,6 +30,7 @@ create table frame (
   lower_pillar_material_id      integer not null,
   vertical_pillar_material_id   integer not null,
   roof_plank_material_id        integer not null,
+  shed_plank_material_id        integer not null,
   vertical_pillar_front_reserve integer not null,
   vertical_pillar_back_reserve  integer not null,
   vertical_pillar_distance      integer not null,
@@ -80,6 +84,9 @@ create table purchase_carport (
   carport_id                    integer not null,
   frame_width                   integer not null,
   frame_length                  integer not null,
+  with_shed                     tinyint(1) default 0,
+  shed_width                    integer not null,
+  shed_length                   integer not null,
   pdf_catalogue                 varchar(255),
   price                         integer not null,
   purchase_id                   integer not null,
@@ -140,6 +147,9 @@ create index ix_frame_vertical_pillar_material_id on frame (vertical_pillar_mate
 
 alter table frame add constraint fk_frame_roof_plank_material_id foreign key (roof_plank_material_id) references material (id) on delete restrict on update restrict;
 create index ix_frame_roof_plank_material_id on frame (roof_plank_material_id);
+
+alter table frame add constraint fk_frame_shed_plank_material_id foreign key (shed_plank_material_id) references material (id) on delete restrict on update restrict;
+create index ix_frame_shed_plank_material_id on frame (shed_plank_material_id);
 
 alter table material_dependency add constraint fk_material_dependency_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
 create index ix_material_dependency_material_id on material_dependency (material_id);

@@ -19,6 +19,9 @@ drop index ix_frame_vertical_pillar_material_id on frame;
 alter table frame drop foreign key fk_frame_roof_plank_material_id;
 drop index ix_frame_roof_plank_material_id on frame;
 
+alter table frame drop foreign key fk_frame_shed_plank_material_id;
+drop index ix_frame_shed_plank_material_id on frame;
+
 alter table material_dependency drop foreign key fk_material_dependency_material_id;
 drop index ix_material_dependency_material_id on material_dependency;
 

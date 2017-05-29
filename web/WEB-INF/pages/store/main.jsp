@@ -16,7 +16,7 @@
 </div>
 <div class="col-lg-4">
     <a href="#" class="btn btn-info" role="button">Add to cart</a>
-    <a href="<%=ROOT%>carport/edit/${carport.id}" class="btn btn-info" role="button">Edit dimensions first</a>
+    <a href="<%=ROOT%>carport/edit/${carport.id}" class="btn btn-info" role="button">Edit frameDimensions first</a>
 </div>
 <div class="col-sm-12">
     <p>${carport.description}</p>

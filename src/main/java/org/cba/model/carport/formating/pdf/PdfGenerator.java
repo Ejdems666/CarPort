@@ -26,7 +26,7 @@ public class PdfGenerator {
 
     public void generatePdf(PurchaseCarport purchase, ServletContext servletContext, String fileName) {
         TemporaryHtmlGenerator htmlGenerator = new TemporaryHtmlGenerator();
-        File temporaryHtmlFile = htmlGenerator.generateFileAndGetPath(purchase, servletContext);
+        File temporaryHtmlFile = htmlGenerator.generateFile(purchase, servletContext);
         String filePath = servletContext.getRealPath(Path.GENERATING_PDF + fileName);
         try {
             FileOutputStream outputStream = new FileOutputStream(filePath);

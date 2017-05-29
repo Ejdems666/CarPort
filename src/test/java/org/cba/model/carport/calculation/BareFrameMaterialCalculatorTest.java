@@ -20,7 +20,7 @@ public class BareFrameMaterialCalculatorTest {
 
     @Test
     public void testMaterialCalculationWithDefaultValues() throws Exception {
-        Dimensions carportDimension = new Dimensions(carport.getDefaultLength(), carport.getDefaultWidth());
+        Dimensions carportDimension = new Dimensions(carport.getFrameLength(), carport.getFrameWidth());
         FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimension);
 
         int sideUpperPillarLength = calculator.getSideUpperPillars().getLength();
@@ -42,14 +42,14 @@ public class BareFrameMaterialCalculatorTest {
 
     @Test(expectedExceptions = {MaterialLengthVariationNotFoundException.class})
     public void testMaterialCalculationWithWrongLength() throws Exception {
-        Dimensions carportDimension = new Dimensions(900, carport.getDefaultWidth());
+        Dimensions carportDimension = new Dimensions(900, carport.getFrameWidth());
         FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimension);
         calculator.getSideUpperPillars();
     }
 
     @Test
     public void testMaterialCalculationWithWrongWidth() throws Exception {
-        Dimensions carportDimension = new Dimensions(carport.getDefaultLength(), 500);
+        Dimensions carportDimension = new Dimensions(carport.getFrameLength(), 500);
         FrameMaterialCalculator calculator = new BareFrameMaterialCalculator(carport.getFrame(), carportDimension);
         calculator.getFrontAndBackUpperPillars();
     }

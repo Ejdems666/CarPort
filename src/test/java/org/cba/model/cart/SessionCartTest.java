@@ -3,7 +3,6 @@ package org.cba.model.cart;
 import org.cba.domain.Carport;
 import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
-import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
@@ -11,7 +10,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.servlet.http.HttpSession;
-
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -21,10 +19,10 @@ import static org.easymock.EasyMock.*;
  * Created by adam on 24/05/2017.
  */
 public class SessionCartTest {
-    HttpSession session;
-
-    PriceCalculator priceCalculator;
     private final Carport carport = Carport.find.byId(1);
+    HttpSession session;
+    PriceCalculator priceCalculator;
+
     @BeforeMethod
     public void setUp() throws Exception {
         priceCalculator = new PriceCalculator();
@@ -36,9 +34,9 @@ public class SessionCartTest {
         try {
             SessionCart cart = mockEmptyCart();
             Carport carport = Carport.find.byId(1);
-            cart.addItem(carport, carport.getDefaultDimensions());
+            cart.addItem(carport, carport); // Passing carport as settings means default values
             Assert.assertEquals(cart.getNumberOfItems(), 1);
-            Assert.assertEquals(cart.getPrice(), priceCalculator.getPrice(carport, carport.getDefaultDimensions()));
+            Assert.assertEquals(cart.getPrice(), priceCalculator.getPrice(carport, carport));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,7 +52,7 @@ public class SessionCartTest {
     @Test()
     public void testRemoveItem() throws Exception {
         Carport carport = Carport.find.byId(1);
-        int price = priceCalculator.getPrice(carport, carport.getDefaultDimensions());
+        int price = priceCalculator.getPrice(carport, carport);
         Purchase mockedCartContents = mockPurchase(carport, price);
         expect(session.getAttribute("cart")).andReturn(mockedCartContents).times(2);
         replay(session);
@@ -75,34 +73,35 @@ public class SessionCartTest {
     @NotNull
     private Purchase mockPurchase(Carport carport, int price) {
         Purchase purchase = new Purchase();
-        purchase.addPurchaseCarport(new PurchaseCarport(carport, carport.getDefaultDimensions(), price, purchase));
+        purchase.addPurchaseCarport(new PurchaseCarport(carport, carport, price, purchase));
         purchase.setFinalPrice(price);
         return purchase;
     }
 
     @Test
     public void testRecalculatePriceForItem() throws Exception {
-        int price = priceCalculator.getPrice(carport, carport.getDefaultDimensions());
+        int price = priceCalculator.getPrice(carport, carport);
         Purchase mockedPurchase = mockPurchase(carport, price);
         expect(session.getAttribute("cart")).andReturn(mockedPurchase).times(2);
         replay(session);
         SessionCart cart = new SessionCart(session);
         PurchaseCarport mockedOrder = cart.getCartContents().getPurchaseCarports().get(0);
         mockedOrder.setFrameLength(400);
-        cart.recalculatePriceForItem(0);
-        Assert.assertEquals(cart.getPrice(),priceCalculator.getPrice(carport, new Dimensions(400,carport.getDefaultWidth())));
+        carport.setFrameLength(400); // Tests with default settings values, except for frame length
+        cart.recalculatePriceForItem(0, carport);
+        Assert.assertEquals(cart.getPrice(), priceCalculator.getPrice(carport, carport));
     }
 
     @Test
     public void testSaveInDatabaseAndEmptyCart() throws Exception {
-        int price = priceCalculator.getPrice(carport, carport.getDefaultDimensions());
+        int price = priceCalculator.getPrice(carport, carport);
         Purchase mockedPurchase = mockPurchase(carport, price);
         expect(session.getAttribute("cart")).andReturn(mockedPurchase).times(2);
         replay(session);
         SessionCart cart = new SessionCart(session);
         cart.saveInDatabaseAndEmptyCart();
         Assert.assertTrue(mockedPurchase.getId() != 0);
-        Assert.assertEquals(mockedPurchase.getOrderedOn().toString(),new Date(Calendar.getInstance().getTimeInMillis()).toString());
+        Assert.assertEquals(mockedPurchase.getOrderedOn().toString(), new Date(Calendar.getInstance().getTimeInMillis()).toString());
         for (PurchaseCarport purchaseCarport : mockedPurchase.getPurchaseCarports()) {
             Assert.assertTrue(purchaseCarport.getId() != 0);
         }

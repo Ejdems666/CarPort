@@ -14,11 +14,11 @@
 </div>
 <div class="col-xs-6 col-sm-4 col-lg-2">
     <a href="#" class="btn btn-info customButton" role="button">Add to cart</a>
-    <a href="<%=ROOT%>carport/edit/${carport.id}" class="btn btn-info customButton" role="button">Edit dimensions
+    <a href="<%=ROOT%>carport/edit/${carport.id}" class="btn btn-info customButton" role="button">Edit frameDimensions
         first</a>
     <div class="alert alert-info col-xs-5 col-sm-6 col-lg-4 descriptionBox">
-        <strong>Width: </strong>${carport.defaultWidth} <strong>cm.</strong><br>
-        <strong>Height: </strong>${carport.defaultLength} <strong>cm.</strong><br>
+        <strong>Width: </strong>${carport.frameWidth} <strong>cm.</strong><br>
+        <strong>Height: </strong>${carport.frameLength} <strong>cm.</strong><br>
         <strong>Price: </strong>${carport.defaultPrice} <strong>DKK.</strong><br>
         <hr>
         <strong>Description:</strong>

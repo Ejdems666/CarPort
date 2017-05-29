@@ -19,7 +19,7 @@ public class FlatRoofTileCalculatorTest {
 
     @Test
     public void testGetNumberOfTiles() {
-        Dimensions frameDimensions = new Dimensions(carport.getDefaultLength(), carport.getDefaultWidth());
+        Dimensions frameDimensions = new Dimensions(carport.getFrameLength(), carport.getFrameWidth());
         calculator = new FlatRoofTileCalculator(carport.getRoofTile(),frameDimensions);
         Assert.assertEquals(calculator.getRoofTiles().getCount(), 128);
     }

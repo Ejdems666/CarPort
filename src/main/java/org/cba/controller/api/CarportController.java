@@ -2,13 +2,13 @@ package org.cba.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.cba.components.CarportSettingsForm;
+import org.cba.controller.exception.NonExistentResourceException;
 import org.cba.domain.Carport;
-import org.cba.model.carport.calculation.Dimensions;
+import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
-import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
-import org.cba.parameter.filters.CarportDimensionsFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,16 +24,15 @@ public class CarportController extends ApiController {
     public void getPrice(Integer carportId) {
         ObjectNode objectNode = new ObjectMapper().createObjectNode();
         try {
-            ParsedParameters parameters = CarportDimensionsFilter.getParameters(request);
             Carport carport = Carport.find.byId(carportId);
+            if (carport == null) {
+                throw new NonExistentResourceException("carport",carportId);
+            }
+            CarportSettings settings = CarportSettingsForm.getRequestedCarportSettings(request);
             PriceCalculator calculator = new PriceCalculator();
-            Dimensions requestedCarportDimensions = new Dimensions(
-                    parameters.getInteger("frameWidth"),
-                    parameters.getInteger("frameLength")
-            );
-            int price = calculator.getPrice(carport,requestedCarportDimensions);
+            int price = calculator.getPrice(carport,settings);
             objectNode.put("price", price);
-        } catch (ParameterParserException | MaterialLengthVariationNotFoundException e) {
+        } catch (MaterialLengthVariationNotFoundException | ParameterParserException | NonExistentResourceException e) {
             objectNode.put("error", e.getMessage());
         }
         returnJSON(objectNode.toString());

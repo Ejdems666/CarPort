@@ -2,9 +2,9 @@ package org.cba.model.cart;
 
 import io.ebean.Ebean;
 import org.cba.domain.Carport;
+import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
-import org.cba.model.carport.calculation.Dimensions;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.jetbrains.annotations.NotNull;
@@ -34,9 +34,9 @@ public class SessionCart implements Cart {
     }
 
     @Override
-    public void addItem(Carport carport, Dimensions frameDimensions) throws MaterialLengthVariationNotFoundException {
-        int newItemPrice = priceCalculator.getPrice(carport, frameDimensions);
-        cartContents.addPurchaseCarport(new PurchaseCarport(carport, frameDimensions, newItemPrice, cartContents));
+    public void addItem(Carport carport, CarportSettings settings) throws MaterialLengthVariationNotFoundException {
+        int newItemPrice = priceCalculator.getPrice(carport, settings);
+        cartContents.addPurchaseCarport(new PurchaseCarport(carport, settings, newItemPrice, cartContents));
         cartContents.setFinalPrice(newItemPrice + cartContents.getFinalPrice());
     }
 
@@ -60,10 +60,10 @@ public class SessionCart implements Cart {
     }
 
     @Override
-    public void recalculatePriceForItem(int index) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound {
+    public void recalculatePriceForItem(int index, CarportSettings carportSettings) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound {
         PurchaseCarport recalculatedItem = getItem(index);
         int oldPrice = recalculatedItem.getPrice();
-        int newPrice = priceCalculator.getPrice(recalculatedItem.getCarport(), recalculatedItem.getFrameDimensions());
+        int newPrice = priceCalculator.getPrice(recalculatedItem.getCarport(), carportSettings);
         recalculatedItem.setPrice(newPrice);
         cartContents.setFinalPrice(cartContents.getFinalPrice() - oldPrice + newPrice);
     }

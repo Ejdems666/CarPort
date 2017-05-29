@@ -1,6 +1,7 @@
 package org.cba.domain;
 
-import org.cba.domain.finder.PurchaseCaportFinder;
+import org.cba.domain.finder.PurchaseCarportFinder;
+import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.model.carport.calculation.Dimensions;
 
 import javax.persistence.Entity;
@@ -12,8 +13,8 @@ import javax.validation.constraints.NotNull;
  * Created by adam on 22/05/2017.
  */
 @Entity
-public class PurchaseCarport {
-    public static final PurchaseCaportFinder find = new PurchaseCaportFinder();
+public class PurchaseCarport implements CarportSettings {
+    public static final PurchaseCarportFinder find = new PurchaseCarportFinder();
 
     @Id
     private int id;
@@ -27,6 +28,13 @@ public class PurchaseCarport {
 
     @NotNull
     private int frameLength;
+
+    private boolean withShed;
+    @NotNull
+    private int shedWidth;
+    @NotNull
+    private int shedLength;
+
     private String pdfCatalogue;
 
     /**
@@ -39,10 +47,11 @@ public class PurchaseCarport {
     @ManyToOne
     private Purchase purchase;
 
-    public PurchaseCarport(Carport carport, Dimensions frameDimensions, int price, Purchase purchase) {
+    public PurchaseCarport(Carport carport, CarportSettings settings, int price, Purchase purchase) {
         this.carport = carport;
-        frameWidth = frameDimensions.width;
-        frameLength = frameDimensions.length;
+        setFrameDimensions(settings.getFrameDimensions());
+        setShedDimensions(settings.getShedDimensions());
+        this.withShed = settings.isWithShed();
         this.price = price;
         this.purchase = purchase;
     }
@@ -87,15 +96,6 @@ public class PurchaseCarport {
         this.purchase = purchase;
     }
 
-    public Dimensions getFrameDimensions() {
-        return new Dimensions(frameLength,frameWidth);
-    }
-
-    public void setFrameDimensions(Dimensions dimensions) {
-        frameLength = dimensions.length;
-        frameWidth = dimensions.width;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -110,5 +110,50 @@ public class PurchaseCarport {
 
     public void setPdfCatalogue(String pdfCatalogue) {
         this.pdfCatalogue = pdfCatalogue;
+    }
+
+    @Override
+    public Dimensions getFrameDimensions() {
+        return new Dimensions(frameLength, frameWidth);
+    }
+
+    public void setFrameDimensions(Dimensions dimensions) {
+        frameLength = dimensions.length;
+        frameWidth = dimensions.width;
+    }
+
+    @Override
+    public boolean isWithShed() {
+        return withShed;
+    }
+
+    public void setWithShed(boolean withShed) {
+        this.withShed = withShed;
+    }
+
+    public int getShedWidth() {
+        return shedWidth;
+    }
+
+    public void setShedWidth(int shedWidth) {
+        this.shedWidth = shedWidth;
+    }
+
+    public int getShedLength() {
+        return shedLength;
+    }
+
+    public void setShedLength(int shedLength) {
+        this.shedLength = shedLength;
+    }
+
+    @Override
+    public Dimensions getShedDimensions() {
+        return new Dimensions(shedLength, shedWidth);
+    }
+
+    public void setShedDimensions(Dimensions dimensions) {
+        shedLength = dimensions.length;
+        shedWidth = dimensions.width;
     }
 }

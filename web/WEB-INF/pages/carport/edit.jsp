@@ -2,13 +2,22 @@
 <div class="panel panel-default">
     <div class="panel-heading">Carport <strong>${carport.name}</strong></div>
     <div class="panel-body">
-        <form id="dimensions-form" method="POST" action="<%=ROOT%>cart/add/${carport.id}">
+        <form id="frameDimensions-form" method="POST" action="<%=ROOT%>cart/add/${carport.id}">
             <div class="form-group">
                 <%= request.getAttribute("lengthSelect") %>
             </div>
-            <hr>
             <div class="form-group">
                 <%= request.getAttribute("widthSelect") %>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="withShed">With shed</label>
+                <input name="withShed" id="withShed" class="form-control"
+                       type="checkbox" <% if (((boolean)request.getAttribute("withShed"))) { %> checked <% } %> value="1">
+            </div>
+            <div class="form-group">
+                <label for="shedLength">Shed Length</label>
+                <input name="shedLength" value="${shedLength}" id="shedLength" class="form-control" type="number">
             </div>
             <hr>
             <strong>Price: </strong>
@@ -21,6 +30,6 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#dimensions-form').find('select').on('change', calculatePriceCall(${carport.id}));
+        $('#frameDimensions-form :input').on('change', calculatePriceCall(${carport.id}));
     });
 </script>
