@@ -11,11 +11,27 @@ import java.util.List;
 public class MaterialCalculatorFactory {
     public List<MaterialCalculator> getMaterialCalculators(Carport carport, CarportSettings settings) {
         List<MaterialCalculator> materialCalculators = new ArrayList<>();
-        materialCalculators.add(new FlatRoofTileCalculator(carport.getRoofTile(), settings.getFrameDimensions()));
+        materialCalculators.add(
+                new FlatRoofTileCalculator(
+                        carport.getRoofTile(),
+                        settings.getFrameDimensions()
+                )
+        );
         if (settings.isWithShed()) {
-            materialCalculators.add(new FrameWithShedMaterialCalculator(carport.getFrame(), settings.getFrameDimensions(), settings.getShedDimensions()));
+            materialCalculators.add(
+                    new FrameWithShedMaterialCalculator(
+                            carport.getFrame(),
+                            settings.getFrameDimensions(),
+                            settings.getShedDimensions()
+                    )
+            );
         } else {
-            materialCalculators.add(new BareFrameMaterialCalculator(carport.getFrame(), settings.getFrameDimensions()));
+            materialCalculators.add(
+                    new BareFrameMaterialCalculator(
+                            carport.getFrame(),
+                            settings.getFrameDimensions()
+                    )
+            );
         }
         return materialCalculators;
     }

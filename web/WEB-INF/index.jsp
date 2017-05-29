@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="<%=ASSETS%>bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
     <script src="<%=ASSETS%>bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 
+    <link rel="stylesheet" href="<%=ASSETS%>ideal-image-slider.css">
+    <script src="<%=ASSETS%>ideal-image-slider.min.js"></script>
+
     <script>
         var root = '<%=ROOT%>';
     </script>
