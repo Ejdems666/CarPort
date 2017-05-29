@@ -81,6 +81,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="<%=ROOT%>profile/email">Change email</a></li>
                             <li><a href="<%=ROOT%>profile/password">Change password</a></li>
+                            <li><a href="<%=ROOT%>order/history">Order history</a></li>
                             <li><a href="<%=ROOT%>sign/out">Logout</a></li>
                         </ul>
                     </li>
