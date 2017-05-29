@@ -2,7 +2,6 @@
 <%@ page import="org.cba.domain.Picture" %>
 <%@ page import="static org.cba.Path.CP_IMG" %>
 <%@ page import="static org.cba.Path.ROOT" %>
-<%@ page import="static org.cba.Path.ASSETS" %>
 <% Carport carport = (Carport) request.getAttribute("carport"); %>
 <h1>Carport <br><strong class="text-uppercase">${carport.name}</strong></h1>
 
@@ -25,8 +24,6 @@
         <p>${carport.description}</p>
     </div>
 </div>
-
-<script src="<%=ASSETS%>ideal-image-slider.js"></script>
 <script>
     var slider = new IdealImageSlider.Slider({
         selector: '#slider',
