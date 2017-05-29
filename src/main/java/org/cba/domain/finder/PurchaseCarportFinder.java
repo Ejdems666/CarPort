@@ -4,19 +4,19 @@ import io.ebean.Finder;
 import org.cba.domain.PurchaseCarport;
 import org.cba.domain.query.QPurchaseCarport;
 
-public class PurchaseCaportFinder extends Finder<Integer,PurchaseCarport> {
+public class PurchaseCarportFinder extends Finder<Integer,PurchaseCarport> {
 
   /**
    * Construct using the default EbeanServer.
    */
-  public PurchaseCaportFinder() {
+  public PurchaseCarportFinder() {
     super(PurchaseCarport.class);
   }
 
   /**
    * Construct with a given EbeanServer.
    */
-  public PurchaseCaportFinder(String serverName) {
+  public PurchaseCarportFinder(String serverName) {
     super(PurchaseCarport.class, serverName);
   }
 

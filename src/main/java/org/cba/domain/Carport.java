@@ -2,6 +2,7 @@ package org.cba.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.cba.domain.finder.CarportFinder;
+import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.model.carport.calculation.Dimensions;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by adam on 15/04/2017.
  */
 @Entity
-public class Carport {
+public class Carport implements CarportSettings {
 
     public static final CarportFinder find = new CarportFinder();
     @Id
@@ -29,9 +30,15 @@ public class Carport {
     @NotNull
     private int profitFromMaterials;
     @NotNull
-    private int defaultWidth;
+    private int frameWidth;
     @NotNull
-    private int defaultLength;
+    private int frameLength;
+
+    private boolean withShed;
+    @NotNull
+    private int shedWidth;
+    @NotNull
+    private int shedLength;
 
     @JsonManagedReference
     private String description;
@@ -89,20 +96,20 @@ public class Carport {
         this.defaultPrice = defaultPrice;
     }
 
-    public int getDefaultWidth() {
-        return defaultWidth;
+    public int getFrameWidth() {
+        return frameWidth;
     }
 
-    public void setDefaultWidth(int defaultWidth) {
-        this.defaultWidth = defaultWidth;
+    public void setFrameWidth(int frameWidth) {
+        this.frameWidth = frameWidth;
     }
 
-    public int getDefaultLength() {
-        return defaultLength;
+    public int getFrameLength() {
+        return frameLength;
     }
 
-    public void setDefaultLength(int defaultLength) {
-        this.defaultLength = defaultLength;
+    public void setFrameLength(int frameLength) {
+        this.frameLength = frameLength;
     }
 
     public String getName() {
@@ -138,8 +145,39 @@ public class Carport {
         this.roofTile = roofTile;
     }
 
-    public Dimensions getDefaultDimensions() {
-        return new Dimensions(defaultLength,defaultWidth);
+    @Override
+    public Dimensions getFrameDimensions() {
+        return new Dimensions(frameLength, frameWidth);
+    }
+
+    @Override
+    public Dimensions getShedDimensions() {
+        return new Dimensions(shedLength, shedWidth);
+    }
+
+    @Override
+    public boolean isWithShed() {
+        return withShed;
+    }
+
+    public void setWithShed(boolean withShed) {
+        this.withShed = withShed;
+    }
+
+    public int getShedWidth() {
+        return shedWidth;
+    }
+
+    public void setShedWidth(int shedWidth) {
+        this.shedWidth = shedWidth;
+    }
+
+    public int getShedLength() {
+        return shedLength;
+    }
+
+    public void setShedLength(int shedLength) {
+        this.shedLength = shedLength;
     }
 }
 

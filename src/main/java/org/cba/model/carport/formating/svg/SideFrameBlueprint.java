@@ -12,17 +12,17 @@ import java.awt.*;
 /**
  * Created by adam on 21/05/2017.
  */
-public class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
+public abstract class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
+    protected Frame frame;
+    protected int frameLength;
+    protected PartRecord verticalPillars;
+    protected PartRecord upperPillars;
+    protected PartRecord lowerPillars;
     private FrameMaterialCalculator materialCalculator;
-    private Frame frame;
-    private int carportLength;
-    private PartRecord verticalPillars;
-    private PartRecord upperPillars;
-    private PartRecord lowerPillars;
 
-    public SideFrameBlueprint(FrameMaterialCalculator materialCalculator, int carportLength, Frame frame) {
+    public SideFrameBlueprint(FrameMaterialCalculator materialCalculator, int frameLength, Frame frame) {
         this.materialCalculator = materialCalculator;
-        this.carportLength = carportLength;
+        this.frameLength = frameLength;
         this.frame = frame;
     }
 
@@ -30,26 +30,27 @@ public class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
     public void draw(SVGGraphics2D svgGen) {
         super.svgGen = svgGen;
         try {
-            verticalPillars = materialCalculator.getVerticalPillars();
             upperPillars = materialCalculator.getSideUpperPillars();
             lowerPillars = materialCalculator.getLowerPillars();
-
-            int upperPillarBottomY = TOP_RESERVE + upperPillars.getHeight();
-            int carportHeight = upperPillarBottomY +
-                    lowerPillars.getHeight() +
-                    verticalPillars.getLength();
-            setScale(carportLength, carportHeight);
-            drawHelpingLines(carportHeight, carportLength + MEASURES_RESERVE);
-
-            drawUpperSidePillar();
-            drawLowerSidePillar(upperPillarBottomY);
-            int lowerPillarBottomY = upperPillarBottomY + lowerPillars.getHeight();
-            drawVerticalPillars(lowerPillarBottomY);
-
         } catch (MaterialLengthVariationNotFoundException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Will not happen in this stage
         }
+        verticalPillars = getImplementationSpecificVerticalPillars();
+
+        int upperPillarBottomY = TOP_RESERVE + upperPillars.getWidth();
+        int carportHeight = upperPillarBottomY +
+                lowerPillars.getWidth() +
+                verticalPillars.getLength();
+        setScale(frameLength, carportHeight);
+        drawHelpingLines(carportHeight, frameLength + MEASURES_RESERVE);
+
+        drawUpperSidePillar();
+        drawLowerSidePillar(upperPillarBottomY);
+        int lowerPillarBottomY = upperPillarBottomY + lowerPillars.getWidth();
+        drawRegularVerticalPillars(lowerPillarBottomY);
     }
+
+    protected abstract PartRecord getImplementationSpecificVerticalPillars();
 
     private void drawHelpingLines(int bottomY, int rightX) {
         svgGen.setColor(Color.GRAY);
@@ -60,46 +61,55 @@ public class SideFrameBlueprint extends Blueprint implements BlueprintDrawing {
     }
 
     private void drawUpperSidePillar() {
-        svgGen.draw(new Rectangle(MEASURES_RESERVE, TOP_RESERVE, carportLength, upperPillars.getHeight()));
+        svgGen.draw(new Rectangle(MEASURES_RESERVE, TOP_RESERVE, frameLength, upperPillars.getWidth()));
         drawMeasureVertically(
-                verticalPillars.getLength() + lowerPillars.getHeight() + upperPillars.getHeight(),
+                verticalPillars.getLength() + lowerPillars.getWidth() + upperPillars.getWidth(),
                 TOP_RESERVE,
                 -20
         );
     }
 
     private void drawLowerSidePillar(int yOffset) {
-        svgGen.draw(new Rectangle(MEASURES_RESERVE, yOffset, carportLength, lowerPillars.getHeight()));
+        svgGen.draw(new Rectangle(MEASURES_RESERVE, yOffset, frameLength, lowerPillars.getWidth()));
         drawMeasureVertically(
-                verticalPillars.getLength() + lowerPillars.getHeight(),
-                upperPillars.getHeight() + TOP_RESERVE,
+                verticalPillars.getLength() + lowerPillars.getWidth(),
+                upperPillars.getWidth() + TOP_RESERVE,
                 -50
         );
     }
 
-    private void drawVerticalPillars(int yOffset) {
-        int amount = verticalPillars.getCount() / 2;
-        int distance = getDistanceOfVP(amount);
+    private void drawRegularVerticalPillars(int yOffset) {
         int length = verticalPillars.getLength();
-        int xOffset = 0;
+        int xOffset = MEASURES_RESERVE;
         int bottomMeasureY = yOffset + length + MEASURES_RESERVE / 2;
-        drawMeasureHorizontally(frame.getVerticalPillarFrontReserve(), MEASURES_RESERVE, bottomMeasureY);
-        for (int i = 0; i < amount; i++) {
-            xOffset = MEASURES_RESERVE + frame.getVerticalPillarFrontReserve() + distance * i;
-            svgGen.draw(new Rectangle(xOffset, yOffset, verticalPillars.getWidth(), length));
-            if (notTheLastVp(amount, i)) {
-                drawMeasureHorizontally(distance, xOffset, bottomMeasureY);
+        int count = verticalPillars.getCount() / 2;
+        if (count != 0) {
+            drawMeasureHorizontally(frame.getVerticalPillarFrontReserve(), MEASURES_RESERVE, bottomMeasureY);
+            int distance = getDistance(count);
+            for (int i = 0; i < count; i++) {
+                xOffset = MEASURES_RESERVE + frame.getVerticalPillarFrontReserve() + distance * i;
+                svgGen.draw(new Rectangle(xOffset, yOffset, verticalPillars.getWidth(), length));
+                if (notTheLastVp(count, i)) {
+                    drawMeasureHorizontally(distance, xOffset, bottomMeasureY);
+                }
             }
         }
-        drawMeasureHorizontally(frame.getVerticalPillarBackReserve(), xOffset, bottomMeasureY);
+        drawAfterRegularVps(xOffset, bottomMeasureY);
+    }
+
+    private int getDistance(int count) {
+        int realVPArea = getRegularVPArea(count);
+        if (count > 1) {
+            return realVPArea / (count - 1);
+        }
+        return realVPArea;
     }
 
     private boolean notTheLastVp(int countOfVP, int i) {
         return i != countOfVP - 1;
     }
 
-    private int getDistanceOfVP(int countOfVP) {
-        int VPLengthArea = carportLength - frame.getVerticalPillarBackReserve() - frame.getVerticalPillarFrontReserve();
-        return VPLengthArea / (countOfVP - 1);
-    }
+    protected abstract int getRegularVPArea(int countOfVP);
+
+    protected abstract void drawAfterRegularVps(int xOffset, int bottomMeasureY);
 }

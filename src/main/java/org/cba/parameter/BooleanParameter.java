@@ -7,7 +7,7 @@ import org.cba.parameter.exception.InvalidParameterTypeException;
  */
 public class BooleanParameter extends GeneralMask<Boolean> implements Parameter {
     private Boolean defaultValue = null;
-    private Boolean value;
+    private Boolean value = false;
     private String key;
 
     public BooleanParameter(String key) {

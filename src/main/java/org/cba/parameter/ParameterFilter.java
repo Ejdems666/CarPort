@@ -39,14 +39,10 @@ public class ParameterFilter {
             Parameter parameter = entry.getValue();
             if (sendValueIsNotEmpty(sendValue)) {
                 parameter.parseSendValue(sendValue);
-                parsedParameters.addParameter(key, parameter);
-            } else if (parameter.getDefaultValue() != null) {
-                parsedParameters.addParameter(key,parameter);
-            } else {
-                if (parameter.isRequired()) {
-                    throw new RequiredParameterNonExistentException(key);
-                }
+            } else if (parameter.getDefaultValue() == null && parameter.isRequired()) {
+                throw new RequiredParameterNonExistentException(key);
             }
+            parsedParameters.addParameter(key,parameter);
         }
         return parsedParameters;
     }

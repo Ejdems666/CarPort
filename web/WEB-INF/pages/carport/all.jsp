@@ -17,9 +17,9 @@
                     <a href="<%=ROOT%>carport/<%=carport.getId() %>"><img
                             src="<%=CP_IMG + carport.getThumbnail().getUrl()%>" alt="<%=carport.getName() %>"
                             class="img-responsive"></a>
-                    <p>Lenght: <%=carport.getDefaultLength() %>
+                    <p>Lenght: <%=carport.getFrameLength() %>
                     </p>
-                    <p>Width: <%=carport.getDefaultWidth() %>
+                    <p>Width: <%=carport.getFrameWidth() %>
                     </p>
                     <p>Price: <%=carport.getDefaultPrice() %>
                     </p>

@@ -32,6 +32,10 @@ public class Frame {
     @NotNull
     private Material roofPlankMaterial;
 
+    @ManyToOne
+    @NotNull
+    private Material shedPlankMaterial;
+
     @NotNull
     private int verticalPillarFrontReserve;
 
@@ -114,5 +118,13 @@ public class Frame {
 
     public void setVerticalPillarBackReserve(int verticalPillarBackReserve) {
         this.verticalPillarBackReserve = verticalPillarBackReserve;
+    }
+
+    public Material getShedPlankMaterial() {
+        return shedPlankMaterial;
+    }
+
+    public void setShedPlankMaterial(Material shedPlankMaterial) {
+        this.shedPlankMaterial = shedPlankMaterial;
     }
 }
