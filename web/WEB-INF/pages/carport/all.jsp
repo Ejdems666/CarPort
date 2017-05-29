@@ -27,6 +27,7 @@
                     <a href="<%=ROOT%>carport/<%=carport.getId() %>" class="btn btn-primary">Go to detail</a>
                     <a href="<%=ROOT%>cart/add/<%=carport.getId() %>" class="btn btn-primary">Add to cart</a>
                     <a href="<%=ROOT%>carport/edit/<%=carport.getId() %>" class="btn btn-primary">Or edit first</a>
+                    <a href="<%=ROOT%>carport/unity" class="btn btn-primary">View 3D model</a>
                 </div>
             </div>
         </div>

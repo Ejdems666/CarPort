@@ -15,6 +15,7 @@
     <a href="#" class="btn btn-info customButton" role="button">Add to cart</a>
     <a href="<%=ROOT%>carport/edit/${carport.id}" class="btn btn-info customButton" role="button">Edit frameDimensions
         first</a>
+    <a href="<%=ROOT%>carport/unity" class="btn btn-primary">View 3D model</a>
     <div class="alert alert-info col-xs-5 col-sm-6 col-lg-4 descriptionBox">
         <strong>Width: </strong>${carport.frameWidth} <strong>cm.</strong><br>
         <strong>Height: </strong>${carport.frameLength} <strong>cm.</strong><br>
