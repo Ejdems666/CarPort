@@ -60,10 +60,13 @@ public class SessionCart implements Cart {
     }
 
     @Override
-    public void recalculatePriceForItem(int index, CarportSettings carportSettings) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound {
+    public void editItem(int index, CarportSettings settings) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound {
         PurchaseCarport recalculatedItem = getItem(index);
+        recalculatedItem.setShedDimensions(settings.getShedDimensions());
+        recalculatedItem.setFrameDimensions(settings.getFrameDimensions());
+        recalculatedItem.setWithShed(settings.isWithShed());
         int oldPrice = recalculatedItem.getPrice();
-        int newPrice = priceCalculator.getPrice(recalculatedItem.getCarport(), carportSettings);
+        int newPrice = priceCalculator.getPrice(recalculatedItem.getCarport(), settings);
         recalculatedItem.setPrice(newPrice);
         cartContents.setFinalPrice(cartContents.getFinalPrice() - oldPrice + newPrice);
     }

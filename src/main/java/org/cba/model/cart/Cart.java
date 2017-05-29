@@ -16,7 +16,7 @@ public interface Cart extends TemplateCart {
     /**
      * Must be called once frameDimensions of certain PurchaseCarport are changed
      */
-    public void recalculatePriceForItem(int index, CarportSettings carportSettings) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound;
+    public void editItem(int index, CarportSettings carportSettings) throws MaterialLengthVariationNotFoundException, IndexOfOrderNotFound;
 
     public void saveInDatabaseAndEmptyCart();
 

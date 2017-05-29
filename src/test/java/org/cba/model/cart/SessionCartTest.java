@@ -88,7 +88,7 @@ public class SessionCartTest {
         PurchaseCarport mockedOrder = cart.getCartContents().getPurchaseCarports().get(0);
         mockedOrder.setFrameLength(400);
         carport.setFrameLength(400); // Tests with default settings values, except for frame length
-        cart.recalculatePriceForItem(0, carport);
+        cart.editItem(0, carport);
         Assert.assertEquals(cart.getPrice(), priceCalculator.getPrice(carport, carport));
     }
 

@@ -55,3 +55,4 @@ buildNumber.properties
 !/src/main/java/org/cba/parameter/ParameterFilter.java
 !/src/main/java/org/cba/parameter/StringParameter.java
 !/src/main/java/org/cba/model/carport/formating/pdf/
+/web/assets/bower_components/

@@ -22,24 +22,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import static org.easymock.EasyMock.*;
-
 /**
  * Created by adam on 25/05/2017.
  */
 public class TemporaryHtmlGenerator {
     public static final String TEMPORARY_HTML_FILE = "temp-pdf-html.html";
     private final MaterialCalculatorFactory factory = new MaterialCalculatorFactory();
-
-    // TODO: JUST FOR TESTING, remove
-    public static void main(String[] args) {
-        PurchaseCarport purchase = PurchaseCarport.find.byId(1);
-        TemporaryHtmlGenerator htmlGenerator = new TemporaryHtmlGenerator();
-        ServletContext context = createNiceMock(ServletContext.class);
-        expect(context.getRealPath(TEMPORARY_HTML_FILE)).andReturn("web/" + Path.GENERATING_PDF + TEMPORARY_HTML_FILE);
-        replay(context);
-        htmlGenerator.generateFile(purchase, context);
-    }
 
     public File generateFile(PurchaseCarport purchase, ServletContext servletContext) {
         String filePath = servletContext.getRealPath(Path.GENERATING_PDF + TEMPORARY_HTML_FILE);

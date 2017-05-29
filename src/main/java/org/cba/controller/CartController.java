@@ -30,14 +30,18 @@ public class CartController extends BaseController {
     public void index() {
         if (cart.getNumberOfItems() > 0) {
             TableBuilder tableBuilder = new TableBuilder("table");
-            tableBuilder.addHeader("Current orders in cart", "Carport name, Frame width, Frame length, Price, Edit order, View pdf catalogue, Remove");
+            tableBuilder.addHeader(
+                    "Current orders in cart",
+                    "Carport name, Frame (width x length), Has shed, Shed Length, Price, Edit order, View pdf catalogue, Remove"
+            );
             List<PurchaseCarport> purchaseCarports = cart.getCartContents().getPurchaseCarports();
             for (int i = 0; i < purchaseCarports.size(); i++) {
                 PurchaseCarport purchaseCarport = purchaseCarports.get(i);
                 Row row = tableBuilder.createNewRow();
                 row.addColumn(purchaseCarport.getCarport().getName());
-                row.addColumn(purchaseCarport.getFrameWidth());
-                row.addColumn(purchaseCarport.getFrameLength());
+                row.addColumn(purchaseCarport.getFrameWidth() + " x " + purchaseCarport.getFrameLength());
+                row.addColumn(purchaseCarport.isWithShed());
+                row.addColumn(purchaseCarport.getShedLength());
                 row.addColumn(purchaseCarport.getPrice());
                 row.addColumnLink("cart/edit/" + i, Row.Icon.EDIT);
                 row.addColumnLink("cart/pdf/" + i, Row.Icon.PDF);
@@ -68,7 +72,7 @@ public class CartController extends BaseController {
         if (request.getMethod().equals("POST")) {
             try {
                 CarportSettings settings = CarportSettingsForm.getRequestedCarportSettings(request);
-                cart.recalculatePriceForItem(purchaseNumber, settings);
+                cart.editItem(purchaseNumber, settings);
                 PurchaseCarport purchase = cart.getCartContents().getPurchaseCarports().get(purchaseNumber);
                 regeneratePdfIfNonExistent(purchase);
                 alertSuccess("Order changed.");
