@@ -5,18 +5,18 @@ import org.cba.components.CarportSettingsForm;
 import org.cba.components.table.Row;
 import org.cba.components.table.TableBuilder;
 import org.cba.domain.Carport;
-import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
+import org.cba.domain.User;
+import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.cba.model.carport.formating.pdf.PdfGenerator;
 import org.cba.model.cart.IndexOfOrderNotFound;
+import org.cba.model.facade.PdfFacade;
 import org.cba.parameter.exception.ParameterParserException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -136,18 +136,19 @@ public class CartController extends BaseController {
             purchase.setCustomer(loggedUser);
         }
         cart.saveInDatabaseAndEmptyCart();
+        updateUserSession();
         renderTemplate();
+    }
+
+    private void updateUserSession() {
+        request.getSession().setAttribute("user", User.find.byId(loggedUser.getId()));
     }
 
     public void pdf(Integer purchaseNumber) {
         try {
             PurchaseCarport purchase = cart.getItem(purchaseNumber);
-            if (purchase.getPdfCatalogue() == null || pdfCatalogueFileDoesNotExist(purchase.getPdfCatalogue())) {
-                PdfGenerator pdfGenerator = new PdfGenerator();
-                String fileName = pdfGenerator.generatePdf(purchase, request.getSession().getServletContext());
-                pdfGenerator.waitUntilThePdfIsAccessible(fileName);
-                purchase.setPdfCatalogue(fileName);
-            }
+            PdfFacade facade = new PdfFacade(request.getSession().getServletContext());
+            facade.generatePdf(purchase);
             redirect(Path.PDF, purchase.getPdfCatalogue());
             return;
         } catch (IndexOfOrderNotFound e) {
@@ -156,9 +157,6 @@ public class CartController extends BaseController {
         }
     }
 
-    private boolean pdfCatalogueFileDoesNotExist(String fileName) {
-        ServletContext servletContext = request.getSession().getServletContext();
-        File file = new File(servletContext.getRealPath(Path.GENERATING_PDF + fileName));
-        return !file.exists();
-    }
+
+
 }

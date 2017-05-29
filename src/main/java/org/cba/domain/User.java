@@ -4,8 +4,10 @@ import org.cba.domain.finder.UserFinder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by adam on 26/02/2017.
@@ -32,6 +34,13 @@ public class User {
     private String password;
     @NotNull
     private String salt;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Purchase> purchaseList;
+
+    public List<Purchase> getPurchaseList() {
+        return purchaseList;
+    }
 
     public int getId() {
         return id;
