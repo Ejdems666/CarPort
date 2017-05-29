@@ -141,7 +141,9 @@ public class CartController extends BaseController {
     }
 
     private void updateUserSession() {
-        request.getSession().setAttribute("user", User.find.byId(loggedUser.getId()));
+        if (isLoggedIn()) {
+            request.getSession().setAttribute("user", User.find.byId(loggedUser.getId()));
+        }
     }
 
     public void pdf(Integer purchaseNumber) {
@@ -156,7 +158,6 @@ public class CartController extends BaseController {
             renderTemplate("error/notFound");
         }
     }
-
 
 
 }

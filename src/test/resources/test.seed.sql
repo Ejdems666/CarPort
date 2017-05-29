@@ -37,13 +37,13 @@ INSERT INTO `user` (`id`, `name`, `surname`, `created_at`, `status`, `type`, `em
 -- Dumping data for table `material_length`
 --
 
-INSERT INTO `material_length` (`id`, `length`, `price`, `stock`, `material_id`) VALUES (1,800,100,100,1),(2,800,100,100,2),(3,300,100,100,3),(4,400,100,100,4),(12,400,100,100,1),(13,300,100,100,5);
+INSERT INTO `material_length` (`id`, `length`, `price`, `stock`, `material_id`) VALUES (1,800,100,100,1),(2,800,100,100,2),(3,300,100,100,3),(4,400,100,100,4),(12,400,100,100,1),(13,330,20,100,5);
 
 --
 -- Dumping data for table `carport`
 --
 
-INSERT INTO `carport` (`id`, `name`, `default_price`, `profit_from_materials`, `description`, `thumbnail_id`, `frame_id`, `roof_tile_id`, `frame_width`, `frame_length`, `with_shed`, `shed_width`, `shed_length`) VALUES (1,'carport1',10000,50,'desc',2,1,1,400,800,0,0,0);
+INSERT INTO `carport` (`id`, `name`, `default_price`, `profit_from_materials`, `description`, `thumbnail_id`, `frame_id`, `roof_tile_id`, `frame_width`, `frame_length`, `with_shed`, `shed_width`, `shed_length`) VALUES (1,'carport1',6087,50,'desc',2,1,1,400,800,0,0,0);
 
 --
 -- Dumping data for table `roof_tile_dependency`
@@ -54,7 +54,7 @@ INSERT INTO `carport` (`id`, `name`, `default_price`, `profit_from_materials`, `
 -- Dumping data for table `picture`
 --
 
-INSERT INTO `picture` (`id`, `url`, `carport_id`) VALUES (2,'carport1.jpeg',NULL);
+INSERT INTO `picture` (`id`, `url`, `carport_id`) VALUES (2,'carport1.jpeg',1);
 
 --
 -- Dumping data for table `frame`
@@ -66,7 +66,7 @@ INSERT INTO `frame` (`id`, `upper_pillar_material_id`, `lower_pillar_material_id
 -- Dumping data for table `material`
 --
 
-INSERT INTO `material` (`id`, `width`, `height`, `name`, `description`) VALUES (1,5,30,'upper frame pillar',''),(2,30,30,'lower frame pillar',''),(3,20,20,'holding vertical pillar',''),(4,10,5,'roof plank',''),(5,15,5,'shed plank','plank for shed');
+INSERT INTO `material` (`id`, `width`, `height`, `name`, `description`) VALUES (1,30,5,'upper frame pillar',''),(2,30,30,'lower frame pillar',''),(3,20,20,'holding vertical pillar',''),(4,10,5,'roof plank',''),(5,15,5,'shed plank','plank for shed');
 
 --
 -- Dumping data for table `assembly_material`
@@ -78,13 +78,13 @@ INSERT INTO `assembly_material` (`id`, `name`, `price`, `stock`, `description`) 
 -- Dumping data for table `purchase_carport`
 --
 
-INSERT INTO `purchase_carport` (`id`, `carport_id`, `frame_width`, `frame_length`, `purchase_id`, `price`, `pdf_catalogue`, `with_shed`, `shed_width`, `shed_length`) VALUES (1,1,400,800,2,6087,NULL,0,0,0),(2,1,400,800,2,6087,NULL,0,0,0),(3,1,400,800,3,6087,NULL,0,0,0),(4,1,400,800,4,6087,NULL,0,0,0);
+INSERT INTO `purchase_carport` (`id`, `carport_id`, `frame_width`, `frame_length`, `purchase_id`, `price`, `pdf_catalogue`, `with_shed`, `shed_width`, `shed_length`) VALUES (1,1,400,800,2,6087,'carport11496055707639.pdf',0,0,0),(2,1,400,800,2,6087,NULL,0,0,0),(3,1,400,800,3,6087,NULL,0,0,0),(4,1,400,800,4,6087,NULL,0,0,0),(5,1,400,800,5,8442,'carport11496051672912.pdf',1,0,410),(6,1,400,800,6,6087,'carport11496055790677.pdf',0,0,0),(7,1,400,800,7,6087,'carport11496056029949.pdf',0,0,0);
 
 --
 -- Dumping data for table `purchase`
 --
 
-INSERT INTO `purchase` (`id`, `final_price`, `ordered_on`, `customer_id`) VALUES (2,12174,'2017-05-24',NULL),(3,6087,'2017-05-26',NULL),(4,6087,'2017-05-28',NULL);
+INSERT INTO `purchase` (`id`, `final_price`, `ordered_on`, `customer_id`) VALUES (2,12174,'2017-05-24',NULL),(3,6087,'2017-05-26',NULL),(4,6087,'2017-05-28',NULL),(5,8442,'2017-05-29',NULL),(6,6087,'2017-05-29',1),(7,6087,'2017-05-29',1);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -95,4 +95,4 @@ INSERT INTO `purchase` (`id`, `final_price`, `ordered_on`, `customer_id`) VALUES
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-28 19:10:41
+-- Dump completed on 2017-05-29 13:43:42
