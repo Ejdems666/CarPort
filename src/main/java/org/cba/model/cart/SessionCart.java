@@ -2,9 +2,9 @@ package org.cba.model.cart;
 
 import io.ebean.Ebean;
 import org.cba.domain.Carport;
-import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.domain.Purchase;
 import org.cba.domain.PurchaseCarport;
+import org.cba.model.carport.calculation.CarportSettings;
 import org.cba.model.carport.calculation.PriceCalculator;
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
 import org.jetbrains.annotations.NotNull;
