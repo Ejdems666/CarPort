@@ -3,7 +3,7 @@ package org.cba.model.facade;
 import io.ebean.Ebean;
 import org.cba.domain.User;
 import org.cba.model.Hasher;
-import org.cba.model.exception.NonExistentEmailException;
+import org.cba.model.exception.EmailTakenException;
 import org.cba.model.exception.WrongPasswordException;
 
 /**
@@ -31,6 +31,16 @@ public class ProfileFacade {
 
        } else {
            throw new WrongPasswordException("Old password does not match");
+       }
+   }
+
+   public void changeEmail(User loggedUser, String email) throws EmailTakenException {
+       int exist = User.find.where().email.equalTo(email).findCount();
+       if (exist == 0) {
+           loggedUser.setEmail(email);
+           Ebean.update(loggedUser);
+       } else {
+           throw new EmailTakenException();
        }
    }
 }

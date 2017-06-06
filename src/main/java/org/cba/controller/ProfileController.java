@@ -1,7 +1,6 @@
 package org.cba.controller;
 
-import io.ebean.Ebean;
-import org.cba.domain.User;
+import org.cba.model.exception.EmailTakenException;
 import org.cba.model.exception.WrongPasswordException;
 import org.cba.model.facade.ProfileFacade;
 
@@ -18,15 +17,15 @@ public class ProfileController extends BaseController {
 
     public void email() {
         if (redirectIfNotSignedIn()) return;
+
         if (request.getMethod().equals("POST")) {
             String email = request.getParameter("email");
-            int exist = User.find.where().email.equalTo(email).findCount();
-            if (exist == 0) {
-                loggedUser.setEmail(email);
-                Ebean.update(loggedUser);
+            ProfileFacade profileFacade = new ProfileFacade();
+            try {
+                profileFacade.changeEmail(loggedUser,email);
                 alertSuccess("Email was updated");
-            } else {
-                alertError("Email already exist");
+            } catch (EmailTakenException e) {
+                alertError(e.getMessage());
             }
         }
         renderTemplate();
@@ -34,6 +33,7 @@ public class ProfileController extends BaseController {
 
     public void password() {
         if (redirectIfNotSignedIn()) return;
+
         if (request.getMethod().equals("POST")) {
             String newPassword = request.getParameter("newPassword");
             String newPassword2 = request.getParameter("newPassword2");
