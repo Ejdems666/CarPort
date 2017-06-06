@@ -1,19 +1,19 @@
 package org.cba.controller;
+
 import io.ebean.Ebean;
-import org.cba.controller.BaseController;
+import org.cba.components.table.Row;
+import org.cba.components.table.TableBuilder;
 import org.cba.domain.Material;
-import org.cba.model.carport.formating.table.Row;
-import org.cba.model.carport.formating.table.TableBuilder;
 import org.cba.model.facade.MaterialFacade;
-import org.cba.parameter.ParameterParser;
-import org.cba.parameter.ParameterSieve;
+import org.cba.parameter.ParameterFilter;
 import org.cba.parameter.ParsedParameters;
 import org.cba.parameter.exception.ParameterParserException;
-import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
+import static org.cba.Path.ROOT;
 
 /**
  * Created by Maksymilian on 21/05/2017.
@@ -38,20 +38,14 @@ public class MaterialController extends BaseController {
     }
 
     private ParsedParameters getNormalParameters() throws ParameterParserException {
-        ParameterSieve parameterSieve = createSieve();
-        ParameterParser parameterParser = new ParameterParser();
-        return parameterParser.parseParameters(request, parameterSieve);
+        ParameterFilter parameterFilter = new ParameterFilter();
+        parameterFilter.addString("name").setRequired();
+        parameterFilter.addInteger("height").setRequired();
+        parameterFilter.addInteger("width").setRequired();
+        parameterFilter.addString("description").setRequired();
+        return parameterFilter.parseParameters(request);
     }
 
-    @NotNull
-    private ParameterSieve createSieve() {
-        ParameterSieve parameterSieve = new ParameterSieve();
-        parameterSieve.addString("name").setRequired();
-        parameterSieve.addInteger("height").setRequired();
-        parameterSieve.addInteger("width").setRequired();
-        parameterSieve.addString("description").setRequired();
-        return parameterSieve;
-    }
 
     private void fillUpEntity(Material material, ParsedParameters parameters) {
         material.setName(parameters.getString("name"));
