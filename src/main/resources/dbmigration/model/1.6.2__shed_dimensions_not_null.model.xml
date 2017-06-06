@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE xml>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <alterColumn columnName="shed_width" tableName="carport" currentType="integer" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="shed_length" tableName="carport" currentType="integer" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="shed_width" tableName="purchase_carport" currentType="integer" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="shed_length" tableName="purchase_carport" currentType="integer" notnull="true" currentNotnull="false"/>
+    </changeSet>
+</migration>

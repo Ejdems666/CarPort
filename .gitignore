@@ -50,5 +50,9 @@ buildNumber.properties
 /src/test/resources/test-ebean.properties
 /src/main/resources/ebean.properties
 !/web/assets/Build/
-!/src/main/java/org/cba/model/carport/formating/table/Row.java
+!/org/cba/components/table/Row.java
 !/src/main/resources/dbmigration/model/1.0__init.model.xml
+!/src/main/java/org/cba/parameter/ParameterFilter.java
+!/src/main/java/org/cba/parameter/StringParameter.java
+!/src/main/java/org/cba/model/carport/formating/pdf/
+/web/assets/bower_components/

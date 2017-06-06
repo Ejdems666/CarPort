@@ -1,5 +1,7 @@
 <%@ page import="org.cba.domain.Carport" %>
 <%@ page import="java.util.List" %>
+<%@ page import="static org.cba.Path.ROOT" %>
+<%@ page import="static org.cba.Path.CP_IMG" %>
 <head>
     <title>Carport List</title>
 </head>
@@ -12,18 +14,20 @@
                 <div class="panel-heading"> Name:  <%=carport.getName() %>
                 </div>
                 <div class="panel-body">
-                    <a href="${root}carport/<%=carport.getId() %>"><img src="${cpImgs}<%=carport.getThumbnail().getUrl()%>" alt="<%=carport.getName() %>"
-                                                                        class="img-responsive"></a>
-                    <p>Lenght: <%=carport.getDefaultLength() %>
+                    <a href="<%=ROOT%>carport/<%=carport.getId() %>"><img
+                            src="<%=CP_IMG + carport.getThumbnail().getUrl()%>" alt="<%=carport.getName() %>"
+                            class="img-responsive"></a>
+                    <p>Lenght: <%=carport.getFrameLength() %>
                     </p>
-                    <p>Width: <%=carport.getDefaultWidth() %>
+                    <p>Width: <%=carport.getFrameWidth() %>
                     </p>
                     <p>Price: <%=carport.getDefaultPrice() %>
                     </p>
                     <hr>
-                    <a href="${root}carport/<%=carport.getId() %>" class="btn btn-primary">Go to detail</a>
-                    <a href="#" class="btn btn-primary">Add to basket</a>
-                    <a href="${root}carport/edit/<%=carport.getId() %>" class="btn btn-primary">Or edit first</a>
+                    <a href="<%=ROOT%>carport/<%=carport.getId() %>" class="btn btn-primary">Go to detail</a>
+                    <a href="<%=ROOT%>cart/add/<%=carport.getId() %>" class="btn btn-primary">Add to cart</a>
+                    <a href="<%=ROOT%>carport/edit/<%=carport.getId() %>" class="btn btn-primary">Or edit first</a>
+                    <a href="<%=ROOT%>carport/unity" class="btn btn-primary">View 3D model</a>
                 </div>
             </div>
         </div>

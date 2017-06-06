@@ -1,4 +1,6 @@
-package org.cba.model.carport.formating.table;
+package org.cba.components.table;
+
+import hyggemvc.component.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +8,18 @@ import java.util.List;
 /**
  * Created by adam on 20/05/2017.
  */
-public class TableBuilder {
-    private StringBuilder tableBuilder = new StringBuilder("<table>");
+public class TableBuilder implements Component {
+    private StringBuilder tableBuilder;
     private List<Row> rows = new ArrayList<>();
+
+    public TableBuilder(String classes) {
+        tableBuilder = new StringBuilder();
+        tableBuilder.append("<table class='").append(classes).append("'>");
+    }
+
+    public TableBuilder() {
+        tableBuilder = new StringBuilder("<table>");
+    }
 
     public Row createNewRow() {
         Row row = new Row();

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE xml>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="purchase" pkName="pk_purchase">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="final_price" type="integer" notnull="true"/>
+            <column name="ordered_on" type="date"/>
+            <column name="customer_id" type="integer" references="user.id" foreignKeyName="fk_purchase_customer_id" foreignKeyIndex="ix_purchase_customer_id"/>
+        </createTable>
+        <createTable name="purchase_carport" pkName="pk_purchase_carport">
+            <column name="id" type="integer" primaryKey="true"/>
+            <column name="carport_id" type="integer" notnull="true" references="carport.id" foreignKeyName="fk_purchase_carport_carport_id" foreignKeyIndex="ix_purchase_carport_carport_id"/>
+            <column name="frame_width" type="integer" notnull="true"/>
+            <column name="frame_length" type="integer" notnull="true"/>
+            <column name="purchase_id" type="integer" notnull="true" references="purchase.id" foreignKeyName="fk_purchase_carport_purchase_id" foreignKeyIndex="ix_purchase_carport_purchase_id"/>
+        </createTable>
+    </changeSet>
+</migration>

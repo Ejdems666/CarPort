@@ -19,6 +19,9 @@ drop index ix_frame_vertical_pillar_material_id on frame;
 alter table frame drop foreign key fk_frame_roof_plank_material_id;
 drop index ix_frame_roof_plank_material_id on frame;
 
+alter table frame drop foreign key fk_frame_shed_plank_material_id;
+drop index ix_frame_shed_plank_material_id on frame;
+
 alter table material_dependency drop foreign key fk_material_dependency_material_id;
 drop index ix_material_dependency_material_id on material_dependency;
 
@@ -30,6 +33,15 @@ drop index ix_material_length_material_id on material_length;
 
 alter table picture drop foreign key fk_picture_carport_id;
 drop index ix_picture_carport_id on picture;
+
+alter table purchase drop foreign key fk_purchase_customer_id;
+drop index ix_purchase_customer_id on purchase;
+
+alter table purchase_carport drop foreign key fk_purchase_carport_carport_id;
+drop index ix_purchase_carport_carport_id on purchase_carport;
+
+alter table purchase_carport drop foreign key fk_purchase_carport_purchase_id;
+drop index ix_purchase_carport_purchase_id on purchase_carport;
 
 alter table roof_tile_dependency drop foreign key fk_roof_tile_dependency_roof_tile_id;
 drop index ix_roof_tile_dependency_roof_tile_id on roof_tile_dependency;
@@ -50,6 +62,10 @@ drop table if exists material_dependency;
 drop table if exists material_length;
 
 drop table if exists picture;
+
+drop table if exists purchase;
+
+drop table if exists purchase_carport;
 
 drop table if exists roof_tile;
 

@@ -12,8 +12,11 @@ create table carport (
   name                          varchar(255) not null,
   default_price                 integer not null,
   profit_from_materials         integer not null,
-  default_width                 integer not null,
-  default_length                integer not null,
+  frame_width                   integer not null,
+  frame_length                  integer not null,
+  with_shed                     tinyint(1) default 0,
+  shed_width                    integer not null,
+  shed_length                   integer not null,
   description                   varchar(255),
   thumbnail_id                  integer not null,
   frame_id                      integer not null,
@@ -27,6 +30,7 @@ create table frame (
   lower_pillar_material_id      integer not null,
   vertical_pillar_material_id   integer not null,
   roof_plank_material_id        integer not null,
+  shed_plank_material_id        integer not null,
   vertical_pillar_front_reserve integer not null,
   vertical_pillar_back_reserve  integer not null,
   vertical_pillar_distance      integer not null,
@@ -65,6 +69,28 @@ create table picture (
   url                           varchar(255) not null,
   carport_id                    integer,
   constraint pk_picture primary key (id)
+);
+
+create table purchase (
+  id                            integer auto_increment not null,
+  final_price                   integer not null,
+  ordered_on                    date,
+  customer_id                   integer,
+  constraint pk_purchase primary key (id)
+);
+
+create table purchase_carport (
+  id                            integer auto_increment not null,
+  carport_id                    integer not null,
+  frame_width                   integer not null,
+  frame_length                  integer not null,
+  with_shed                     tinyint(1) default 0,
+  shed_width                    integer not null,
+  shed_length                   integer not null,
+  pdf_catalogue                 varchar(255),
+  price                         integer not null,
+  purchase_id                   integer not null,
+  constraint pk_purchase_carport primary key (id)
 );
 
 create table roof_tile (
@@ -122,6 +148,9 @@ create index ix_frame_vertical_pillar_material_id on frame (vertical_pillar_mate
 alter table frame add constraint fk_frame_roof_plank_material_id foreign key (roof_plank_material_id) references material (id) on delete restrict on update restrict;
 create index ix_frame_roof_plank_material_id on frame (roof_plank_material_id);
 
+alter table frame add constraint fk_frame_shed_plank_material_id foreign key (shed_plank_material_id) references material (id) on delete restrict on update restrict;
+create index ix_frame_shed_plank_material_id on frame (shed_plank_material_id);
+
 alter table material_dependency add constraint fk_material_dependency_material_id foreign key (material_id) references material (id) on delete restrict on update restrict;
 create index ix_material_dependency_material_id on material_dependency (material_id);
 
@@ -133,6 +162,15 @@ create index ix_material_length_material_id on material_length (material_id);
 
 alter table picture add constraint fk_picture_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
 create index ix_picture_carport_id on picture (carport_id);
+
+alter table purchase add constraint fk_purchase_customer_id foreign key (customer_id) references user (id) on delete restrict on update restrict;
+create index ix_purchase_customer_id on purchase (customer_id);
+
+alter table purchase_carport add constraint fk_purchase_carport_carport_id foreign key (carport_id) references carport (id) on delete restrict on update restrict;
+create index ix_purchase_carport_carport_id on purchase_carport (carport_id);
+
+alter table purchase_carport add constraint fk_purchase_carport_purchase_id foreign key (purchase_id) references purchase (id) on delete restrict on update restrict;
+create index ix_purchase_carport_purchase_id on purchase_carport (purchase_id);
 
 alter table roof_tile_dependency add constraint fk_roof_tile_dependency_roof_tile_id foreign key (roof_tile_id) references roof_tile (id) on delete restrict on update restrict;
 create index ix_roof_tile_dependency_roof_tile_id on roof_tile_dependency (roof_tile_id);

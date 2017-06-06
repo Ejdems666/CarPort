@@ -15,18 +15,13 @@ public class FlatRoofTileCalculatorTest {
     @BeforeMethod
     public void setUp() throws Exception {
         carport = Carport.find.byId(1);
-        calculator = new FlatRoofTileCalculator();
     }
 
     @Test
     public void testGetNumberOfTiles() {
-        Assert.assertEquals(
-                calculator.getNumberOfTiles(
-                        carport.getRoofTile(),
-                        carport.getDefaultWidth(),
-                        carport.getDefaultLength()),
-                128
-        );
+        Dimensions frameDimensions = new Dimensions(carport.getFrameLength(), carport.getFrameWidth());
+        calculator = new FlatRoofTileCalculator(carport.getRoofTile(),frameDimensions);
+        Assert.assertEquals(calculator.getRoofTiles().getCount(), 128);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.cba.controller;
 
+import org.cba.components.CarportSettingsForm;
 import org.cba.domain.Carport;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class CarportController extends BaseController {
 
     public void edit(Integer carportId) {
         Carport carport = Carport.find.byId(carportId);
+        CarportSettingsForm.createFormComponents(request,carport.getFrame(),carport);
         request.setAttribute("carport", carport);
         renderTemplate();
     }

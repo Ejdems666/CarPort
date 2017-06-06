@@ -2,28 +2,29 @@ package org.cba.controller;
 
 import hyggemvc.component.Alerts;
 import hyggemvc.controller.Controller;
+import org.cba.Path;
 import org.cba.domain.User;
+import org.cba.model.cart.Cart;
+import org.cba.model.cart.SessionCart;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+
+import static org.cba.Path.ROOT;
 
 /**
  * Created by adam on 26/02/2017.
  */
 public abstract class BaseController extends Controller {
     public static final int ADMIN_TYPE = 2;
-    protected final String ROOT = "/";
-    protected final String ASSETS = ROOT + "assets/";
-    protected final String CP_IMGS = ASSETS + "carport-images/";
-    protected User loggedUser = null;
+    protected User loggedUser;
+    protected Cart cart;
 
     public BaseController(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
         loggedUser = getLoggedUser();
+        cart = new SessionCart(request.getSession());
     }
 
     private User getLoggedUser() {
@@ -32,29 +33,24 @@ public abstract class BaseController extends Controller {
     }
 
     protected boolean isLoggedIn() {
-        return loggedUser != null; }
+        return loggedUser != null;
+    }
 
     @Override
     protected void renderTemplate(String template) {
-        setTemplateConstants();
+        request.setAttribute("cart", cart);
         super.renderTemplate(template);
-    }
-
-    private void setTemplateConstants() {
-        request.setAttribute("root", ROOT);
-        request.setAttribute("assets", ASSETS);
-        request.setAttribute("cpImgs", CP_IMGS);
     }
 
     @Override
     protected void renderTemplate() {
-        setTemplateConstants();
+        request.setAttribute("cart", cart);
         super.renderTemplate();
     }
 
     @Override
     protected void renderTemplate(String template, String layout) {
-        setTemplateConstants();
+        request.setAttribute("cart", cart);
         super.renderTemplate(template, layout);
     }
 
@@ -62,45 +58,37 @@ public abstract class BaseController extends Controller {
     protected void redirect(String url) {
         super.redirect(ROOT + url);
     }
+
     protected void redirect() {
-        super.redirect(ROOT);
+        super.redirect(ROOT.toString());
     }
 
-    protected void redirectIfNotSignedIn() {
+    protected void redirect(Path path, String url) {
+        super.redirect(path + url);
+    }
+
+    protected boolean redirectIfNotSignedIn() {
         if (!isLoggedIn()) {
             addAlert(Alerts.Type.ERROR, "First sign in mate.");
             redirect("sign/in");
+            return true;
         }
+        return false;
     }
 
-    protected void redirectIfNotAdmin() {
-        redirectIfNotSignedIn();
+    protected boolean redirectIfNotAdmin() {
+        if(redirectIfNotSignedIn()) {
+            return true;
+        }
         if (!isAdmin()) {
             addAlert(Alerts.Type.ERROR, "You're not an admin mate.");
             redirect();
+            return true;
         }
+        return false;
     }
 
     private boolean isAdmin() {
         return loggedUser.getType() == ADMIN_TYPE;
-    }
-
-    protected Map<String, Object> getParameters() {
-        Map<String, Object> parameters = new HashMap<>();
-        Enumeration names = request.getParameterNames();
-        String key;
-        String value;
-        Integer intValue;
-        while (names.hasMoreElements()) {
-            key = ((String) names.nextElement());
-            value = request.getParameter(key);
-            try {
-                intValue = Integer.parseInt(value);
-                parameters.put(key, intValue);
-            } catch (NumberFormatException e) {
-                parameters.put(key, value);
-            }
-        }
-        return parameters;
     }
 }

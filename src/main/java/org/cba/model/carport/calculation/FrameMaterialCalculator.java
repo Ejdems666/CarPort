@@ -1,19 +1,19 @@
 package org.cba.model.carport.calculation;
 
 import org.cba.model.carport.calculation.exception.MaterialLengthVariationNotFoundException;
-import org.cba.model.carport.formating.MaterialLengthRecord;
+import org.cba.model.carport.formating.PartRecord;
 
 /**
  * Created by adam on 09/05/2017.
  */
 public interface FrameMaterialCalculator extends MaterialCalculator{
-    MaterialLengthRecord getSideUpperPillars() throws MaterialLengthVariationNotFoundException;
+    PartRecord getSideUpperPillars() throws MaterialLengthVariationNotFoundException;
 
-    MaterialLengthRecord getFrontAndBackUpperPillars() throws MaterialLengthVariationNotFoundException;
+    PartRecord getFrontAndBackUpperPillars() throws MaterialLengthVariationNotFoundException;
 
-    MaterialLengthRecord getLowerPillars() throws MaterialLengthVariationNotFoundException;
+    PartRecord getLowerPillars() throws MaterialLengthVariationNotFoundException;
 
-    MaterialLengthRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException;
+    PartRecord getRoofPlanks() throws MaterialLengthVariationNotFoundException;
 
-    MaterialLengthRecord getVerticalPillars();
+    PartRecord getVerticalPillars();
 }

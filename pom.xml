@@ -26,10 +26,10 @@
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>ejdems-hygge</groupId>
-            <artifactId>HyggeMVC</artifactId>
-            <version>0.6.0</version>
-        </dependency>
+        <groupId>ejdems-hygge</groupId>
+        <artifactId>HyggeMVC</artifactId>
+        <version>0.6.0</version>
+    </dependency>
 
         <!-- SVG -->
         <dependency>
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>querybean-generator</artifactId>
-            <version>10.1.2</version>
+            <version>10.1.3</version>
             <scope>provided</scope>
         </dependency>
 

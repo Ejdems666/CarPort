@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE xml>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <addColumn tableName="carport">
+            <column name="frame_width" type="integer" notnull="true"/>
+            <column name="frame_length" type="integer" notnull="true"/>
+            <column name="with_shed" type="bit"/>
+            <column name="shed_width" type="integer"/>
+            <column name="shed_length" type="integer"/>
+        </addColumn>
+        <addColumn tableName="frame">
+            <column name="shed_plank_material_id" type="integer" notnull="true" references="material.id" foreignKeyName="fk_frame_shed_plank_material_id" foreignKeyIndex="ix_frame_shed_plank_material_id"/>
+        </addColumn>
+        <addColumn tableName="purchase_carport">
+            <column name="with_shed" type="bit"/>
+            <column name="shed_width" type="integer"/>
+            <column name="shed_length" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet type="pendingDrops">
+        <dropColumn columnName="default_width" tableName="carport"/>
+        <dropColumn columnName="default_length" tableName="carport"/>
+    </changeSet>
+</migration>

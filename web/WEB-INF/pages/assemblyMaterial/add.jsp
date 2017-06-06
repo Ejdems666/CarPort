@@ -1,4 +1,5 @@
-<form action="${root}assembly-material/add" method="POST">
+<%@ page import="static org.cba.Path.ROOT" %>
+<form action="<%=ROOT%>assembly-material/add" method="POST">
     <div class="input-group">
         <label for="name">Name</label>
         <input type="text" required id="name" name="name" class="form-control">
