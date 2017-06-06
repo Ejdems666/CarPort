@@ -54,6 +54,15 @@
                             <li><a href="<%=ROOT%>roof-tile/add">Add</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Materials<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                          <li><a href="<%=ROOT%>material">List</a></li>
+                          <li><a href="<%=ROOT%>material/add">Add</a></li>
+                      </ul>
+                    </li>
                     <% }%>
                     <li>
                         <% if (request.getAttribute("alerts") != null) {%>
