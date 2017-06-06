@@ -1,10 +1,10 @@
 package org.cba.controller;
-
 import io.ebean.Ebean;
 import org.cba.controller.BaseController;
 import org.cba.domain.Material;
 import org.cba.model.carport.formating.table.Row;
 import org.cba.model.carport.formating.table.TableBuilder;
+import org.cba.model.facade.MaterialFacade;
 import org.cba.parameter.ParameterParser;
 import org.cba.parameter.ParameterSieve;
 import org.cba.parameter.ParsedParameters;
@@ -27,9 +27,8 @@ public class MaterialController extends BaseController {
         if (request.getMethod().equals("POST")) {
             try {
                 ParsedParameters parameters = getNormalParameters();
-                Material material = new Material();
-                fillUpEntity(material, parameters);
-                Ebean.save(material);
+                MaterialFacade facade = new MaterialFacade();
+                facade.add(parameters);
                 alertSuccess("Assembly material added!");
             } catch (ParameterParserException e) {
                 alertError("Wrong input!");
@@ -87,8 +86,7 @@ public class MaterialController extends BaseController {
             row.addColumn(String.valueOf(material.getWidth()));
             row.addColumn(String.valueOf(material.getHeight()));
             row.addColumn(material.getDescription());
-            // add Edit Link if needed.
-
+            row.addColumn("<a href='" + ROOT + "material/edit/" + material.getId() + "'>" + material.getId() + "</a>");
         }
         request.setAttribute("table", tableBuilder);
         renderTemplate();
