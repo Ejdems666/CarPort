@@ -69,7 +69,7 @@ public abstract class BaseController extends Controller {
 
     protected boolean redirectIfNotSignedIn() {
         if (!isLoggedIn()) {
-            addAlert(Alerts.Type.ERROR, "First sign in mate.");
+            addAlert(Alerts.Type.ERROR, "First sign in.");
             redirect("sign/in");
             return true;
         }
@@ -81,7 +81,7 @@ public abstract class BaseController extends Controller {
             return true;
         }
         if (!isAdmin()) {
-            addAlert(Alerts.Type.ERROR, "You're not an admin mate.");
+            addAlert(Alerts.Type.ERROR, "You're not an admin.");
             redirect();
             return true;
         }

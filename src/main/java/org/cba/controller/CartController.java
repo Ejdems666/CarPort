@@ -74,7 +74,7 @@ public class CartController extends BaseController {
                 CarportSettings settings = CarportSettingsForm.getRequestedCarportSettings(request);
                 cart.editItem(purchaseNumber, settings);
                 PurchaseCarport purchase = cart.getCartContents().getPurchaseCarports().get(purchaseNumber);
-                regeneratePdfIfNonExistent(purchase);
+                regeneratePdfIfExists(purchase);
                 alertSuccess("Order changed.");
                 redirect("cart");
                 return;
@@ -91,7 +91,7 @@ public class CartController extends BaseController {
         renderTemplate("error/notFound");
     }
 
-    private void regeneratePdfIfNonExistent(PurchaseCarport purchase) {
+    private void regeneratePdfIfExists(PurchaseCarport purchase) {
         if (purchase.getPdfCatalogue() != null) {
             PdfGenerator pdfGenerator = new PdfGenerator();
             pdfGenerator.generatePdf(purchase, request.getSession().getServletContext(), purchase.getPdfCatalogue());

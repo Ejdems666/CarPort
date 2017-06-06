@@ -21,6 +21,7 @@ public class RoofTileController extends BaseController {
     }
 
     public void add() {
+        if (redirectIfNotSignedIn()) return;
         if (request.getMethod().equals("POST")) {
             try {
                 ParsedParameters parameters = getRoofTileParameters();
@@ -60,6 +61,7 @@ public class RoofTileController extends BaseController {
     }
 
     public void edit(Integer id) {
+        if (redirectIfNotSignedIn()) return;
         RoofTile roofTile = RoofTile.find.byId(id);
         if (request.getMethod().equals("POST")) {
             try {
@@ -76,6 +78,7 @@ public class RoofTileController extends BaseController {
     }
 
     public void index() {
+        if (redirectIfNotSignedIn()) return;
         List<RoofTile> roofTileList = RoofTile.find.all();
         TableBuilder tableBuilder = new TableBuilder("table");
         tableBuilder.addHeader("Roof Tiles", "Name, Width, Width overlap, Length, Length overlap, Price, Stock, Description, Edit link");

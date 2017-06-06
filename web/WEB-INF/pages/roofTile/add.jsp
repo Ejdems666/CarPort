@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<form action="<%=ROOT%>roof-tile/add/" method="POST">
+<form action="<%=ROOT%>roof-tile/add" method="POST">
     <div class="input-group">
         <label for="name">Name</label>
         <input type="text" required id="name" name="name" class="form-control">
